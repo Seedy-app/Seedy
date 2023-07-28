@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-function CommunitiesScreen() {
+function PlantIdentifierScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Plant Identifier Screen</Text>
@@ -9,4 +9,4 @@ function CommunitiesScreen() {
   );
 }
 
-export default CommunitiesScreen;
+export default PlantIdentifierScreen;
