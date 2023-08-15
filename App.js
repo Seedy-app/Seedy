@@ -4,9 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthStackNavigator from './src/navigation/AuthStackNavigator';
 import MyTabs from './src/navigation/BottomTabsNavigator';
-
-// Crear un contexto de autenticación
-export const AuthContext = createContext();
+import { AuthContext } from './src/contexts/AuthContext';
 
 // Crea el stack de navegación de nivel superior
 const RootStack = createStackNavigator();

@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../../../App'; 
+import { AuthContext } from '../../../src/contexts/AuthContext';
+
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
