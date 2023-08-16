@@ -1,13 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import CustomInput from './CustomInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../../src/contexts/AuthContext';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isPasswordVisible, setPasswordVisible] = useState(true);
 
   const { signIn } = useContext(AuthContext);
 
@@ -32,19 +31,10 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!isPasswordVisible);
-  };
-
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="Username" onChangeText={text => setUsername(text)} />
-      <View>
-        <TextInput style={styles.input} placeholder="Password" onChangeText={text => setPassword(text)} secureTextEntry={isPasswordVisible} />
-        <TouchableOpacity style={styles.eyeIcon} onPress={togglePasswordVisibility}>
-          <Icon name={isPasswordVisible ? 'eye-slash' : 'eye'} size={20} color="grey" />
-        </TouchableOpacity>
-      </View>
+      <CustomInput placeholder="Username" onChangeText={text => setUsername(text)} />
+      <CustomInput placeholder="Password" isPassword onChangeText={text => setPassword(text)} />  
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -64,7 +54,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    position: 'relative',
   },
   eyeIcon: {
     position: 'absolute',
