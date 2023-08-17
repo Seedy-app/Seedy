@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableOpacity>
       <View style={styles.registerContainer}>
         <Text style={styles.registerText}>{t("dont_have_an_account")}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <TouchableOpacity onPress={() => navigation.navigate(t('singup'))}>
           <Text style={styles.registerButton}>{t("singup")}</Text>
         </TouchableOpacity>
       </View>
