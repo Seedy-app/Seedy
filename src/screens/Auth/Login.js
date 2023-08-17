@@ -7,7 +7,6 @@ import { AuthContext } from '../../../src/contexts/AuthContext';
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const { signIn } = useContext(AuthContext);
 
   const login = async () => {
@@ -34,7 +33,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <CustomInput placeholder="Username" onChangeText={text => setUsername(text)} />
-      <CustomInput placeholder="Password" isPassword onChangeText={text => setPassword(text)} />  
+      <CustomInput placeholder="Password" isPassword onChangeText={text => setPassword(text)}/>  
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
