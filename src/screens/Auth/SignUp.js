@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
-import { TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import CustomInput from './CustomInput';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
   const register = async () => {
     if (password !== confirmPassword) {
-      console.log('Passwords do not match.');
+      setError('Passwords do not match.');
+      return;
+    }
+    // Validación de correo electrónico
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    console.log(email);
+    console.log('fdfsdvgs');
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    // Validación de contraseña
+    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError('Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.');
       return;
     }
     const response = await fetch('http://192.168.0.242:3000/register', {
@@ -18,6 +36,7 @@ export default function SignUpScreen({ navigation }) {
       },
       body: JSON.stringify({
         username,
+        email,
         password,
       }),
     });
@@ -25,15 +44,17 @@ export default function SignUpScreen({ navigation }) {
       // La cuenta ha sido creada y puedes navegar a la pantalla de inicio de sesión
       navigation.navigate('Login');
     } else {
-      console.log('There was a problem registering the account.');
+      setError('There was a problem registering the account.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="Username" onChangeText={text => setUsername(text)} />
-      <TextInput style={styles.input} placeholder="Password" onChangeText={text => setPassword(text)} secureTextEntry />
-      <TextInput style={styles.input} placeholder="Confirm Password" onChangeText={text => setConfirmPassword(text)} secureTextEntry />
+      <CustomInput placeholder="Username" onChangeText={text => setUsername(text)} />
+      <CustomInput placeholder="Email" keyboardType="email-address" onChangeText={text => setEmail(text)} />
+      <CustomInput placeholder="Password" isPassword onChangeText={text => setPassword(text)} />  
+      <CustomInput placeholder="Confirm Password" isConfirmPassword onChangeText={text => setConfirmPassword(text)} />  
+      {error && <Text style={{color: 'red'}}>{error}</Text>}
       <TouchableOpacity style={styles.button} onPress={register}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
@@ -52,6 +73,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
+  },
+  eyeIcon: {
+    position: 'absolute',
+    transform: [{ translateX: 340 }, { translateY: 10 }],
   },
   input: {
     height: 40,
