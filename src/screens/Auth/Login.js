@@ -3,11 +3,14 @@ import CustomInput from './CustomInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../../src/contexts/AuthContext';
+import i18next from '../../services/i18next';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const login = async () => {
     const response = await fetch('http://192.168.0.242:3000/login', {
@@ -32,15 +35,15 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <CustomInput placeholder="Username" onChangeText={text => setUsername(text)} />
-      <CustomInput placeholder="Password" isPassword onChangeText={text => setPassword(text)}/>  
+      <CustomInput placeholder={t("username")} onChangeText={text => setUsername(text)} />
+      <CustomInput placeholder={t("password")} isPassword onChangeText={text => setPassword(text)}/>  
       <TouchableOpacity style={styles.button} onPress={login}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>{t("login")}</Text>
       </TouchableOpacity>
       <View style={styles.registerContainer}>
-        <Text style={styles.registerText}>You do not have an account?</Text>
+        <Text style={styles.registerText}>{t("dont_have_an_account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.registerButton}>Sign up</Text>
+          <Text style={styles.registerButton}>{t("singup")}</Text>
         </TouchableOpacity>
       </View>
     </View>
