@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import CustomInput from './CustomInput';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import i18next from '../../services/i18next';
+import { useTranslation } from 'react-i18next';
 
 
 export default function SignUpScreen({ navigation }) {
@@ -9,24 +11,24 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const { t } = useTranslation();
+
 
   const register = async () => {
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError(t("unmatched_passwords_error"));
       return;
     }
     // Validación de correo electrónico
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    console.log(email);
-    console.log('fdfsdvgs');
     if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address.');
+      setError(t("invalid_email_error"));
       return;
     }
     // Validación de contraseña
     const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!passwordRegex.test(password)) {
-      setError('Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.');
+      setError(t("weak_password_error"));
       return;
     }
     const response = await fetch('http://192.168.0.242:3000/register', {
@@ -44,24 +46,24 @@ export default function SignUpScreen({ navigation }) {
       // La cuenta ha sido creada y puedes navegar a la pantalla de inicio de sesión
       navigation.navigate('Login');
     } else {
-      setError('There was a problem registering the account.');
+      setError(t("register_error"));
     }
   };
 
   return (
     <View style={styles.container}>
-      <CustomInput placeholder="Username" onChangeText={text => setUsername(text)} />
-      <CustomInput placeholder="Email" keyboardType="email-address" onChangeText={text => setEmail(text)} />
-      <CustomInput placeholder="Password" isPassword onChangeText={text => setPassword(text)} />  
-      <CustomInput placeholder="Confirm Password" isConfirmPassword onChangeText={text => setConfirmPassword(text)} />  
+      <CustomInput placeholder={t("username")} onChangeText={text => setUsername(text)} />
+      <CustomInput placeholder={t("email")} keyboardType="email-address" onChangeText={text => setEmail(text)} />
+      <CustomInput placeholder={t("password")} isPassword onChangeText={text => setPassword(text)} />  
+      <CustomInput placeholder={t("confirm_password")} isConfirmPassword onChangeText={text => setConfirmPassword(text)} />  
       {error && <Text style={{color: 'red'}}>{error}</Text>}
       <TouchableOpacity style={styles.button} onPress={register}>
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>{t("register")}</Text>
       </TouchableOpacity>
       <View style={styles.loginContainer}>
-        <Text style={styles.loginText}>Already have an account?</Text>
+        <Text style={styles.loginText}>{t("already_have_an_account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.loginButton}>Log in</Text>
+          <Text style={styles.loginButton}>{t("login")}</Text>
         </TouchableOpacity>
       </View>
     </View>
