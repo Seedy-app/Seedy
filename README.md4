@@ -4,5 +4,5 @@ React Native (framework)
 React Navigator (navegacion):
   -AuthStackNavigator
   -BottomTabsNavigator
-i18n (multilenguaje)
-expo-localization (localización)
+i18next (multilenguaje)
+
