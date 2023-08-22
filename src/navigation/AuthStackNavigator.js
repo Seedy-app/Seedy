@@ -1,9 +1,9 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../screens/Auth/Login';
-import SignUpScreen from '../screens/Auth/SignUp';
-import i18next from '../services/i18next';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginScreen from "../screens/Auth/Login";
+import SignUpScreen from "../screens/Auth/SignUp";
+import i18next from "../services/i18next";
+import { useTranslation } from "react-i18next";
 
 const Stack = createStackNavigator();
 

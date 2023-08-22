@@ -1,53 +1,51 @@
-import React, { useState } from 'react';
-import CustomInput from './CustomInput';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import i18next from '../../services/i18next';
-import { useTranslation } from 'react-i18next';
-
+import React, { useState } from "react";
+import CustomInput from "./CustomInput";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import i18next from "../../services/i18next";
+import { useTranslation } from "react-i18next";
 
 export default function SignUpScreen({ navigation }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [usernameError, setUsernameError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const { t } = useTranslation();
 
-
   const checkEmailAvailability = async (email) => {
-    const response = await fetch('http://192.168.0.242:3000/check-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
+    const response = await fetch("http://192.168.0.242:3000/check-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
     });
     const data = await response.json();
     if (response.status === 409) {
-      setEmailError(t("email_already_exists_error")); 
+      setEmailError(t("email_already_exists_error"));
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
   const checkUsernameAvailability = async (username) => {
-    const response = await fetch('http://192.168.0.242:3000/check-username', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
+    const response = await fetch("http://192.168.0.242:3000/check-username", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
     });
     const data = await response.json();
     if (response.status === 409) {
-      setUsernameError(t("username_already_exists_error")); 
+      setUsernameError(t("username_already_exists_error"));
     } else {
-      setUsernameError('');
+      setUsernameError("");
     }
   };
-
 
   let u_timeout;
   const handleUsernameChange = (text) => {
@@ -69,25 +67,26 @@ export default function SignUpScreen({ navigation }) {
 
   const register = async () => {
     if (password !== confirmPassword) {
-      setError(t("unmatched_passwords_error"));
+      setPasswordError(t("unmatched_passwords_error"));
       return;
     }
     // Validación de correo electrónico
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
-      setError(t("invalid_email_error"));
+      emailError(t("invalid_email_error"));
       return;
     }
     // Validación de contraseña
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    const passwordRegex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!passwordRegex.test(password)) {
-      setError(t("weak_password_error"));
+      setPasswordError(t("weak_password_error"));
       return;
     }
-    const response = await fetch('http://192.168.0.242:3000/register', {
-      method: 'POST',
+    const response = await fetch("http://192.168.0.242:3000/register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username,
@@ -97,7 +96,7 @@ export default function SignUpScreen({ navigation }) {
     });
     if (response.ok) {
       // La cuenta ha sido creada y puedes navegar a la pantalla de inicio de sesión
-      navigation.navigate('Login');
+      navigation.navigate("Login");
     } else {
       setError(t("register_error"));
     }
@@ -105,19 +104,42 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {usernameError && <Text style={{color: 'red'}}>{usernameError}</Text>}
-      <CustomInput placeholder={t("username")} onChangeText={handleUsernameChange} />
-      {emailError && <Text style={{color: 'red'}}>{emailError}</Text>}
-      <CustomInput placeholder={t("email")} keyboardType="email-address" onChangeText={handleEmailChange} />
-      <CustomInput placeholder={t("password")} isPassword onChangeText={text => setPassword(text)} />  
-      <CustomInput placeholder={t("confirm_password")} isConfirmPassword onChangeText={text => setConfirmPassword(text)} />  
-      {error && <Text style={{color: 'red'}}>{error}</Text>}
-      <TouchableOpacity style={styles.button} onPress={register}>
+      {usernameError && <Text style={{ color: "red" }}>{usernameError}</Text>}
+      <CustomInput
+        placeholder={t("username")}
+        onChangeText={handleUsernameChange}
+      />
+      {emailError && <Text style={{ color: "red" }}>{emailError}</Text>}
+      <CustomInput
+        placeholder={t("email")}
+        keyboardType="email-address"
+        onChangeText={handleEmailChange}
+      />
+      {passwordError && <Text style={{ color: "red" }}>{passwordError}</Text>}
+      <CustomInput
+        placeholder={t("password")}
+        isPassword
+        onChangeText={(text) => setPassword(text)}
+      />
+      <CustomInput
+        placeholder={t("confirm_password")}
+        isConfirmPassword
+        onChangeText={(text) => setConfirmPassword(text)}
+      />
+      {error && <Text style={{ color: "red" }}>{error}</Text>}
+      <TouchableOpacity
+        style={[
+          styles.button,
+          (usernameError || emailError) && styles.buttonDisabled,
+        ]}
+        onPress={register}
+        disabled={(usernameError || emailError) != ""}
+      >
         <Text style={styles.buttonText}>{t("register")}</Text>
       </TouchableOpacity>
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>{t("already_have_an_account")}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(t('login'))}>
+        <TouchableOpacity onPress={() => navigation.navigate(t("login"))}>
           <Text style={styles.loginButton}>{t("login")}</Text>
         </TouchableOpacity>
       </View>
@@ -128,34 +150,37 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 20,
   },
   eyeIcon: {
-    position: 'absolute',
+    position: "absolute",
     transform: [{ translateX: 340 }, { translateY: 10 }],
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 20,
     padding: 10,
     borderRadius: 5,
   },
   button: {
-    backgroundColor: 'limegreen',
+    backgroundColor: "limegreen",
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
   },
+  buttonDisabled: {
+    backgroundColor: "gray",
+  },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
   loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 15,
   },
   loginText: {
@@ -164,6 +189,6 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     fontSize: 16,
-    color: 'blue',
+    color: "blue",
   },
 });
