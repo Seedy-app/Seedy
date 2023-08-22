@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import CustomInput from "./CustomInput";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -14,6 +17,9 @@ export default function SignUpScreen({ navigation }) {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const { t } = useTranslation();
+
+  const u_timeout = useRef(null);
+  const e_timeout = useRef(null);
 
   const checkEmailAvailability = async (email) => {
     try {
@@ -55,20 +61,18 @@ export default function SignUpScreen({ navigation }) {
     }
   };
 
-  let u_timeout;
   const handleUsernameChange = (text) => {
     setUsername(text);
-    clearTimeout(u_timeout);
-    u_timeout = setTimeout(() => {
+    clearTimeout(u_timeout.current);
+    u_timeout.current = setTimeout(() => {
       checkUsernameAvailability(text);
     }, 300);
   };
 
-  let e_timeout;
   const handleEmailChange = (text) => {
     setEmail(text);
-    clearTimeout(e_timeout);
-    e_timeout = setTimeout(() => {
+    clearTimeout(e_timeout.current);
+    e_timeout.current = setTimeout(() => {
       checkEmailAvailability(text);
     }, 300);
   };
@@ -79,14 +83,11 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     // Validación de correo electrónico
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       setEmailError(t("invalid_email_error"));
       return;
     }
     // Validación de contraseña
-    const passwordRegex =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!passwordRegex.test(password)) {
       setPasswordError(t("weak_password_error"));
       return;
@@ -115,18 +116,18 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {usernameError && <Text style={{ color: "red" }}>{usernameError}</Text>}
+      {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
         placeholder={t("username")}
         onChangeText={handleUsernameChange}
       />
-      {emailError && <Text style={{ color: "red" }}>{emailError}</Text>}
+      {emailError && <Text style={styles.error}>{emailError}</Text>}
       <CustomInput
         placeholder={t("email")}
         keyboardType="email-address"
         onChangeText={handleEmailChange}
       />
-      {passwordError && <Text style={{ color: "red" }}>{passwordError}</Text>}
+      {passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CustomInput
         placeholder={t("password")}
         isPassword
@@ -137,7 +138,7 @@ export default function SignUpScreen({ navigation }) {
         isConfirmPassword
         onChangeText={(text) => setConfirmPassword(text)}
       />
-      {Error && <Text style={{ color: "red" }}>{Error}</Text>}
+      {Error && <Text style={styles.error}>{Error}</Text>}
       <TouchableOpacity
         style={[
           styles.button,
@@ -167,6 +168,9 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: "absolute",
     transform: [{ translateX: 340 }, { translateY: 10 }],
+  },
+  error: {
+    color: "red",
   },
   input: {
     height: 40,
