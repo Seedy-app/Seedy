@@ -9,41 +9,49 @@ export default function SignUpScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [Error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const { t } = useTranslation();
 
   const checkEmailAvailability = async (email) => {
-    const response = await fetch("http://192.168.0.242:3000/check-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
-    const data = await response.json();
-    if (response.status === 409) {
-      setEmailError(t("email_already_exists_error"));
-    } else {
-      setEmailError("");
+    try {
+      const response = await fetch("http://192.168.0.242:3000/check-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      if (response.status === 409) {
+        setEmailError(t("email_already_exists_error"));
+      } else {
+        setEmailError("");
+      }
+    } catch (error) {
+      setError(t("network_error"));
     }
   };
 
   const checkUsernameAvailability = async (username) => {
-    const response = await fetch("http://192.168.0.242:3000/check-username", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username }),
-    });
-    const data = await response.json();
-    if (response.status === 409) {
-      setUsernameError(t("username_already_exists_error"));
-    } else {
-      setUsernameError("");
+    try {
+      const response = await fetch("http://192.168.0.242:3000/check-username", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+      const data = await response.json();
+      if (response.status === 409) {
+        setUsernameError(t("username_already_exists_error"));
+      } else {
+        setUsernameError("");
+      }
+    } catch (error) {
+      setError(t("network_error"));
     }
   };
 
@@ -73,7 +81,7 @@ export default function SignUpScreen({ navigation }) {
     // Validación de correo electrónico
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
-      emailError(t("invalid_email_error"));
+      setEmailError(t("invalid_email_error"));
       return;
     }
     // Validación de contraseña
@@ -83,22 +91,25 @@ export default function SignUpScreen({ navigation }) {
       setPasswordError(t("weak_password_error"));
       return;
     }
-    const response = await fetch("http://192.168.0.242:3000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-      }),
-    });
-    if (response.ok) {
-      // La cuenta ha sido creada y puedes navegar a la pantalla de inicio de sesión
-      navigation.navigate("Login");
-    } else {
-      setError(t("register_error"));
+    try {
+      const response = await fetch("http://192.168.0.242:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+      if (response.ok) {
+        navigation.navigate("Login");
+      } else {
+        setError(t("register_error"));
+      }
+    } catch (error) {
+      setError(t("network_error"));
     }
   };
 
@@ -126,7 +137,7 @@ export default function SignUpScreen({ navigation }) {
         isConfirmPassword
         onChangeText={(text) => setConfirmPassword(text)}
       />
-      {error && <Text style={{ color: "red" }}>{error}</Text>}
+      {Error && <Text style={{ color: "red" }}>{Error}</Text>}
       <TouchableOpacity
         style={[
           styles.button,

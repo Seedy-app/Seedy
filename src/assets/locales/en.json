@@ -12,6 +12,7 @@
   "invalid_email_error": "Please enter a valid email address.",
   "weak_password_error": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.",
   "register_error": "There was a problem registering the account.",
+  "network_error": "There was a network error.",
   "unmatched_passwords_error": "Passwords do not match.",
   "username_already_exists_error": "Username already exists.",
   "email_already_exists_error": "Email already registered.",
