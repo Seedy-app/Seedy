@@ -18,7 +18,7 @@ const CustomInput = ({ placeholder, isPassword, isConfirmPassword, onChangeText,
         onChangeText={onChangeText}
         secureTextEntry={(isPassword && isPasswordVisible) || (isConfirmPassword && isConfirmPasswordVisible)}
         value={value}
-        autoCapitalize={isPassword || isConfirmPassword ? "none" : "sentences"}
+        autoCapitalize="none"
       />
       {isPassword && (
         <TouchableOpacity style={styles.eyeIcon} onPress={togglePasswordVisibility}>
