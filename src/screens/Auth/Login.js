@@ -12,6 +12,7 @@ export default function LoginScreen({ navigation }) {
   const { signIn } = useContext(AuthContext);
   const { t } = useTranslation();
 
+
   const login = async () => {
     const response = await fetch('http://192.168.0.242:3000/login', {
       method: 'POST',

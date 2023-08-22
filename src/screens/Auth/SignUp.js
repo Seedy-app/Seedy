@@ -11,8 +11,61 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const { t } = useTranslation();
 
+
+  const checkEmailAvailability = async (email) => {
+    const response = await fetch('http://192.168.0.242:3000/check-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    if (response.status === 409) {
+      setEmailError(t("email_already_exists_error")); 
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const checkUsernameAvailability = async (username) => {
+    const response = await fetch('http://192.168.0.242:3000/check-username', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+    });
+    const data = await response.json();
+    if (response.status === 409) {
+      setUsernameError(t("username_already_exists_error")); 
+    } else {
+      setUsernameError('');
+    }
+  };
+
+
+  let u_timeout;
+  const handleUsernameChange = (text) => {
+    setUsername(text);
+    clearTimeout(u_timeout);
+    u_timeout = setTimeout(() => {
+      checkUsernameAvailability(text);
+    }, 300);
+  };
+
+  let e_timeout;
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    clearTimeout(e_timeout);
+    e_timeout = setTimeout(() => {
+      checkEmailAvailability(text);
+    }, 300);
+  };
 
   const register = async () => {
     if (password !== confirmPassword) {
@@ -52,8 +105,10 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <CustomInput placeholder={t("username")} onChangeText={text => setUsername(text)} />
-      <CustomInput placeholder={t("email")} keyboardType="email-address" onChangeText={text => setEmail(text)} />
+      {usernameError && <Text style={{color: 'red'}}>{usernameError}</Text>}
+      <CustomInput placeholder={t("username")} onChangeText={handleUsernameChange} />
+      {emailError && <Text style={{color: 'red'}}>{emailError}</Text>}
+      <CustomInput placeholder={t("email")} keyboardType="email-address" onChangeText={handleEmailChange} />
       <CustomInput placeholder={t("password")} isPassword onChangeText={text => setPassword(text)} />  
       <CustomInput placeholder={t("confirm_password")} isConfirmPassword onChangeText={text => setConfirmPassword(text)} />  
       {error && <Text style={{color: 'red'}}>{error}</Text>}
