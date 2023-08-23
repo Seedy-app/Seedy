@@ -4,15 +4,15 @@ import en from "../assets/locales/en.json";
 import es from "../assets/locales/es.json";
 
 export const languageResources = {
-    en: {translation: en},
-    es: {translation: es}
-}
+  en: { translation: en },
+  es: { translation: es },
+};
 
 i18next.use(initReactI18next).init({
-    compatibilityJSON: 'v3',
-    lng: 'en',
-    fallbackLng: 'en',
-    resources: languageResources,
-})
+  compatibilityJSON: "v3",
+  lng: "en",
+  fallbackLng: "en",
+  resources: languageResources,
+});
 
 export default i18next;

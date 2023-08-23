@@ -1,10 +1,10 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AuthStackNavigator from './src/navigation/AuthStackNavigator';
-import MyTabs from './src/navigation/BottomTabsNavigator';
-import { AuthContext } from './src/contexts/AuthContext';
+import React, { useState, useEffect, createContext, useContext } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthStackNavigator from "./src/navigation/AuthStackNavigator";
+import MyTabs from "./src/navigation/BottomTabsNavigator";
+import { AuthContext } from "./src/contexts/AuthContext";
 
 // Crea el stack de navegación de nivel superior
 const RootStack = createStackNavigator();
@@ -18,7 +18,7 @@ function App() {
     const bootstrapAsync = async () => {
       let token;
       try {
-        token = await AsyncStorage.getItem('userToken');
+        token = await AsyncStorage.getItem("userToken");
       } catch (e) {
         console.error(e);
       }
@@ -37,7 +37,7 @@ function App() {
     signOut: async () => {
       setIsLoading(false);
       setUserToken(null);
-      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem("userToken");
     },
   };
 
@@ -51,9 +51,17 @@ function App() {
       <NavigationContainer>
         <RootStack.Navigator>
           {userToken != null ? (
-            <RootStack.Screen name="BottomTabsNavigator" component={MyTabs} options={{ headerShown: false }} />
+            <RootStack.Screen
+              name="BottomTabsNavigator"
+              component={MyTabs}
+              options={{ headerShown: false }}
+            />
           ) : (
-            <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} options={{ headerShown: false }} />
+            <RootStack.Screen
+              name="AuthStackNavigator"
+              component={AuthStackNavigator}
+              options={{ headerShown: false }}
+            />
           )}
         </RootStack.Navigator>
       </NavigationContainer>
