@@ -1,9 +1,10 @@
 import React, { useContext } from "react"; // No olvides importar useContext
-import { Button, View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
+import styles from "./ProfileStyles";
 
 function ProfileScreen() {
   const { t } = useTranslation();
@@ -18,7 +19,9 @@ function ProfileScreen() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>{t("profile")}</Text>
-      <Button title={t("logout")} onPress={logout} />
+      <TouchableOpacity style={styles.button} onPress={logout}>
+        <Text style={styles.buttonText}>{t("logout")}</Text>
+    </TouchableOpacity>
     </View>
   );
 }

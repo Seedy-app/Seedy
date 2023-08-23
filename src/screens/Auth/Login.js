@@ -5,6 +5,8 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
+import styles from './LoginStyles';
+import Config from '../../config/Config';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -13,7 +15,7 @@ export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
 
   const login = async () => {
-    const response = await fetch("http://192.168.0.242:3000/login", {
+    const response = await fetch(Config.API_URL+"/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,45 +59,4 @@ export default function LoginScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  eyeIcon: {
-    position: "absolute",
-    transform: [{ translateX: 340 }, { translateY: 10 }],
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 5,
-  },
-  button: {
-    backgroundColor: "limegreen",
-    padding: 10,
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 18,
-  },
-  registerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 15,
-  },
-  registerText: {
-    marginRight: 10,
-    fontSize: 16,
-  },
-  registerButton: {
-    fontSize: 16,
-    color: "blue",
-  },
-});
+
