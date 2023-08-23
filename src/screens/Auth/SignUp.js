@@ -3,6 +3,9 @@ import CustomInput from "./CustomInput";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
+import styles from './SignUpStyles';
+import Config from '../../config/Config';
+
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -23,7 +26,7 @@ export default function SignUpScreen({ navigation }) {
 
   const checkEmailAvailability = async (email) => {
     try {
-      const response = await fetch("http://192.168.0.242:3000/check-email", {
+      const response = await fetch(Config.API_URL+"/check-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +46,7 @@ export default function SignUpScreen({ navigation }) {
 
   const checkUsernameAvailability = async (username) => {
     try {
-      const response = await fetch("http://192.168.0.242:3000/check-username", {
+      const response = await fetch(Config.API_URL+"/check-username", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +96,7 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     try {
-      const response = await fetch("http://192.168.0.242:3000/register", {
+      const response = await fetch(Config.API_URL+"/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,51 +162,4 @@ export default function SignUpScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  eyeIcon: {
-    position: "absolute",
-    transform: [{ translateX: 340 }, { translateY: 10 }],
-  },
-  error: {
-    color: "red",
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 5,
-  },
-  button: {
-    backgroundColor: "limegreen",
-    padding: 10,
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  buttonDisabled: {
-    backgroundColor: "gray",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 18,
-  },
-  loginContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 15,
-  },
-  loginText: {
-    marginRight: 10,
-    fontSize: 16,
-  },
-  loginButton: {
-    fontSize: 16,
-    color: "blue",
-  },
-});
+
