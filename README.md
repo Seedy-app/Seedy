@@ -1,8 +1,9 @@
 # Seedy
 
-React Native (framework)\
-React Navigator (navegacion):\
-  -AuthStackNavigator\
-  -BottomTabsNavigator\
-i18next (multilenguaje)\
+**React Native** (framework)
 
+**React Navigator** (navegación):
+  - AuthStackNavigator
+  - BottomTabsNavigator
+
+**i18next** (multilenguaje)
