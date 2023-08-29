@@ -1,6 +1,6 @@
 # Seedy
 
-React Native (framework)
+React Native (framework)\
 React Navigator (navegacion):
   -AuthStackNavigator
   -BottomTabsNavigator
