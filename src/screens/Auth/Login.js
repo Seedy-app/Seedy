@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import CustomInput from "./CustomInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
@@ -49,10 +49,16 @@ export default function LoginScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>{t("login")}</Text>
       </TouchableOpacity>
-      <View style={styles.registerContainer}>
+      <View style={styles.otherOptionsContainer}>
         <Text style={styles.registerText}>{t("dont_have_an_account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate(t("singup"))}>
           <Text style={styles.registerButton}>{t("singup")}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.otherOptionsContainer}> 
+      <Text style={styles.registerText}>{t("forgot_your_password")}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate(t("forgot_your_password"))}>
+          <Text style={styles.registerButton}>{t("reset_it")}</Text>
         </TouchableOpacity>
       </View>
     </View>

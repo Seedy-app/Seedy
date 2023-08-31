@@ -3,9 +3,6 @@ import commonStyles from "../../config/CommonStyles";
 
 const signUpStyles = StyleSheet.create({
     ...commonStyles,
-    error: {
-      color: "red",
-    },
     buttonDisabled: {
       backgroundColor: "gray",
     },
