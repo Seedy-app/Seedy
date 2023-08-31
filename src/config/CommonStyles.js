@@ -30,6 +30,11 @@ const commonStyles = StyleSheet.create({
       color: Colors.white,
       fontSize: FontSizes.large,
     },
+    otherOptionsContainer: {
+      flexDirection: "row",
+      justifyContent: "center",
+      marginTop: 15,
+    },
 });
 
 export default commonStyles;

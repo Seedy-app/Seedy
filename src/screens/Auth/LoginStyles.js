@@ -3,11 +3,6 @@ import commonStyles from "../../config/CommonStyles";
 
 const loginStyles = StyleSheet.create({
     ...commonStyles,
-    registerContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
-      marginTop: 15,
-    },
     registerText: {
       marginRight: 10,
       fontSize: 16,
