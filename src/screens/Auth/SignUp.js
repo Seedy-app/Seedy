@@ -6,10 +6,6 @@ import { useTranslation } from "react-i18next";
 import styles from './SignUpStyles';
 import Config from '../../config/Config';
 
-
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -86,12 +82,12 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     // Validación de correo electrónico
-    if (!emailRegex.test(email)) {
+    if (!Config.EMAIL_REGEX.test(email)) {
       setEmailError(t("invalid_email_error"));
       return;
     }
     // Validación de contraseña
-    if (!passwordRegex.test(password)) {
+    if (!Config.PASSWORD_REGEX.test(password)) {
       setPasswordError(t("weak_password_error"));
       return;
     }

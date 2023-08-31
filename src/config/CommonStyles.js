@@ -35,6 +35,9 @@ const commonStyles = StyleSheet.create({
       justifyContent: "center",
       marginTop: 15,
     },
+    error: {
+      color: "red",
+    },
 });
 
 export default commonStyles;

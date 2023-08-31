@@ -23,9 +23,7 @@ export default function ForgotPasswordScreen({ navigation }) {
             const data = await response.json();
     
             if (response.status === 200) {
-                console.log("Status 200 recibido");
-                navigation.navigate(t("forgot_your_password"));
-                console.log("Después de navegar");
+                navigation.navigate(t("reset_password"));
             } else {
                 alert(t("send_email_error"));
             }
