@@ -1,6 +1,7 @@
 // Importamos librerías y componentes.
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; // Importamos el creador de navegación de pestañas inferior
+import CommunitiesStackNavigator from './CommunitiesStackNavigator';
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; // Importamos la librería de íconos MaterialCommunityIcons
 import Foundation from "react-native-vector-icons/Foundation"; // Importamos la librería de íconos Foundation
@@ -65,7 +66,7 @@ function MyTabs() {
       {/* Definimos las pantallas que se mostrarán para cada pestaña. */}
 
       <Tab.Screen name={t("my_plants")} component={MyPlantsScreen} />
-      <Tab.Screen name={t("communities")} component={CommunitiesScreen} />
+      <Tab.Screen name={t("communities")} component={CommunitiesStackNavigator} />
       <Tab.Screen
         name={t("plant_identifier")}
         component={PlantIdentifierScreen}

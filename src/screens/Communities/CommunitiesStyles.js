@@ -38,7 +38,15 @@ const communitiesStyles = StyleSheet.create({
     },
     communityDescription: {
         marginTop: 5
-    }
+    },
+    tab: {
+        backgroundColor: '#f4f4f4',
+    },
+    tabLabel: {
+        color: 'black',
+    },
+    
+
 
 });
 

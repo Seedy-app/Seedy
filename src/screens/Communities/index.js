@@ -1,5 +1,6 @@
 // Importamos las dependencias necesarias
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Image, View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
@@ -7,6 +8,9 @@ import styles from "./CommunitiesStyles";
 import Config from '../../config/Config';
 
 function CommunitiesScreen() {
+  // Usamos el hook de navegación
+  const navigation = useNavigation();
+
   // Usamos el hook de traducción
   const { t } = useTranslation();
 
@@ -45,10 +49,10 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <TouchableOpacity style={styles.communityCard}>
+    <TouchableOpacity style={styles.communityCard} onPress={() => navigation.navigate(t("community"), { community: community })} >
         <Image 
           source={community.picture ? { uri: community.picture } : require('../../assets/images/favicon.png')} 
-          style={styles.communityPic}  // Asegúrate de ajustar estas dimensiones según lo que necesites
+          style={styles.communityPic}  
         />
       <View style={styles.communityShortInfo}>
         <Text style={styles.communityName}>{community.name}</Text>
