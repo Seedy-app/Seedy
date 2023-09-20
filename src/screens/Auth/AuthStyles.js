@@ -10,9 +10,6 @@ const authStyles = StyleSheet.create({
       marginRight: 10,
       fontSize: FontSizes.regular,
     },
-    registerButton: {
-      fontSize: FontSizes.regular,
-    },
     buttonDisabled: {
       backgroundColor: Colors.gray,
     },
@@ -23,9 +20,6 @@ const authStyles = StyleSheet.create({
     },
     loginText: {
       marginRight: 10,
-      fontSize: FontSizes.regular,
-    },
-    loginButton: {
       fontSize: FontSizes.regular,
     },
 });

@@ -6,6 +6,7 @@ const commonStyles = StyleSheet.create({
     container: {
       flex: 1,
       paddingHorizontal: 20,
+      padding: 10
     },
     eyeIcon: {
       position: "absolute",
@@ -35,6 +36,10 @@ const commonStyles = StyleSheet.create({
       letterSpacing: 0.25,
       color: Colors.white,
     },
+    justTextButton: {
+      fontSize: FontSizes.regular,
+      color: Colors.secondary
+    },
     otherOptionsContainer: {
       flexDirection: "row",
       justifyContent: "center",
@@ -42,6 +47,9 @@ const commonStyles = StyleSheet.create({
     },
     error: {
       color: Colors.red,
+    },
+    label: {
+      fontSize: FontSizes.regular
     },
     input: {
       height: 40,

@@ -11,6 +11,7 @@ function EditProfileScreen() {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [picture, setPicture] = useState("");
 
   // Función para recuperar la información del usuario de AsyncStorage
   const fetchUserInfo = async () => {
@@ -19,6 +20,7 @@ function EditProfileScreen() {
       const parsedInfo = JSON.parse(storedUserInfo);
       setUsername(parsedInfo.username);
       setEmail(parsedInfo.email);
+      setPicture(parsedInfo.picture);
     }
   };
 
@@ -27,6 +29,7 @@ function EditProfileScreen() {
     const updatedInfo = {
       username: username,
       email: email,
+      picture: picture,
     };
     await AsyncStorage.setItem("userInfo", JSON.stringify(updatedInfo));
   };
@@ -38,24 +41,32 @@ function EditProfileScreen() {
 
   const handleSubmit = async () => {
     await updateUserInfo();
-    Alert.alert("Datos actualizados", `Nombre: ${username}\nEmail: ${email}`);
+    Alert.alert("Datos actualizados",);
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>{t("username")+":"}</Text>
       <CustomInput
         placeholder={t("username")}
         value={username}
         onChangeText={setUsername}
       />
+      <Text style={styles.label}>{t("email")+":"}</Text>
       <CustomInput
         placeholder={t("email")}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
       />
+      <Text style={styles.label}>{t("picture")+":"}</Text>
+      <CustomInput
+        placeholder={t("picture")}
+        value={picture}
+        onChangeText={setPicture}
+      />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>{t("send")}</Text>
+        <Text style={styles.buttonText}>{t("save")}</Text>
       </TouchableOpacity>
     </View>
   );

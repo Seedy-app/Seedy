@@ -40,10 +40,12 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={[styles.container, {justifyContent:'center'}]}>
+      <Text style={styles.label}>{t("username")+":"}</Text>
       <CustomInput
         placeholder={t("username")}
         onChangeText={(text) => setUsername(text)}
       />
+      <Text style={styles.label}>{t("password")+":"}</Text>
       <CustomInput
         placeholder={t("password")}
         isPassword
@@ -55,13 +57,13 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.otherOptionsContainer}>
         <Text style={styles.registerText}>{t("dont_have_an_account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate(t("singup"))}>
-          <Text style={styles.registerButton}>{t("singup")}</Text>
+          <Text style={styles.justTextButton}>{t("singup")}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.otherOptionsContainer}> 
       <Text style={styles.registerText}>{t("forgot_your_password")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate(t("forgot_your_password"))}>
-          <Text style={styles.registerButton}>{t("reset_it")}</Text>
+          <Text style={styles.justTextButton}>{t("reset_it")}</Text>
         </TouchableOpacity>
       </View>
     </View>

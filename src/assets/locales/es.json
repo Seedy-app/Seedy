@@ -1,6 +1,7 @@
 {
   "username": "Nombre de usuario",
   "email": "Correo electrónico",
+  "picture": "Imagen",
   "confirm_password": "Confirmar contraseña",
   "dont_have_an_account": "¿No tienes una cuenta?",
   "already_have_an_account": "¿Ya tienes una cuenta?",
@@ -31,6 +32,7 @@
   "my_plants": "Mis plantas",
   "plant_identifier": "Identificador de plantas",
   "send": "Enviar",
+  "save": "Guardar",
   "token": "Token",
   "profile": "Perfil",
   "show_profile": "Mostrar profile",

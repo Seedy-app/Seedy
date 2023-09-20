@@ -51,11 +51,13 @@ export default function ForgotPasswordScreen ({ navigation }) {
 
     return (
         <View style={[styles.container, {justifyContent:'center'}]}>
+            <Text style={styles.label}>{t("token")+":"}</Text>
             <CustomInput
                 placeholder={t("token")}
                 value={token}
                 onChangeText={setToken}
             />
+            <Text style={styles.label}>{t("new_password")+":"}</Text>
             {passwordError && <Text style={styles.error}>{passwordError}</Text>}
             <CustomInput 
                 placeholder={t("new_password")}
@@ -64,6 +66,7 @@ export default function ForgotPasswordScreen ({ navigation }) {
                 onChangeText={setNewPassword}
                 secureTextEntry={true}
             />
+            <Text style={styles.label}>{t("confirm_new_password")+":"}</Text>
             <CustomInput 
                 placeholder={t("confirm_new_password")}
                 value={confirmNewPassword}

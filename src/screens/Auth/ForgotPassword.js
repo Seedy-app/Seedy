@@ -35,6 +35,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     return (
         <View style={[styles.container, {justifyContent:'center'}]}>
+            <Text style={styles.label}>{t("email")+":"}</Text>
             <CustomInput
                 placeholder={t("email")}
                 onChangeText={(text) => setEmail(text)}

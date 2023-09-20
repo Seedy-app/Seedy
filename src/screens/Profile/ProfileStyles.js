@@ -8,8 +8,6 @@ const profileStyles = StyleSheet.create({
     profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10
       },
       profileButtons: {
         marginTop: 10,
