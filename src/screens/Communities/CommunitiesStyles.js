@@ -3,7 +3,7 @@ import commonStyles from "../../config/CommonStyles";
 
 const communitiesStyles = StyleSheet.create({
     ...commonStyles,
-    container: {
+    communitiesContainer: {
         flex: 1,
         backgroundColor: '#f4f4f4',
         padding: 10

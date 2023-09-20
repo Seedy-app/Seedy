@@ -114,7 +114,7 @@ export default function SignUpScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {justifyContent:'center'}]}>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
         placeholder={t("username")}

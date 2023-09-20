@@ -38,6 +38,7 @@ function App() {
       setIsLoading(false);
       setUserToken(null);
       await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userInfo");
     },
   };
 

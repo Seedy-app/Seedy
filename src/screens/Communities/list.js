@@ -63,7 +63,7 @@ function CommunitiesScreen() {
 
   // Renderizamos el componente principal
   return (
-    <View style={styles.container}>
+    <View style={styles.communitiesContainer}>
       {/* FlatList para mostrar las comunidades */}
       <FlatList 
         data={communitiesData}

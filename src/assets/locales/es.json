@@ -30,7 +30,9 @@
   "market": "Mercado",
   "my_plants": "Mis plantas",
   "plant_identifier": "Identificador de plantas",
-  "profile": "Perfil",
   "send": "Enviar",
-  "token": "Token"
+  "token": "Token",
+  "profile": "Perfil",
+  "show_profile": "Mostrar profile",
+  "edit_profile": "Editar perfil"
 }

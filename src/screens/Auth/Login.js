@@ -26,8 +26,11 @@ export default function LoginScreen({ navigation }) {
       }),
     });
     if (response.ok) {
-      const token = await response.text();
+      const data = await response.json(); // Parsea la respuesta a JSON
+      const token = data.token;
+      const userInfo = data.userInfo;
       await AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
       // Actualiza el estado de la aplicación para reflejar que el usuario ha iniciado sesión
       signIn(token);
     } else {
@@ -36,7 +39,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {justifyContent:'center'}]}>
       <CustomInput
         placeholder={t("username")}
         onChangeText={(text) => setUsername(text)}

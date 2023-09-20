@@ -4,10 +4,10 @@ import { View } from 'react-native';
 import { useLayoutEffect } from 'react';
 import { useRoute, useNavigation  } from '@react-navigation/native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import i18next from "../../../services/i18next";
+import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import styles from "../CommunitiesStyles";
-import Config from '../../../config/Config';
+import styles from "./CommunitiesStyles";
+import Config from '../../config/Config';
 import { TabBar } from 'react-native-tab-view';
 
 

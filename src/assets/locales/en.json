@@ -30,7 +30,10 @@
   "market": "Market",
   "my_plants": "My plants",
   "plant_identifier": "Plant identifier",
-  "profile": "Profile",
   "send": "Send",
-  "token": "Token"
+  "token": "Token",
+  "profile": "Profile",
+  "show_profile": "Show profile",
+  "edit_profile": "Edit profile"
+
 }
