@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 import commonStyles from "../../config/CommonStyles";
+import FontSizes from "../../config/FontSizes";
+import Colors from "../../config/Colors";
 
 const profileStyles = StyleSheet.create({
     ...commonStyles,
@@ -23,11 +25,11 @@ const profileStyles = StyleSheet.create({
       },
       username: {
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: FontSizes.large
       },
       email: {
-        fontSize: 18,
-        color: 'gray'
+        fontSize: FontSizes.regular,
+        color: Colors.gray
       }
 });
 

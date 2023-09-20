@@ -1,11 +1,13 @@
 import { StyleSheet } from "react-native";
 import commonStyles from "../../config/CommonStyles";
+import FontSizes from "../../config/FontSizes";
+import Colors from "../../config/Colors";
 
 const communitiesStyles = StyleSheet.create({
     ...commonStyles,
     communitiesContainer: {
         flex: 1,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: Colors.white,
         padding: 10
     },
     communityPic: {
@@ -14,11 +16,11 @@ const communitiesStyles = StyleSheet.create({
         borderRadius: 25
     },
     communityCard: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.white,
         borderRadius: 5,
         padding: 15,
         marginBottom: 10,
-        shadowColor: "#000",
+        shadowColor: Colors.shadow,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -33,17 +35,17 @@ const communitiesStyles = StyleSheet.create({
         paddingLeft: 20
     },
     communityName: {
-        fontSize: 18,
+        fontSize: FontSizes.large,
         fontWeight: 'bold'
     },
     communityDescription: {
         marginTop: 5
     },
     tab: {
-        backgroundColor: '#f4f4f4',
+        backgroundColor: Colors.white,
     },
     tabLabel: {
-        color: 'black',
+        color: Colors.black,
     },
     
 

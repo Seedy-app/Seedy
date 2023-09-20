@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
-import CustomInput from "./CustomInput";
+import CustomInput from "../CustomInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Text, TouchableOpacity } from "react-native";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import styles from './LoginStyles';
+import styles from './AuthStyles';
 import Config from '../../config/Config';
 
 export default function LoginScreen({ navigation }) {

@@ -13,7 +13,7 @@ const commonStyles = StyleSheet.create({
     },
     input: {
       height: 40,
-      borderColor: Colors.inputBorder,
+      borderColor: Colors.gray,
       borderWidth: 1,
       marginBottom: 20,
       padding: 10,
@@ -41,7 +41,15 @@ const commonStyles = StyleSheet.create({
       marginTop: 15,
     },
     error: {
-      color: "red",
+      color: Colors.red,
+    },
+    input: {
+      height: 40,
+      borderColor: Colors.gray,
+      borderWidth: 1,
+      marginBottom: 10,
+      padding: 10,
+      borderRadius: 5,
     },
 });
 

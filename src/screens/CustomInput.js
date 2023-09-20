@@ -1,6 +1,7 @@
 import React from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import styles from "../config/CommonStyles";
 
 const CustomInput = ({
   placeholder,
@@ -58,20 +59,5 @@ const CustomInput = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  eyeIcon: {
-    position: "absolute",
-    transform: [{ translateX: 340 }, { translateY: 10 }],
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 5,
-  },
-});
 
 export default CustomInput;
