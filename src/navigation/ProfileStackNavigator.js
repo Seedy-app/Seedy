@@ -1,7 +1,7 @@
 // CommunitiesStackNavigator.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ProfileScreen from "../screens/Profile/index";
+import ProfileScreen from "../screens/Profile/show";
 import EditProfileScreen from "../screens/Profile/edit";
 import { useTranslation } from "react-i18next";
 
