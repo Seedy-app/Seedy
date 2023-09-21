@@ -46,7 +46,7 @@ const commonStyles = StyleSheet.create({
       marginTop: 15,
     },
     error: {
-      color: Colors.red,
+      color: Colors.error,
     },
     label: {
       fontSize: FontSizes.regular

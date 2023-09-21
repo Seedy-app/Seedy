@@ -5,6 +5,7 @@ import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
 import styles from './AuthStyles';
 import Config from '../../config/Config';
+import { checkUsernameAvailability } from "../../utils/api";
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -40,31 +41,14 @@ export default function SignUpScreen({ navigation }) {
     }
   };
 
-  const checkUsernameAvailability = async (username) => {
-    try {
-      const response = await fetch(Config.API_URL+"/check-username", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username }),
-      });
-      const data = await response.json();
-      if (response.status === 409) {
-        setUsernameError(t("username_already_exists_error"));
-      } else {
-        setUsernameError("");
-      }
-    } catch (error) {
-      setError(t("network_error"));
-    }
-  };
-
   const handleUsernameChange = (text) => {
     setUsername(text);
     clearTimeout(u_timeout.current);
-    u_timeout.current = setTimeout(() => {
-      checkUsernameAvailability(text);
+    u_timeout.current = setTimeout(async () => {
+      const result = await checkUsernameAvailability(t, text)
+      if (result.error || result.error == "") {
+        setUsernameError(result.error);
+      }
     }, 300);
   };
 

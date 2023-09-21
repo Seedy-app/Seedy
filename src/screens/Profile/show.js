@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, View, Text, Image } from "react-native";
+import { TouchableOpacity, View, Text, Image, ScrollView, RefreshControl } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import i18next from "../../services/i18next";
@@ -14,6 +14,7 @@ function ProfileScreen() {
 
   // Estado para almacenar la información del usuario
   const [userInfo, setUserInfo] = useState({});
+  const [refreshing, setRefreshing] = useState(false); // Nuevo estado para el refresco
 
   // Función para recuperar la información del usuario de AsyncStorage
   const fetchUserInfo = async () => {
@@ -21,6 +22,12 @@ function ProfileScreen() {
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
     }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchUserInfo();
+    setRefreshing(false);
   };
 
   // useEffect para recuperar la información del usuario cuando se monta el componente
@@ -35,7 +42,12 @@ function ProfileScreen() {
   };
 
   return (
-    <View style={[styles.container]}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={styles.profileContainer}>
         <Image source={{ uri: userInfo.picture }} style={styles.profileImage} />
         <View style={styles.userInfo}>
@@ -43,13 +55,13 @@ function ProfileScreen() {
           <Text style={styles.email}>{userInfo.email}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(t("edit_profile"))} >
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(t("edit_profile"))}>
         <Text style={styles.buttonText}>{t("edit_profile")}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={logout}>
         <Text style={styles.buttonText}>{t("logout")}</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
