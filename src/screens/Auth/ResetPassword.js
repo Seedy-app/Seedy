@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import CustomInput from "./CustomInput";
-import styles from './LoginStyles';
+import CustomInput from "../CustomInput";
+import styles from './AuthStyles';
 import Config from '../../config/Config';
 
 export default function ForgotPasswordScreen ({ navigation }) {
@@ -50,12 +50,14 @@ export default function ForgotPasswordScreen ({ navigation }) {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {justifyContent:'center'}]}>
+            <Text style={styles.label}>{t("token")+":"}</Text>
             <CustomInput
                 placeholder={t("token")}
                 value={token}
                 onChangeText={setToken}
             />
+            <Text style={styles.label}>{t("new_password")+":"}</Text>
             {passwordError && <Text style={styles.error}>{passwordError}</Text>}
             <CustomInput 
                 placeholder={t("new_password")}
@@ -64,6 +66,7 @@ export default function ForgotPasswordScreen ({ navigation }) {
                 onChangeText={setNewPassword}
                 secureTextEntry={true}
             />
+            <Text style={styles.label}>{t("confirm_new_password")+":"}</Text>
             <CustomInput 
                 placeholder={t("confirm_new_password")}
                 value={confirmNewPassword}

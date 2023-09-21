@@ -1,8 +1,8 @@
 // CommunitiesStackNavigator.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import CommunitiesScreen from "../screens/Communities/index";
-import CommunityScreen from "../screens/Communities/Community/index";
+import CommunitiesScreen from "../screens/Communities/list";
+import CommunityScreen from "../screens/Communities/show";
 import { useTranslation } from "react-i18next";
 
 

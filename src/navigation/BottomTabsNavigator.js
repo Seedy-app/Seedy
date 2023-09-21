@@ -1,18 +1,13 @@
-// Importamos librerías y componentes.
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; // Importamos el creador de navegación de pestañas inferior
 import CommunitiesStackNavigator from './CommunitiesStackNavigator';
+import ProfileStackNavigator from './ProfileStackNavigator';
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; // Importamos la librería de íconos MaterialCommunityIcons
 import Foundation from "react-native-vector-icons/Foundation"; // Importamos la librería de íconos Foundation
-
-// Importamos pantallas.
-import CommunitiesScreen from "../screens/Communities";
 import PlantIdentifierScreen from "../screens/PlantIdentifier";
 import MyPlantsScreen from "../screens/MyPlants";
 import MarketScreen from "../screens/Market";
-import ProfileScreen from "../screens/Profile";
-
 import i18next from "../services/i18next";
 import { useTranslation } from "react-i18next";
 
@@ -67,12 +62,9 @@ function MyTabs() {
 
       <Tab.Screen name={t("my_plants")} component={MyPlantsScreen} />
       <Tab.Screen name={t("communities")} component={CommunitiesStackNavigator} />
-      <Tab.Screen
-        name={t("plant_identifier")}
-        component={PlantIdentifierScreen}
-      />
+      <Tab.Screen name={t("plant_identifier")} component={PlantIdentifierScreen} />
       <Tab.Screen name={t("market")} component={MarketScreen} />
-      <Tab.Screen name={t("profile")} component={ProfileScreen} />
+      <Tab.Screen name={t("profile")} component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 }

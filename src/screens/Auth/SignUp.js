@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
-import CustomInput from "./CustomInput";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import CustomInput from "../CustomInput";
+import { View, Text, TouchableOpacity } from "react-native";
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import styles from './SignUpStyles';
+import styles from './AuthStyles';
 import Config from '../../config/Config';
+import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -20,59 +21,25 @@ export default function SignUpScreen({ navigation }) {
   const u_timeout = useRef(null);
   const e_timeout = useRef(null);
 
-  const checkEmailAvailability = async (email) => {
-    try {
-      const response = await fetch(Config.API_URL+"/check-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      if (response.status === 409) {
-        setEmailError(t("email_already_exists_error"));
-      } else {
-        setEmailError("");
-      }
-    } catch (error) {
-      setError(t("network_error"));
-    }
-  };
-
-  const checkUsernameAvailability = async (username) => {
-    try {
-      const response = await fetch(Config.API_URL+"/check-username", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username }),
-      });
-      const data = await response.json();
-      if (response.status === 409) {
-        setUsernameError(t("username_already_exists_error"));
-      } else {
-        setUsernameError("");
-      }
-    } catch (error) {
-      setError(t("network_error"));
-    }
-  };
-
   const handleUsernameChange = (text) => {
     setUsername(text);
     clearTimeout(u_timeout.current);
-    u_timeout.current = setTimeout(() => {
-      checkUsernameAvailability(text);
+    u_timeout.current = setTimeout(async () => {
+      const result = await checkUsernameAvailability(t, text)
+      if (result.error || result.error == "") {
+        setUsernameError(result.error);
+      }
     }, 300);
   };
 
   const handleEmailChange = (text) => {
     setEmail(text);
     clearTimeout(e_timeout.current);
-    e_timeout.current = setTimeout(() => {
-      checkEmailAvailability(text);
+    e_timeout.current = setTimeout(async () => {
+      const result = await checkEmailAvailability(t, text)
+      if (result.error || result.error == "") {
+        setEmailError(result.error);
+      }
     }, 300);
   };
 
@@ -114,24 +81,28 @@ export default function SignUpScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {justifyContent:'center'}]}>
+      <Text style={styles.label}>{t("username")+":"}</Text>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
         placeholder={t("username")}
         onChangeText={handleUsernameChange}
       />
+      <Text style={styles.label}>{t("email")+":"}</Text>
       {emailError && <Text style={styles.error}>{emailError}</Text>}
       <CustomInput
         placeholder={t("email")}
         keyboardType="email-address"
         onChangeText={handleEmailChange}
       />
+      <Text style={styles.label}>{t("password")+":"}</Text>
       {passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CustomInput
         placeholder={t("password")}
         isPassword
         onChangeText={(text) => setPassword(text)}
       />
+      <Text style={styles.label}>{t("confirm_password")+":"}</Text>
       <CustomInput
         placeholder={t("confirm_password")}
         isConfirmPassword
@@ -151,7 +122,7 @@ export default function SignUpScreen({ navigation }) {
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>{t("already_have_an_account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate(t("login"))}>
-          <Text style={styles.loginButton}>{t("login")}</Text>
+          <Text style={styles.justTextButton}>{t("login")}</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -3,8 +3,9 @@ const Colors = {
     secondary: "blue",
     white: "white",
     gray: "gray",
+    black: "black",
     error: "red",
-    inputBorder: "gray",
+    shadow: "black",
 };
 
 export default Colors;

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import CustomInput from "./CustomInput";
-import styles from './LoginStyles';
+import CustomInput from "../CustomInput";
+import styles from './AuthStyles';
 import Config from '../../config/Config';
 
 export default function ForgotPasswordScreen({ navigation }) {
@@ -34,7 +34,8 @@ export default function ForgotPasswordScreen({ navigation }) {
     
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {justifyContent:'center'}]}>
+            <Text style={styles.label}>{t("email")+":"}</Text>
             <CustomInput
                 placeholder={t("email")}
                 onChangeText={(text) => setEmail(text)}

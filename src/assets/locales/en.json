@@ -1,6 +1,7 @@
 {
   "username": "Username",
   "email": "Email",
+  "picture": "Picture",
   "confirm_password": "Confirm password",
   "dont_have_an_account": "You do not have an account?",
   "already_have_an_account": "Already have an account?",
@@ -30,7 +31,11 @@
   "market": "Market",
   "my_plants": "My plants",
   "plant_identifier": "Plant identifier",
-  "profile": "Profile",
   "send": "Send",
-  "token": "Token"
+  "save": "Save",
+  "token": "Token",
+  "profile": "Profile",
+  "show_profile": "Show profile",
+  "edit_profile": "Edit profile"
+
 }

@@ -5,8 +5,8 @@ import FontSizes from "./FontSizes";
 const commonStyles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
       paddingHorizontal: 20,
+      padding: 10
     },
     eyeIcon: {
       position: "absolute",
@@ -14,21 +14,31 @@ const commonStyles = StyleSheet.create({
     },
     input: {
       height: 40,
-      borderColor: Colors.inputBorder,
+      borderColor: Colors.gray,
       borderWidth: 1,
       marginBottom: 20,
       padding: 10,
       borderRadius: 5,
     },
     button: {
-      backgroundColor: Colors.primary,
-      padding: 10,
       alignItems: "center",
-      borderRadius: 5,
+      justifyContent: "center",
+      marginTop: 10,
+      paddingVertical: 12,
+      paddingHorizontal: 32,
+      borderRadius: 4,
+      elevation: 3,
+      backgroundColor: Colors.primary,
     },
     buttonText: {
-      color: Colors.white,
       fontSize: FontSizes.large,
+      lineHeight: 21,
+      letterSpacing: 0.25,
+      color: Colors.white,
+    },
+    justTextButton: {
+      fontSize: FontSizes.regular,
+      color: Colors.secondary
     },
     otherOptionsContainer: {
       flexDirection: "row",
@@ -36,7 +46,18 @@ const commonStyles = StyleSheet.create({
       marginTop: 15,
     },
     error: {
-      color: "red",
+      color: Colors.error,
+    },
+    label: {
+      fontSize: FontSizes.regular
+    },
+    input: {
+      height: 40,
+      borderColor: Colors.gray,
+      borderWidth: 1,
+      marginBottom: 10,
+      padding: 10,
+      borderRadius: 5,
     },
 });
 
