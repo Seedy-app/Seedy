@@ -5,7 +5,7 @@ import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
 import styles from './AuthStyles';
 import Config from '../../config/Config';
-import { checkUsernameAvailability } from "../../utils/api";
+import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -21,26 +21,6 @@ export default function SignUpScreen({ navigation }) {
   const u_timeout = useRef(null);
   const e_timeout = useRef(null);
 
-  const checkEmailAvailability = async (email) => {
-    try {
-      const response = await fetch(Config.API_URL+"/check-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      if (response.status === 409) {
-        setEmailError(t("email_already_exists_error"));
-      } else {
-        setEmailError("");
-      }
-    } catch (error) {
-      setError(t("network_error"));
-    }
-  };
-
   const handleUsernameChange = (text) => {
     setUsername(text);
     clearTimeout(u_timeout.current);
@@ -55,8 +35,11 @@ export default function SignUpScreen({ navigation }) {
   const handleEmailChange = (text) => {
     setEmail(text);
     clearTimeout(e_timeout.current);
-    e_timeout.current = setTimeout(() => {
-      checkEmailAvailability(text);
+    e_timeout.current = setTimeout(async () => {
+      const result = await checkEmailAvailability(t, text)
+      if (result.error || result.error == "") {
+        setEmailError(result.error);
+      }
     }, 300);
   };
 

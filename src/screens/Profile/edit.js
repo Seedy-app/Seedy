@@ -7,7 +7,7 @@ import i18next from "../../services/i18next";
 import styles from "./ProfileStyles";
 import CustomInput from "../CustomInput";
 import Config from "../../config/Config";
-import { checkUsernameAvailability } from "../../utils/api";
+import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
 
 function EditProfileScreen() {
   const { t } = useTranslation();
@@ -16,6 +16,7 @@ function EditProfileScreen() {
   const [email, setEmail] = useState("");
   const [picture, setPicture] = useState("");
   const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [userId, setUserId] = useState("");
 
   const u_timeout = useRef(null);
@@ -49,7 +50,17 @@ function EditProfileScreen() {
     fetchUserInfo();
   }, []);
 
-  
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    clearTimeout(e_timeout.current);
+    e_timeout.current = setTimeout(async () => {
+      const result = await checkEmailAvailability(t, text)
+      if (result.error || result.error == "") {
+        setEmailError(result.error);
+      }
+    }, 300);
+  };
+
   const handleUsernameChange = (text) => {
     setUsername(text);
     clearTimeout(u_timeout.current);
@@ -97,10 +108,11 @@ function EditProfileScreen() {
         onChangeText={handleUsernameChange}
       />
       <Text style={styles.label}>{t("email") + ":"}</Text>
+      {emailError && <Text style={styles.error}>{emailError}</Text>}
       <CustomInput
         placeholder={t("email")}
         value={email}
-        onChangeText={setEmail}
+        onChangeText={handleEmailChange}
         keyboardType="email-address"
       />
       <Text style={styles.label}>{t("picture") + ":"}</Text>
