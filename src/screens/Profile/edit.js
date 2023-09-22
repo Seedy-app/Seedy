@@ -7,6 +7,7 @@ import i18next from "../../services/i18next";
 import styles from "./ProfileStyles";
 import CustomInput from "../CustomInput";
 import Config from "../../config/Config";
+import * as ImagePicker from 'expo-image-picker';
 import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
 
 function EditProfileScreen() {
@@ -49,6 +50,56 @@ function EditProfileScreen() {
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+  const uploadImageToServer = async (imageUri) => {
+    const formData = new FormData();
+    formData.append('image', {
+      uri: imageUri,
+      name: `profile-${userId}.jpg`,
+      type: 'image/jpeg'
+    });
+  
+    try {
+      const response = await fetch(`${Config.API_URL}/upload`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      const responseData = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(responseData.message || 'Failed to upload image.');
+      }
+  
+      setPicture(responseData.imageUrl); // Asumiendo que tu servidor devuelve un objeto con una clave "imageUrl"
+    } catch (error) {
+      console.error('Error uploading image:', error.message);
+    }
+  };
+  
+
+  const selectImageFromGallery = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Necesitamos permisos para acceder a tus fotos.');
+      return;
+    }
+  
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      await uploadImageToServer(result.assets[0].uri);
+    }
+  };
+  
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -116,11 +167,9 @@ function EditProfileScreen() {
         keyboardType="email-address"
       />
       <Text style={styles.label}>{t("picture") + ":"}</Text>
-      <CustomInput
-        placeholder={t("picture")}
-        value={picture}
-        onChangeText={setPicture}
-      />
+      <TouchableOpacity onPress={selectImageFromGallery}>
+        <Text>{t("select_image")}</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>{t("save")}</Text>
       </TouchableOpacity>
