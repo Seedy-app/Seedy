@@ -8,7 +8,6 @@ import Foundation from "react-native-vector-icons/Foundation"; // Importamos la 
 import PlantIdentifierScreen from "../screens/PlantIdentifier";
 import MyPlantsScreen from "../screens/MyPlants";
 import MarketScreen from "../screens/Market";
-import i18next from "../services/i18next";
 import { useTranslation } from "react-i18next";
 
 // Creamos el componente BottomTabNavigator.

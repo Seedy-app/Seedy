@@ -1,6 +1,6 @@
 const Colors = {
     primary: "limegreen",
-    secondary: "blue",
+    secondary: "darkgreen",
     white: "white",
     gray: "gray",
     black: "black",

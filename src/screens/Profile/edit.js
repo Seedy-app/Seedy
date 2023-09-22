@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from "react"; // No olvides import
 import { TouchableOpacity, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import i18next from "../../services/i18next";
+import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
 import styles from "./ProfileStyles";
 import CustomInput from "../CustomInput";
 import Config from "../../config/Config";
+import Colors from "../../config/Colors";
 import * as ImagePicker from 'expo-image-picker';
-import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
 
 function EditProfileScreen() {
   const { t } = useTranslation();
@@ -167,8 +168,13 @@ function EditProfileScreen() {
         keyboardType="email-address"
       />
       <Text style={styles.label}>{t("picture") + ":"}</Text>
-      <TouchableOpacity onPress={selectImageFromGallery}>
-        <Text>{t("select_image")}</Text>
+      <TouchableOpacity style={[styles.button, {backgroundColor:Colors.secondary}]} onPress={selectImageFromGallery}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <FontAwesome name="picture-o" size={16} color={Colors.white} />
+          <Text style={[styles.buttonText, { marginLeft: 8 }]}>
+            {t("select_image")}
+          </Text>
+        </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>{t("save")}</Text>
