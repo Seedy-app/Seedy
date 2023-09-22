@@ -52,16 +52,18 @@ function EditProfileScreen() {
     fetchUserInfo();
   }, []);
 
-  const uploadImageToServer = async (imageUri) => {
+  const uploadProfilePictureToServer = async (imageUri) => {
+    const folderName = `${userId}`;
+
     const formData = new FormData();
     formData.append('image', {
       uri: imageUri,
-      name: `profile-${userId}.jpg`,
+      name: `profile_picture.jpg`,
       type: 'image/jpeg'
     });
   
     try {
-      const response = await fetch(`${Config.API_URL}/upload`, {
+      const response = await fetch(`${Config.API_URL}/upload/${folderName}`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -97,7 +99,7 @@ function EditProfileScreen() {
     });
   
     if (!result.canceled) {
-      await uploadImageToServer(result.assets[0].uri);
+      await uploadProfilePictureToServer(result.assets[0].uri);
     }
   };
   
