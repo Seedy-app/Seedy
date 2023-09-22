@@ -36,6 +36,9 @@
   "token": "Token",
   "profile": "Profile",
   "show_profile": "Show profile",
-  "edit_profile": "Edit profile"
+  "edit_profile": "Edit profile",
+  "select_pp": "Select profile picture",
+  "select_image": "Select Image",
+  "need_gallery_permission": "We need permissions to access your photos."
 
 }

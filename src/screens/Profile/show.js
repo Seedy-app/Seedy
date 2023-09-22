@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, View, Text, Image, ScrollView, RefreshControl } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../../src/contexts/AuthContext";
-import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./ProfileStyles";
+import Config from "../../config/Config";
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -49,7 +49,7 @@ function ProfileScreen() {
       }
     >
       <View style={styles.profileContainer}>
-        <Image source={{ uri: userInfo.picture }} style={styles.profileImage} />
+        <Image source={{ uri: Config.API_URL+userInfo.picture }} style={styles.profileImage} />
         <View style={styles.userInfo}>
           <Text style={styles.username}>{userInfo.username}</Text>
           <Text style={styles.email}>{userInfo.email}</Text>
