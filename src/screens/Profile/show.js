@@ -20,6 +20,7 @@ function ProfileScreen() {
   const fetchUserInfo = async () => {
     const storedUserInfo = await AsyncStorage.getItem("userInfo");
     if (storedUserInfo) {
+      console.log(userInfo.picture);
       setUserInfo(JSON.parse(storedUserInfo));
     }
   };
