@@ -20,7 +20,6 @@ function EditProfileScreen() {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [picture, setPicture] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [userId, setUserId] = useState("");
@@ -36,17 +35,16 @@ function EditProfileScreen() {
       const parsedInfo = JSON.parse(storedUserInfo);
       setUsername(parsedInfo.username);
       setEmail(parsedInfo.email);
-      setPicture(parsedInfo.picture);
       setUserId(parsedInfo.id);
     }
   };
 
   // Función para actualizar la información del usuario en AsyncStorage
-  const updateUserInfo = async () => {
+  const updateUserInfo = async (imageUrl) => {
     const updatedInfo = {
       username: username,
       email: email,
-      picture: picture,
+      picture: imageUrl,
       id: userId,
     };
     await AsyncStorage.setItem("userInfo", JSON.stringify(updatedInfo));
@@ -81,7 +79,7 @@ function EditProfileScreen() {
 
   const HandleSelectImage = async () => {
     try {
-      const imageUri = await selectImageFromGallery("profile_picture", `users/${userId}`);
+      const imageUri = await selectImageFromGallery();
       setSelectedImageUri(imageUri);
     } catch (error) {
       console.error("Error selecting the image:", error);
@@ -90,17 +88,16 @@ function EditProfileScreen() {
 
   const handleSubmit = async () => {
     try {
-      const imageUrl = await uploadPictureToServer("profile_picture", `users/${userId}`, selectedImageUri);
-      setPicture(imageUrl);
+      const imageUrl = await uploadPictureToServer(`pp_${Date.now()}`, `users/${userId}`, selectedImageUri);
       const response = await fetch(`${Config.API_URL}/user/${userId}/edit`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username,
-          email,
-          imageUrl,
+          username: username,
+          email: email,
+          picture: imageUrl,
         }),
       });
 
@@ -108,7 +105,7 @@ function EditProfileScreen() {
         throw new Error("Failed to edit user");
       }
 
-      await updateUserInfo();
+      await updateUserInfo(imageUrl);
       navigation.navigate(t("show_profile"));
     } catch (error) {
       console.error("Error:", error.message);

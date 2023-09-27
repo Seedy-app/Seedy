@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 
-export const selectImageFromGallery = async (filename, filepath) => {
+export const selectImageFromGallery = async () => {
   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
   if (status !== "granted") {
     alert(t("need_gallery_permission"));

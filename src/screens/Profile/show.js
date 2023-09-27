@@ -13,7 +13,6 @@ import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./ProfileStyles";
 import Config from "../../config/Config";
-import FastImage from "react-native-fast-image";
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -57,15 +56,7 @@ function ProfileScreen() {
       }
     >
       <View style={styles.profileContainer}>
-        <FastImage
-          style={styles.profileImage}
-          source={{
-            uri: Config.API_URL + userInfo.picture,
-            priority: FastImage.priority.normal,
-            cache: FastImage.cacheControl.web,
-          }}
-          resizeMode={FastImage.resizeMode.contain}
-        />
+        <Image source={{ uri: Config.API_URL+userInfo.picture }} style={styles.profileImage} />
         <View style={styles.userInfo}>
           <Text style={styles.username}>{userInfo.username}</Text>
           <Text style={styles.email}>{userInfo.email}</Text>
