@@ -12,9 +12,7 @@ function ProfileStackNavigator() {
   const { t } = useTranslation();
   return (
     <ProfileStack.Navigator initialRouteName={t("show_profile")}>
-      <ProfileStack.Screen name={t("show_profile")} component={ProfileScreen} options={{
-    headerShown: false
-  }}/>
+      <ProfileStack.Screen name={t("show_profile")} component={ProfileScreen} options={{title:t("profile")}}/>
       <ProfileStack.Screen name={t("edit_profile")} component={EditProfileScreen} />
     </ProfileStack.Navigator>
   );

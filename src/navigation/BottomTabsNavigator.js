@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; // Importamos el creador de navegación de pestañas inferior
-import CommunitiesStackNavigator from './CommunitiesStackNavigator';
-import ProfileStackNavigator from './ProfileStackNavigator';
+import CommunitiesStackNavigator from "./CommunitiesStackNavigator";
+import ProfileStackNavigator from "./ProfileStackNavigator";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; // Importamos la librería de íconos MaterialCommunityIcons
 import Foundation from "react-native-vector-icons/Foundation"; // Importamos la librería de íconos Foundation
@@ -59,11 +59,35 @@ function MyTabs() {
     >
       {/* Definimos las pantallas que se mostrarán para cada pestaña. */}
 
-      <Tab.Screen name={t("my_plants")} component={MyPlantsScreen} />
-      <Tab.Screen name={t("communities")} component={CommunitiesStackNavigator} />
-      <Tab.Screen name={t("plant_identifier")} component={PlantIdentifierScreen} />
-      <Tab.Screen name={t("market")} component={MarketScreen} />
-      <Tab.Screen name={t("profile")} component={ProfileStackNavigator} />
+      <Tab.Screen
+        name={t("my_plants")}
+        component={MyPlantsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name={t("communities")}
+        component={CommunitiesStackNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name={t("plant_identifier")}
+        component={PlantIdentifierScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={t("market")}
+        component={MarketScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={t("profile")}
+        component={ProfileStackNavigator}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }

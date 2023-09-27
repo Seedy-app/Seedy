@@ -28,16 +28,22 @@
   "communities_list": "Listado de comunidades",
   "communities": "Comunidades",
   "community": "Comunidad",
+  "no_community_image_message": "Si no subes tu propia imagen de la comunidad, elegiremos aleatoriamente una de las nuestras.",
+  "create_community": "Crear comunidad",
+  "name": "Nombre",
+  "description": "Descripción",
   "market": "Mercado",
   "my_plants": "Mis plantas",
   "plant_identifier": "Identificador de plantas",
   "send": "Enviar",
   "save": "Guardar",
+  "create": "Crear",
   "token": "Token",
   "profile": "Perfil",
   "show_profile": "Mostrar profile",
   "edit_profile": "Editar perfil",
   "select_pp": "Seleccionar foto de perfil",
   "select_image": "Seleccionar imagen",
-  "need_gallery_permission": "Necesitamos permisos para acceder a tus fotos."
+  "need_gallery_permission": "Necesitamos permisos para acceder a tus fotos.",
+  "optional": "opcional"
 }

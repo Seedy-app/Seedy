@@ -50,3 +50,33 @@ export const checkEmailAvailability = async (t, email, ignore_user_id = null) =>
     return { error: t("network_error") };
   }
 };
+
+export const uploadPictureToServer = async (filename, filepath, imageUri) => {
+  const folderName = filepath;
+
+  const formData = new FormData();
+  formData.append("image", {
+    uri: imageUri,
+    name: `${filename}.jpg`,
+    type: "image/jpeg",
+  });
+
+  try {
+    const response = await fetch(`${Config.API_URL}/upload/${encodeURIComponent(folderName)}`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "Failed to upload image.");
+    }
+    return responseData.imageUrl;
+  } catch (error) {
+    console.error("Error uploading image:", error.message);
+  }
+};

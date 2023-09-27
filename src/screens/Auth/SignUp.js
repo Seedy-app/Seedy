@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import CustomInput from "../CustomInput";
 import { View, Text, TouchableOpacity } from "react-native";
-import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
 import styles from './AuthStyles';
 import Config from '../../config/Config';

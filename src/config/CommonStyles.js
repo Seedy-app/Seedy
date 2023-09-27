@@ -59,6 +59,10 @@ const commonStyles = StyleSheet.create({
       padding: 10,
       borderRadius: 5,
     },
+    underInputMessage: {
+      fontSize: FontSizes.small,
+      color: Colors.gray,
+    }
 });
 
 export default commonStyles;

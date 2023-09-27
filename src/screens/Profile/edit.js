@@ -2,14 +2,18 @@ import React, { useState, useEffect, useRef } from "react"; // No olvides import
 import { TouchableOpacity, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
+import {
+  checkUsernameAvailability,
+  checkEmailAvailability,
+} from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
 import styles from "./ProfileStyles";
 import CustomInput from "../CustomInput";
 import Config from "../../config/Config";
 import Colors from "../../config/Colors";
-import * as ImagePicker from 'expo-image-picker';
+import { selectImageFromGallery } from "../../utils/device";
+import { uploadPictureToServer } from "../../utils/api";
 
 function EditProfileScreen() {
   const { t } = useTranslation();
@@ -20,6 +24,7 @@ function EditProfileScreen() {
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [userId, setUserId] = useState("");
+  const [selectedImageUri, setSelectedImageUri] = useState(null);
 
   const u_timeout = useRef(null);
   const e_timeout = useRef(null);
@@ -52,63 +57,11 @@ function EditProfileScreen() {
     fetchUserInfo();
   }, []);
 
-  const uploadProfilePictureToServer = async (imageUri) => {
-    const folderName = `${userId}`;
-
-    const formData = new FormData();
-    formData.append('image', {
-      uri: imageUri,
-      name: `profile_picture.jpg`,
-      type: 'image/jpeg'
-    });
-  
-    try {
-      const response = await fetch(`${Config.API_URL}/upload/${folderName}`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
-      const responseData = await response.json();
-  
-      if (!response.ok) {
-        throw new Error(responseData.message || 'Failed to upload image.');
-      }
-  
-      setPicture(responseData.imageUrl); // Asumiendo que tu servidor devuelve un objeto con una clave "imageUrl"
-    } catch (error) {
-      console.error('Error uploading image:', error.message);
-    }
-  };
-  
-
-  const selectImageFromGallery = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Necesitamos permisos para acceder a tus fotos.');
-      return;
-    }
-  
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  
-    if (!result.canceled) {
-      await uploadProfilePictureToServer(result.assets[0].uri);
-    }
-  };
-  
-
   const handleEmailChange = (text) => {
     setEmail(text);
     clearTimeout(e_timeout.current);
     e_timeout.current = setTimeout(async () => {
-      const result = await checkEmailAvailability(t, text)
+      const result = await checkEmailAvailability(t, text);
       if (result.error || result.error == "") {
         setEmailError(result.error);
       }
@@ -119,38 +72,48 @@ function EditProfileScreen() {
     setUsername(text);
     clearTimeout(u_timeout.current);
     u_timeout.current = setTimeout(async () => {
-      const result = await checkUsernameAvailability(t, text, userId)
+      const result = await checkUsernameAvailability(t, text, userId);
       if (result.error || result.error == "") {
         setUsernameError(result.error);
       }
     }, 300);
   };
 
+  const HandleSelectImage = async () => {
+    try {
+      const imageUri = await selectImageFromGallery("profile_picture", `users/${userId}`);
+      setSelectedImageUri(imageUri);
+    } catch (error) {
+      console.error("Error selecting the image:", error);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-        const response = await fetch(`${Config.API_URL}/user/${userId}/edit`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                picture,
-            }),
-        });
+      const imageUrl = await uploadPictureToServer("profile_picture", `users/${userId}`, selectedImageUri);
+      setPicture(imageUrl);
+      const response = await fetch(`${Config.API_URL}/user/${userId}/edit`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          imageUrl,
+        }),
+      });
 
-        if (!response.ok) {
-            throw new Error('Failed to edit user');
-        }
+      if (!response.ok) {
+        throw new Error("Failed to edit user");
+      }
 
-        await updateUserInfo();
-        navigation.navigate(t("show_profile"));
+      await updateUserInfo();
+      navigation.navigate(t("show_profile"));
     } catch (error) {
-        console.error("Error:", error.message);
+      console.error("Error:", error.message);
     }
-};
-
+  };
 
   return (
     <View style={styles.container}>
@@ -170,8 +133,11 @@ function EditProfileScreen() {
         keyboardType="email-address"
       />
       <Text style={styles.label}>{t("picture") + ":"}</Text>
-      <TouchableOpacity style={[styles.button, {backgroundColor:Colors.secondary}]} onPress={selectImageFromGallery}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: Colors.secondary }]}
+        onPress={HandleSelectImage}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <FontAwesome name="picture-o" size={16} color={Colors.white} />
           <Text style={[styles.buttonText, { marginLeft: 8 }]}>
             {t("select_image")}
