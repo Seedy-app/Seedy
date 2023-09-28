@@ -30,6 +30,7 @@
   "community": "Comunidad",
   "no_community_image_message": "Si no subes tu propia imagen de la comunidad, elegiremos aleatoriamente una de las nuestras.",
   "create_community": "Crear comunidad",
+  "community_name_already_exists_error": "Community name already exists.",
   "name": "Nombre",
   "description": "Descripción",
   "market": "Mercado",

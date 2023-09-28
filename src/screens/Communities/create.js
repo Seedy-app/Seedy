@@ -1,5 +1,5 @@
 // Importamos las dependencias necesarias
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -11,39 +11,89 @@ import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
 import Colors from "../../config/Colors";
 import { selectImageFromGallery } from "../../utils/device";
-import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { checkCommunityNameAvailability } from "../../utils/api";
 
 function CreateCommunitiesScreen() {
+  const [selectedImageUri, setSelectedImageUri] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [nameError, setNameError] = useState(null);
+  const [name, setName] = useState(null);
+
+  const n_timeout = useRef(null);
+
   const navigation = useNavigation();
 
   const { t } = useTranslation();
 
   const handleCommunityNameChange = (text) => {
-    console.log(text);
+    setName(text);
+    clearTimeout(n_timeout.current);
+    n_timeout.current = setTimeout(async () => {
+      const result = await checkCommunityNameAvailability(t, text);
+      if (result.error || result.error == "") {
+        setNameError(result.error);
+      }
+    }, 300);
   };
 
   const HandleSelectImage = async () => {
     try {
-      const imageUrl = await selectImageFromGallery("profile_picture", `communities/${userId}`);
-      setPicture(imageUrl);
+      const imageUri = await selectImageFromGallery();
+      setSelectedImageUri(imageUri);
     } catch (error) {
       console.error("Error selecting the image:", error);
     }
   };
 
-  const handleSubmit = (text) => {
-    console.log(text);
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`${Config.API_URL}/communities/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          description,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create community.");
+      }
+
+      response = await fetch(`${Config.API_URL}/communities/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          description,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create community.");
+      }
+
+      const imageUrl = await uploadPictureToServer(`pp_${Date.now()}`, `users/${userId}`, selectedImageUri);
+
+      navigation.navigate(t("communities_list"));
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{t("name") + ":"}</Text>
+      {nameError && <Text style={styles.error}>{nameError}</Text>}
       <CustomInput
         placeholder={t("name")}
         onChangeText={handleCommunityNameChange}
       />
       <Text style={styles.label}>{t("description") + ":"}</Text>
-      <CustomInput placeholder={t("description")} />
+      <CustomInput placeholder={t("description")} onChangeText={(text) => setDescription(text)}/>
       <Text style={styles.label}>{t("picture") + " (" + t("optional") + "):"}</Text>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: Colors.secondary }]}
