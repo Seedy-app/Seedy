@@ -51,7 +51,7 @@ function CommunitiesScreen() {
   const CommunityCard = ({ community }) => (
     <TouchableOpacity style={styles.communityCard} onPress={() => navigation.navigate(t("community"), { community: community })} >
         <Image 
-          source={community.picture ? { uri: community.picture } : require('../../assets/images/favicon.png')} 
+          source={{ uri: Config.API_URL+community.picture }}
           style={styles.communityPic}  
         />
       <View style={styles.communityShortInfo}>

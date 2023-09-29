@@ -1,5 +1,7 @@
 import Config from "../config/Config";
 
+// User
+
 export const checkUsernameAvailability = async (
   t,
   username,
@@ -24,6 +26,7 @@ export const checkUsernameAvailability = async (
       return { error: "" };
     }
   } catch (error) {
+    console.error("Error:", error.message);
     return { error: t("network_error") };
   }
 };
@@ -51,11 +54,61 @@ export const checkEmailAvailability = async (
       return { error: "" };
     }
   } catch (error) {
+    console.error("Error:", error.message);
     return { error: t("network_error") };
   }
 };
 
 // Community
+
+export const changeCommunityPicture = async (communityId, picture) => {
+  try {
+    const response = await fetch(`${Config.API_URL}/communities/${communityId}/change-image`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        picture,
+      }),
+    });
+    if (!response.ok) {
+      console.info(response);
+      return false;
+    }else{
+      return true;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: t("network_error") };
+  }
+};
+
+export const createCommunity = async (name, description, picture) => {
+  try {
+    const response = await fetch(`${Config.API_URL}/communities/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        description,
+        picture
+      }),
+    });
+    if (!response.ok) {
+      console.info(response);
+      return null;
+    }else{
+      const responseData = await response.json();
+      return responseData.id;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: t("network_error") };
+  }
+};
 
 export const checkCommunityNameAvailability = async (
   t,
@@ -67,7 +120,7 @@ export const checkCommunityNameAvailability = async (
     if (ignore_community_id) {
       requestBody.ignore_community_id = ignore_community_id;
     }
-    const response = await fetch(Config.API_URL + "communities/check-name", {
+    const response = await fetch(Config.API_URL + "/communities/check-name", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,12 +131,16 @@ export const checkCommunityNameAvailability = async (
     if (response.status === 409) {
       return { error: t("community_name_already_exists_error") };
     } else {
+      console.log(response.status);
       return { error: "" };
     }
   } catch (error) {
+    console.error("Error checking community name:", error.message);
     return { error: t("network_error") };
   }
 };
+
+// Image
 
 export const uploadPictureToServer = async (filename, filepath, imageUri) => {
   const folderName = filepath;
@@ -115,6 +172,7 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
     return responseData.imageUrl;
   } catch (error) {
     console.error("Error uploading image:", error.message);
+    return { error: t("network_error") };
   }
 };
 
@@ -134,11 +192,12 @@ export const getRandomPicture = async (type) => {
     );
     if (image_response.ok) {
       const imageData = await image_response.json();
-      const randomFilePath = imageData.randomFilePath
+      const randomFilePath = imageData.randomFilePath;
       return randomFilePath;
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error:", error.message);
+    return { error: t("network_error") };
   }
   return null;
 };
