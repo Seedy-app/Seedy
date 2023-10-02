@@ -45,6 +45,7 @@
   "edit_profile": "Edit profile",
   "select_pp": "Select profile picture",
   "select_image": "Select Image",
+  "loading_image": "Loading image...",
   "need_gallery_permission": "We need permissions to access your photos.",
   "optional": "optional"
 

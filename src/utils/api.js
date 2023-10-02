@@ -131,7 +131,6 @@ export const checkCommunityNameAvailability = async (
     if (response.status === 409) {
       return { error: t("community_name_already_exists_error") };
     } else {
-      console.log(response.status);
       return { error: "" };
     }
   } catch (error) {

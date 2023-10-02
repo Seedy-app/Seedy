@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"; // No olvides importar useContext
-import { TouchableOpacity, View, Text } from "react-native";
+import { Image, TouchableOpacity, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import {
@@ -20,10 +20,12 @@ function EditProfileScreen() {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [picture, setPicture] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [userId, setUserId] = useState("");
   const [selectedImageUri, setSelectedImageUri] = useState(null);
+  const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
 
   const u_timeout = useRef(null);
   const e_timeout = useRef(null);
@@ -36,6 +38,7 @@ function EditProfileScreen() {
       setUsername(parsedInfo.username);
       setEmail(parsedInfo.email);
       setUserId(parsedInfo.id);
+      setPicture(parsedInfo.picture);
     }
   };
 
@@ -53,6 +56,7 @@ function EditProfileScreen() {
   // useEffect para recuperar la información del usuario cuando se monta el componente
   useEffect(() => {
     fetchUserInfo();
+    setDisplayedImageUrl(Config.API_URL+picture);
   }, []);
 
   const handleEmailChange = (text) => {
@@ -81,6 +85,7 @@ function EditProfileScreen() {
     try {
       const imageUri = await selectImageFromGallery();
       setSelectedImageUri(imageUri);
+      setDisplayedImageUrl(imageUri);
     } catch (error) {
       console.error("Error selecting the image:", error);
     }
@@ -88,7 +93,7 @@ function EditProfileScreen() {
 
   const handleSubmit = async () => {
     try {
-      const imageUrl = await uploadPictureToServer(`pp_${Date.now()}`, `users/${userId}`, selectedImageUri);
+      const imageUrl = selectedImageUri ? await uploadPictureToServer(`pp_${Date.now()}`, `users/${userId}`, selectedImageUri) : picture;
       const response = await fetch(`${Config.API_URL}/user/${userId}/edit`, {
         method: "PUT",
         headers: {
@@ -130,6 +135,16 @@ function EditProfileScreen() {
         keyboardType="email-address"
       />
       <Text style={styles.label}>{t("picture") + ":"}</Text>
+      <View style={styles.formPicPreviewView}>
+        {displayedImageUrl ? (
+          <Image
+            source={{ uri: displayedImageUrl }}
+            style={[styles.FormProfilePic, styles.formPicPreview]}
+          />
+        ) : (
+          <Text>{t("loading_image")}</Text>
+        )}
+      </View>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: Colors.secondary }]}
         onPress={HandleSelectImage}

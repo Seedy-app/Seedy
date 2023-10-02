@@ -1,24 +1,29 @@
 // Importamos las dependencias necesarias
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import { Image, View, Text, TouchableOpacity } from "react-native";
 import CustomInput from "../CustomInput";
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
 import Colors from "../../config/Colors";
+import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { checkCommunityNameAvailability, changeCommunityPicture, createCommunity, getRandomPicture, uploadPictureToServer } from "../../utils/api";
+import {
+  checkCommunityNameAvailability,
+  changeCommunityPicture,
+  createCommunity,
+  getRandomPicture,
+  uploadPictureToServer,
+} from "../../utils/api";
 
 function CreateCommunitiesScreen() {
   const [selectedImageUri, setSelectedImageUri] = useState(null);
   const [description, setDescription] = useState(null);
   const [nameError, setNameError] = useState(null);
   const [name, setName] = useState(null);
+  const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
+
 
   const n_timeout = useRef(null);
 
@@ -27,9 +32,12 @@ function CreateCommunitiesScreen() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    return () => {
-      clearTimeout(n_timeout.current);
+    const fetchPicture = async () => {
+      const picUrl = await getRandomPicture("community_picture");
+      setDisplayedImageUrl(Config.API_URL + picUrl);
     };
+    clearTimeout(n_timeout.current);
+    fetchPicture();
   }, []);
 
   const handleCommunityNameChange = (text) => {
@@ -47,6 +55,7 @@ function CreateCommunitiesScreen() {
     try {
       const imageUri = await selectImageFromGallery();
       setSelectedImageUri(imageUri);
+      setDisplayedImageUrl(imageUri);
     } catch (error) {
       console.error("Error selecting the image:", error.message);
     }
@@ -54,12 +63,13 @@ function CreateCommunitiesScreen() {
 
   const handleSubmit = async () => {
     try {
-      
-      const pictureUrl = await getRandomPicture('community_picture');
-
-      const community_id = await createCommunity(name, description, pictureUrl);
-      if (selectedImageUri){
-        const imageUrl = await uploadPictureToServer(`cp_${Date.now()}`, `communities/${community_id}`, selectedImageUri);
+      const community_id = await createCommunity(name, description, displayedImageUrl.replace(Config.API_URL, ""));
+      if (selectedImageUri) {
+        const imageUrl = await uploadPictureToServer(
+          `cp_${Date.now()}`,
+          `communities/${community_id}`,
+          selectedImageUri
+        );
         await changeCommunityPicture(community_id, imageUrl);
       }
       navigation.navigate(t("communities_list"));
@@ -77,8 +87,24 @@ function CreateCommunitiesScreen() {
         onChangeText={handleCommunityNameChange}
       />
       <Text style={styles.label}>{t("description") + ":"}</Text>
-      <CustomInput placeholder={t("description")} onChangeText={(text) => setDescription(text)}/>
-      <Text style={styles.label}>{t("picture") + " (" + t("optional") + "):"}</Text>
+      <CustomInput
+        placeholder={t("description")}
+        onChangeText={(text) => setDescription(text)}
+      />
+
+      <Text style={styles.label}>
+        {t("picture") + " (" + t("optional") + "):"}
+      </Text>
+      <View style={styles.formPicPreviewView}>
+        {displayedImageUrl ? (
+          <Image
+            source={{ uri: displayedImageUrl }}
+            style={[styles.communityCreatePic, styles.formPicPreview]}
+          />
+        ) : (
+          <Text>{t("loading_image")}</Text>
+        )}
+      </View>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: Colors.secondary }]}
         onPress={handleSelectImage}
@@ -90,7 +116,9 @@ function CreateCommunitiesScreen() {
           </Text>
         </View>
       </TouchableOpacity>
-      <Text style={styles.underInputMessage}>{t("no_community_image_message")}</Text>
+      <Text style={styles.underInputMessage}>
+        {t("no_community_image_message")}
+      </Text>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>{t("create")}</Text>
       </TouchableOpacity>

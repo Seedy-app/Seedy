@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import commonStyles from "../../config/CommonStyles";
 import FontSizes from "../../config/FontSizes";
 import Colors from "../../config/Colors";
@@ -28,7 +28,10 @@ const profileStyles = StyleSheet.create({
       email: {
         fontSize: FontSizes.regular,
         color: Colors.gray
-      }
+      },
+      FormProfilePic: {
+        borderRadius: Dimensions.get("window").width/2,
+      },
 });
 
 export default profileStyles;
