@@ -47,5 +47,7 @@
   "select_image": "Seleccionar imagen",
   "loading_image": "Cargando imagen...",
   "need_gallery_permission": "Necesitamos permisos para acceder a tus fotos.",
-  "optional": "opcional"
+  "optional": "opcional",
+  "not_logged_in_error": "Usuario no autenticado. Por favor, inicia sesión."
+
 }

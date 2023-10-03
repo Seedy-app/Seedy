@@ -14,6 +14,7 @@ import Config from "../../config/Config";
 import Colors from "../../config/Colors";
 import { selectImageFromGallery } from "../../utils/device";
 import { uploadPictureToServer } from "../../utils/api";
+import loadingImage from "../../assets/images/loading.gif";
 
 function EditProfileScreen() {
   const { t } = useTranslation();
@@ -55,9 +56,16 @@ function EditProfileScreen() {
 
   // useEffect para recuperar la información del usuario cuando se monta el componente
   useEffect(() => {
-    fetchUserInfo();
-    setDisplayedImageUrl(Config.API_URL + picture);
-  }, []);
+    const fetchData = async () => {
+      await fetchUserInfo();
+      if (picture) {
+        // Asegurarse de que 'picture' está disponible
+        const imageUrl = Config.API_URL + picture;
+        setDisplayedImageUrl(imageUrl);
+      }
+    };
+    fetchData();
+  }, [picture]);
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -95,6 +103,12 @@ function EditProfileScreen() {
 
   const handleSubmit = async () => {
     try {
+      const token = await AsyncStorage.getItem("userToken");
+
+      if (!token) {
+        console.error(t("not_logged_in_error"));
+        return { error: t("not_logged_in_error") };
+      }
       const imageUrl = selectedImageUri
         ? await uploadPictureToServer(
             `pp_${Date.now()}`,
@@ -106,6 +120,7 @@ function EditProfileScreen() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           username: username,
@@ -150,7 +165,10 @@ function EditProfileScreen() {
             style={[styles.FormProfilePic, styles.formPicPreview]}
           />
         ) : (
-          <Text>{t("loading_image")}</Text>
+          <Image
+            source={loadingImage}
+            style={[styles.FormProfilePic, styles.formPicPreview]}
+          />
         )}
       </View>
       <TouchableOpacity

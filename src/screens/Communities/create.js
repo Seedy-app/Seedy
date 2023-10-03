@@ -10,6 +10,8 @@ import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import loadingImage from "../../assets/images/loading.gif";
+
 import {
   checkCommunityNameAvailability,
   changeCommunityPicture,
@@ -44,14 +46,21 @@ function CreateCommunitiesScreen() {
   };
 
   useEffect(() => {
-    fetchUserInfo();
+    const fetchData = async () => {
+      await fetchUserInfo();
+    };
+  
     const fetchPicture = async () => {
       const picUrl = await getRandomPicture("community_picture");
-      setDisplayedImageUrl(Config.API_URL + picUrl);
+      if (picUrl) { // Asegurarse de que 'picUrl' está disponible
+        setDisplayedImageUrl(Config.API_URL + picUrl);
+      }
     };
-    clearTimeout(n_timeout.current);
+  
+    fetchData();
     fetchPicture();
   }, []);
+  
 
   const handleCommunityNameChange = (text) => {
     setName(text);
@@ -118,7 +127,10 @@ function CreateCommunitiesScreen() {
             style={[styles.communityCreatePic, styles.formPicPreview]}
           />
         ) : (
-          <Text>{t("loading_image")}</Text>
+          <Image
+            source={loadingImage}
+            style={[styles.FormProfilePic, styles.formPicPreview]}
+          />
         )}
       </View>
       <TouchableOpacity
