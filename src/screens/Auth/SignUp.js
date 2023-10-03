@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
 import CustomInput from "../CustomInput";
 import { View, Text, TouchableOpacity } from "react-native";
-import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import styles from './AuthStyles';
-import Config from '../../config/Config';
-import { checkUsernameAvailability, checkEmailAvailability } from "../../utils/api";
+import styles from "./AuthStyles";
+import Config from "../../config/Config";
+import {
+  checkUsernameAvailability,
+  checkEmailAvailability,
+  getRandomPicture,
+} from "../../utils/api";
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -25,7 +28,7 @@ export default function SignUpScreen({ navigation }) {
     setUsername(text);
     clearTimeout(u_timeout.current);
     u_timeout.current = setTimeout(async () => {
-      const result = await checkUsernameAvailability(t, text)
+      const result = await checkUsernameAvailability(t, text);
       if (result.error || result.error == "") {
         setUsernameError(result.error);
       }
@@ -36,7 +39,7 @@ export default function SignUpScreen({ navigation }) {
     setEmail(text);
     clearTimeout(e_timeout.current);
     e_timeout.current = setTimeout(async () => {
-      const result = await checkEmailAvailability(t, text)
+      const result = await checkEmailAvailability(t, text);
       if (result.error || result.error == "") {
         setEmailError(result.error);
       }
@@ -44,6 +47,7 @@ export default function SignUpScreen({ navigation }) {
   };
 
   const register = async () => {
+    let pictureUrl = "";
     if (password !== confirmPassword) {
       setPasswordError(t("unmatched_passwords_error"));
       return;
@@ -59,15 +63,17 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     try {
-      const response = await fetch(Config.API_URL+"/register", {
+      pictureUrl = await getRandomPicture('profile_picture');
+      const response = await fetch(Config.API_URL + "/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username,
-          email,
-          password,
+          username: username,
+          email: email,
+          password: password,
+          picture: pictureUrl,
         }),
       });
       if (response.ok) {
@@ -76,33 +82,34 @@ export default function SignUpScreen({ navigation }) {
         setError(t("register_error"));
       }
     } catch (error) {
+      console.log(error);
       setError(t("network_error"));
     }
   };
 
   return (
-    <View style={[styles.container, {justifyContent:'center'}]}>
-      <Text style={styles.label}>{t("username")+":"}</Text>
+    <View style={[styles.container, { justifyContent: "center" }]}>
+      <Text style={styles.label}>{t("username") + ":"}</Text>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
         placeholder={t("username")}
         onChangeText={handleUsernameChange}
       />
-      <Text style={styles.label}>{t("email")+":"}</Text>
+      <Text style={styles.label}>{t("email") + ":"}</Text>
       {emailError && <Text style={styles.error}>{emailError}</Text>}
       <CustomInput
         placeholder={t("email")}
         keyboardType="email-address"
         onChangeText={handleEmailChange}
       />
-      <Text style={styles.label}>{t("password")+":"}</Text>
+      <Text style={styles.label}>{t("password") + ":"}</Text>
       {passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CustomInput
         placeholder={t("password")}
         isPassword
         onChangeText={(text) => setPassword(text)}
       />
-      <Text style={styles.label}>{t("confirm_password")+":"}</Text>
+      <Text style={styles.label}>{t("confirm_password") + ":"}</Text>
       <CustomInput
         placeholder={t("confirm_password")}
         isConfirmPassword
@@ -128,5 +135,3 @@ export default function SignUpScreen({ navigation }) {
     </View>
   );
 }
-
-

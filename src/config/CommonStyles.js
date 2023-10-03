@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Colors from "./Colors";
 import FontSizes from "./FontSizes";
 
@@ -58,6 +58,18 @@ const commonStyles = StyleSheet.create({
       marginBottom: 10,
       padding: 10,
       borderRadius: 5,
+    },
+    underInputMessage: {
+      fontSize: FontSizes.small,
+      color: Colors.gray,
+    },
+    formPicPreview: {
+      width: Dimensions.get("window").width/1.25,
+      height: Dimensions.get("window").width/1.25,
+    },
+    formPicPreviewView:{
+      justifyContent: 'center',
+      alignItems: 'center',
     },
 });
 

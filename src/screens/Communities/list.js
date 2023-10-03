@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image, View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
-import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
 import Config from '../../config/Config';
@@ -51,8 +50,8 @@ function CommunitiesScreen() {
   const CommunityCard = ({ community }) => (
     <TouchableOpacity style={styles.communityCard} onPress={() => navigation.navigate(t("community"), { community: community })} >
         <Image 
-          source={community.picture ? { uri: community.picture } : require('../../assets/images/favicon.png')} 
-          style={styles.communityPic}  
+          source={{ uri: Config.API_URL+community.picture }}
+          style={styles.communityListPic}  
         />
       <View style={styles.communityShortInfo}>
         <Text style={styles.communityName}>{community.name}</Text>

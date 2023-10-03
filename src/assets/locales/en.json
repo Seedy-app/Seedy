@@ -28,17 +28,25 @@
   "communities_list": "Communities list",
   "communities": "Communities",
   "community": "Community",
+  "no_community_image_message": "If you do not upload your own community image, we will randomly choose one of ours.",
+  "create_community": "Create community",
+  "community_name_already_exists_error": "Community name already exists.",
+  "name": "Name",
+  "description": "Description",
   "market": "Market",
   "my_plants": "My plants",
   "plant_identifier": "Plant identifier",
   "send": "Send",
   "save": "Save",
+  "create": "Create",
   "token": "Token",
   "profile": "Profile",
   "show_profile": "Show profile",
   "edit_profile": "Edit profile",
   "select_pp": "Select profile picture",
   "select_image": "Select Image",
-  "need_gallery_permission": "We need permissions to access your photos."
+  "loading_image": "Loading image...",
+  "need_gallery_permission": "We need permissions to access your photos.",
+  "optional": "optional"
 
 }

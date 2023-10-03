@@ -1,6 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, View, Text, Image, ScrollView, RefreshControl } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,7 +27,6 @@ function ProfileScreen() {
   const fetchUserInfo = async () => {
     const storedUserInfo = await AsyncStorage.getItem("userInfo");
     if (storedUserInfo) {
-      console.log(userInfo.picture);
       setUserInfo(JSON.parse(storedUserInfo));
     }
   };
@@ -56,7 +62,10 @@ function ProfileScreen() {
           <Text style={styles.email}>{userInfo.email}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(t("edit_profile"))}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate(t("edit_profile"))}
+      >
         <Text style={styles.buttonText}>{t("edit_profile")}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={logout}>
