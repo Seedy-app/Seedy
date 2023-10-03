@@ -9,12 +9,14 @@ import Colors from "../../config/Colors";
 import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   checkCommunityNameAvailability,
   changeCommunityPicture,
   createCommunity,
   getRandomPicture,
   uploadPictureToServer,
+  giveUserCommunityRole
 } from "../../utils/api";
 
 function CreateCommunitiesScreen() {
@@ -22,6 +24,7 @@ function CreateCommunitiesScreen() {
   const [description, setDescription] = useState(null);
   const [nameError, setNameError] = useState(null);
   const [name, setName] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
 
 
@@ -31,7 +34,17 @@ function CreateCommunitiesScreen() {
 
   const { t } = useTranslation();
 
+  // Función para recuperar la información del usuario de AsyncStorage
+  const fetchUserInfo = async () => {
+    const storedUserInfo = await AsyncStorage.getItem("userInfo");
+    if (storedUserInfo) {
+      const parsedInfo = JSON.parse(storedUserInfo);
+      setUserId(parsedInfo.id);
+    }
+  };
+
   useEffect(() => {
+    fetchUserInfo();
     const fetchPicture = async () => {
       const picUrl = await getRandomPicture("community_picture");
       setDisplayedImageUrl(Config.API_URL + picUrl);
@@ -54,8 +67,10 @@ function CreateCommunitiesScreen() {
   const handleSelectImage = async () => {
     try {
       const imageUri = await selectImageFromGallery();
-      setSelectedImageUri(imageUri);
-      setDisplayedImageUrl(imageUri);
+      if (imageUri) {
+        setSelectedImageUri(imageUri);
+        setDisplayedImageUrl(imageUri);
+      }
     } catch (error) {
       console.error("Error selecting the image:", error.message);
     }
@@ -63,7 +78,8 @@ function CreateCommunitiesScreen() {
 
   const handleSubmit = async () => {
     try {
-      const community_id = await createCommunity(name, description, displayedImageUrl.replace(Config.API_URL, ""));
+      const community_id = await createCommunity(name, description, displayedImageUrl.replace(Config.API_URL, ""), userId);
+      await giveUserCommunityRole(userId, community_id, 'community_founder');
       if (selectedImageUri) {
         const imageUrl = await uploadPictureToServer(
           `cp_${Date.now()}`,

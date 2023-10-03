@@ -84,7 +84,7 @@ export const changeCommunityPicture = async (communityId, picture) => {
   }
 };
 
-export const createCommunity = async (name, description, picture) => {
+export const createCommunity = async (name, description, picture, user_id) => {
   try {
     const response = await fetch(`${Config.API_URL}/communities/create`, {
       method: "POST",
@@ -94,7 +94,8 @@ export const createCommunity = async (name, description, picture) => {
       body: JSON.stringify({
         name,
         description,
-        picture
+        picture,
+        user_id
       }),
     });
     if (!response.ok) {
@@ -107,6 +108,32 @@ export const createCommunity = async (name, description, picture) => {
   } catch (error) {
     console.error("Error:", error.message);
     return { error: t("network_error") };
+  }
+};
+
+export const giveUserCommunityRole = async (user_id, community_id, role_name) => {
+  try {
+    const response = await fetch(`${Config.API_URL}/communities/give-role-to-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id,
+        community_id,
+        role_name
+      }),
+    });
+    if (!response.ok) {
+      console.info(response);
+      return false;
+    }else{
+      const responseData = await response.json();
+      return true;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return false;
   }
 };
 

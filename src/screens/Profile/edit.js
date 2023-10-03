@@ -56,7 +56,7 @@ function EditProfileScreen() {
   // useEffect para recuperar la información del usuario cuando se monta el componente
   useEffect(() => {
     fetchUserInfo();
-    setDisplayedImageUrl(Config.API_URL+picture);
+    setDisplayedImageUrl(Config.API_URL + picture);
   }, []);
 
   const handleEmailChange = (text) => {
@@ -84,8 +84,10 @@ function EditProfileScreen() {
   const HandleSelectImage = async () => {
     try {
       const imageUri = await selectImageFromGallery();
-      setSelectedImageUri(imageUri);
-      setDisplayedImageUrl(imageUri);
+      if (imageUri) {
+        setSelectedImageUri(imageUri);
+        setDisplayedImageUrl(imageUri);
+      }
     } catch (error) {
       console.error("Error selecting the image:", error);
     }
@@ -93,7 +95,13 @@ function EditProfileScreen() {
 
   const handleSubmit = async () => {
     try {
-      const imageUrl = selectedImageUri ? await uploadPictureToServer(`pp_${Date.now()}`, `users/${userId}`, selectedImageUri) : picture;
+      const imageUrl = selectedImageUri
+        ? await uploadPictureToServer(
+            `pp_${Date.now()}`,
+            `users/${userId}`,
+            selectedImageUri
+          )
+        : picture;
       const response = await fetch(`${Config.API_URL}/user/${userId}/edit`, {
         method: "PUT",
         headers: {
