@@ -18,28 +18,8 @@ const communitiesStyles = StyleSheet.create({
   communityCreatePic: {
     borderRadius: Dimensions.get("window").width/4,
   },
-  communityCard: {
-    backgroundColor: Colors.white,
-    borderRadius: 5,
-    padding: 15,
-    marginBottom: 10,
-    shadowColor: Colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    flexDirection: "row",
-    alignItems: "center",
-  },
   communityShortInfo: {
     paddingLeft: 20,
-  },
-  communityName: {
-    fontSize: FontSizes.large,
-    fontWeight: "bold",
   },
   communityDescription: {
     marginTop: 5,

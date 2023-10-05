@@ -56,9 +56,9 @@ function ProfileScreen() {
       }
     >
       <View style={styles.profileContainer}>
-        <Image source={{ uri: Config.API_URL+userInfo.picture }} style={styles.profileImage} />
+        <Image source={{ uri: Config.API_URL+userInfo.picture }} style={styles.largeProfilePic} />
         <View style={styles.userInfo}>
-          <Text style={styles.username}>{userInfo.username}</Text>
+          <Text style={styles.title}>{userInfo.username}</Text>
           <Text style={styles.email}>{userInfo.email}</Text>
         </View>
       </View>

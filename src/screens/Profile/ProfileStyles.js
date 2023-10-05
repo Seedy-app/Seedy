@@ -12,18 +12,8 @@ const profileStyles = StyleSheet.create({
       profileButtons: {
         marginTop: 10,
       },
-      profileImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginRight: 10
-      },
       userInfo: {
         flexDirection: 'column'
-      },
-      username: {
-        fontWeight: 'bold',
-        fontSize: FontSizes.large
       },
       email: {
         fontSize: FontSizes.regular,

@@ -18,7 +18,7 @@ import {
   createCommunity,
   getRandomPicture,
   uploadPictureToServer,
-  giveUserCommunityRole
+  giveUserCommunityRole,
 } from "../../utils/api";
 
 function CreateCommunitiesScreen() {
@@ -28,7 +28,6 @@ function CreateCommunitiesScreen() {
   const [name, setName] = useState(null);
   const [userId, setUserId] = useState(null);
   const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
-
 
   const n_timeout = useRef(null);
 
@@ -49,18 +48,18 @@ function CreateCommunitiesScreen() {
     const fetchData = async () => {
       await fetchUserInfo();
     };
-  
+
     const fetchPicture = async () => {
       const picUrl = await getRandomPicture("community_picture");
-      if (picUrl) { // Asegurarse de que 'picUrl' está disponible
+      if (picUrl) {
+        // Asegurarse de que 'picUrl' está disponible
         setDisplayedImageUrl(Config.API_URL + picUrl);
       }
     };
-  
+
     fetchData();
     fetchPicture();
   }, []);
-  
 
   const handleCommunityNameChange = (text) => {
     setName(text);
@@ -87,8 +86,13 @@ function CreateCommunitiesScreen() {
 
   const handleSubmit = async () => {
     try {
-      const community_id = await createCommunity(name, description, displayedImageUrl.replace(Config.API_URL, ""), userId);
-      await giveUserCommunityRole(userId, community_id, 'community_founder');
+      const community_id = await createCommunity(
+        name,
+        description,
+        displayedImageUrl.replace(Config.API_URL, ""),
+        userId
+      );
+      await giveUserCommunityRole(userId, community_id, "community_founder");
       if (selectedImageUri) {
         const imageUrl = await uploadPictureToServer(
           `cp_${Date.now()}`,
