@@ -48,13 +48,13 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <TouchableOpacity style={styles.communityCard} onPress={() => navigation.navigate(t("community"), { community: community })} >
+    <TouchableOpacity style={styles.listCard} onPress={() => navigation.navigate(t("community"), { community: community })} >
         <Image 
           source={{ uri: Config.API_URL+community.picture }}
           style={styles.communityListPic}  
         />
       <View style={styles.communityShortInfo}>
-        <Text style={styles.communityName}>{community.name}</Text>
+        <Text style={styles.title}>{community.name}</Text>
         <Text style={styles.communityDescription}>{community.description}</Text>
       </View>
     </TouchableOpacity>

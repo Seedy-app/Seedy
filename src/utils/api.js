@@ -1,7 +1,6 @@
 import Config from "../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 // User
 
 export const checkUsernameAvailability = async (
@@ -65,7 +64,7 @@ export const checkEmailAvailability = async (
 
 export const changeCommunityPicture = async (communityId, picture) => {
   try {
-    const token = await AsyncStorage.getItem('userToken');
+    const token = await AsyncStorage.getItem("userToken");
 
     if (!token) {
       console.error(t("not_logged_in_error"));
@@ -99,7 +98,7 @@ export const changeCommunityPicture = async (communityId, picture) => {
 
 export const createCommunity = async (name, description, picture, user_id) => {
   try {
-    const token = await AsyncStorage.getItem('userToken');
+    const token = await AsyncStorage.getItem("userToken");
 
     if (!token) {
       console.error(t("not_logged_in_error"));
@@ -137,7 +136,7 @@ export const giveUserCommunityRole = async (
   role_name
 ) => {
   try {
-    const token = await AsyncStorage.getItem('userToken');
+    const token = await AsyncStorage.getItem("userToken");
 
     if (!token) {
       console.error(t("not_logged_in_error"));
@@ -212,20 +211,14 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
   });
 
   try {
-    const token = await AsyncStorage.getItem('userToken');
 
-    if (!token) {
-      console.error(t("not_logged_in_error"));
-      return { error: t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/image/upload/${encodeURIComponent(folderName)}`,
       {
         method: "POST",
         body: formData,
         headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
         },
       }
     );
@@ -242,21 +235,14 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
   }
 };
 
-export const getRandomPicture = async (type) => {
+export const getRandomPicture = async (t, type) => {
   try {
-    const token = await AsyncStorage.getItem('userToken');
-
-    if (!token) {
-      console.error(t("not_logged_in_error"));
-      return { error: t("not_logged_in_error") };
-    }
     const image_response = await fetch(
       Config.API_URL + "/image/random-filepath",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           type,

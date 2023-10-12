@@ -63,7 +63,7 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     try {
-      pictureUrl = await getRandomPicture('profile_picture');
+      pictureUrl = await getRandomPicture(t, 'profile_picture');
       const response = await fetch(Config.API_URL + "/register", {
         method: "POST",
         headers: {
