@@ -50,7 +50,7 @@ function CreateCommunitiesScreen() {
     };
 
     const fetchPicture = async () => {
-      const picUrl = await getRandomPicture("community_picture");
+      const picUrl = await getRandomPicture(t, "community_picture");
       if (picUrl) {
         // Asegurarse de que 'picUrl' está disponible
         setDisplayedImageUrl(Config.API_URL + picUrl);

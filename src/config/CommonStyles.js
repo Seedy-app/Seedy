@@ -88,6 +88,12 @@ const commonStyles = StyleSheet.create({
     alignItems: "center",
   },
 
+  fullLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   // Texts
   title: {
     fontSize: FontSizes.large,
