@@ -35,8 +35,8 @@ En resumen, Seedy es una aplicación móvil que aborda la falta de información 
 La aplicación "Seedy" abarca desde el momento en que un usuario descarga la aplicación y la utiliza para obtener información sobre el cuidado de las plantas y se extiende hasta la identificación de las mismas a través de la función de reconocimiento de plantas. Durante este ciclo de vida de la planta, se garantiza la integridad y confidencialidad de la información relacionada con las plantas.
 
 **Alcance**
-Dado que el proyecto "Seedy" involucra tanto la creación de una nueva comunidad en línea como un cambio en la forma en que las personas cuidan de sus plantas, se considera recomendable comenzar el proyecto de forma gradual, enfocándonos en un conjunto inicial de funcionalidades y objetivos. Esto permitirá un cambio cultural de magnitud y un impacto significativo en la experiencia del usuario. 
-El alcance inicial se concentra en las siguientes áreas:
+Dado que el proyecto "Seedy" involucra tanto la creación de una nueva comunidad en línea como un cambio en la forma en que las personas cuidan de sus plantas, hemos considerado recomendable comenzar el proyecto de forma gradual, enfocándonos en un conjunto inicial de funcionalidades y objetivos. Esto permitirá un cambio cultural de magnitud y un impacto significativo en la experiencia del usuario. 
+**El alcance inicial se concentra en las siguientes áreas:**
 
 **Función de Identificación de Plantas:** Implementar una función que permita a los usuarios tomar fotos de sus plantas y recibir información instantánea sobre la especie y los cuidados requeridos. Esta funcionalidad será la piedra angular de la aplicación.
 
