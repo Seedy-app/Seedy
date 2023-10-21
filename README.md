@@ -50,8 +50,22 @@ El proceso de desarrollo de software en el proyecto "Seedy" sigue un modelo estr
 
 Posteriormente, en la etapa de construcción, se produce el código y se implementan las funcionalidades utilizando tecnologías como React Native y React Navigator. Estos frameworks desempeñan un papel fundamental en el desarrollo de la aplicación. Finalmente, en la fase de despliegue, la aplicación se publica en la tienda de aplicación de Android "Google Play" para que los usuarios la descarguen y utilicen. Este enfoque estructurado garantiza un proceso de desarrollo efectivo y eficiente en el proyecto "Seedy", permitiendo la creación de una aplicación móvil moderna para el cuidado de plantas.
 
-**Aseguramiento de la calidad del producto:**
+**Aseguramiento de la calidad del Software:**
+En todas las etapas del ciclo de vida del desarrollo de software es posible aplicar técnicas de aseguramiento de la calidad. Las técnicas que utilizamos específicamente para este proyecto es:
+**Verificación:** 
+**Revisión de Código:** Primeramente con la revisión del código, nos aseguramos de que el código fuente de la aplicación sea revisado por todos los miembros del grupo. Esto ayuda a identificar posibles errores o problemas de calidad en el código a tiempo.
+**Pruebas de Unidad**: En estas pruebas, para verificar que cada componente o módulo de la aplicación funcione según lo acordado, comprobamos el comportamiento tanto de funciones como de métodos individuales. Para esto, hemos realizado los diagramas pertinentes para cada prueba. En el caso de las pruebas de unidad, tuvimos fuertemente en cuenta el "Diagrama de Componentes" de Seedy, realizado a la misma vez que   desarrollabamos el proyecto, aplicando constantemente cada actualización.
+**Pruebas de Integración:** En las pruebas de integración, nos aseguramos que los diferentes componentes de nuestra aplicación trabajen juntos sin problemas. De esta manera, verificamos que los módulos se puedan integrar sin problema. 
+**Revisiones de Diseño:** No solo realizamos pruebas para el Back-end, sino que también para el Front-end. Tenemos en cuenta que para que la aplicación funcione debemos prestar atencion a verificar que el diseño de la interfaz de usuario y la arquitectura de la aplicación, cumpla con los requisitos y estándares previamente definidos.
 
+**Validación:**
+**Pruebas de Aceptación:** En las pruebas de aceptación, necesitamos de usuarios finales o representantes de los usuarios para que prueben la aplicación en un entorno de prueba. Para esto, no solo contaron las correcciones del profesor, el cual simulaba la interaccion con la aplicación sino que también contactamos 
+personas que ambos miembros del grupo conocíamos para poder realizar las validaciones de la aplicación y de esta manera, lograr como resultado que la misma haya sido lo suficientemente intuitiva como nos planteamos.Por otro lado, ver como el usuario interactua con "Seedy" y sus funciones bien establecidas. Por último, llegar a la satisfacción de las necesidades reales de los usuarios que tomen la decisión de instalar nuestra aplicación.
+**Evaluación de Requisitos:** Esta evaluación es fundamental como grupo, ya que los requisitos iniciales del proyecto se deben cumplir y la aplicación, como objetivo principal del proyecto, debe cumplir las expectativas del cliente y de los usuarios.
+**Pruebas de rendimiento:** En las pruebas de rendimiento, validamos que la aplicación funcione de forma eficiente ya que si probamos bajo cargas de trabajo muy elevadas, debemos garantizar un rendimiento óptimo.
+**Pruebas de Seguridad:** Realizamos pruebas de seguridad para garantizar que la aplicación sea resistente a vulnerabilidades o amenazas.
+
+**PENDIENTE: ARQUITECTURA EN CAPAS PRIMERO Y DESPUES LO DEMÁS....**
 
 **Tecnologías utilizadas:**
 **React Native** (framework)
