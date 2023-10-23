@@ -77,9 +77,10 @@ A partir de aquí es donde nos vamos a centrar en las capas, las cuales estructu
 Esta arquitectura de capaz con el uso de tecnologías como React Native, React Express, Nodemailer, JSON Web Tokens (JWT Tokens), Multer y Sharp permiten que "Seedy" ofrezca una experiencia de usuario efectiva y una plataforma sólida para el cuidado de las plantas. AWS asegura que todo funcione sin problemas y que los datos estén seguros.
 
 **Mapa de Competencia:**
-tenemos en cuenta que el mapa de competencia es una herramienta esencial en el análisis estratégico de un proyecto, ya que nos permite identificar y comprender a los actores clave que operan en el mismo espacio. Los factores de competencia directa, indirecta, analógica y digital son categorías que nos ayudan a clasificar a los competidores y a comprender cómo influyen en el éxito de un proyecto. La competencia directa son aquellas organizaciones o aplicaciones que ofrecen un servicio similar al nuestro. La competencia indirecta se refiere a actores que no ofrecen exactamente lo mismo, pero compiten por la atención del mismo público. La competencia analógica se relaciona con las ofertas físicas, como tiendas o viveros, mientras que la competencia digital se refiere a soluciones en línea, como aplicaciones y sitios web.
+Tenemos en cuenta que el mapa de competencia es una herramienta esencial en el análisis estratégico de un proyecto, ya que nos permite identificar y comprender a los actores clave que operan en el mismo espacio. Los factores de competencia directa, indirecta, analógica y digital son categorías que nos ayudan a clasificar a los competidores y a comprender cómo influyen en el éxito de un proyecto. La competencia directa son aquellas organizaciones o aplicaciones que ofrecen un servicio similar al nuestro. La competencia indirecta se refiere a actores que no ofrecen exactamente lo mismo, pero compiten por la atención del mismo público. La competencia analógica se relaciona con las ofertas físicas, como tiendas o viveros, mientras que la competencia digital se refiere a soluciones en línea, como aplicaciones y sitios web. 
+Para realizar los mapas nos quisimos centrar en los 3 objetivos principales del proyecto: Identificación de plantas, Consejos de plantas y por último la posibilidad de unirse a comunidades para los usuarios.
 
-A partir de un análisis, elaboramos un mapa de competencia específico para la identificación de plantas en "SEEDY" para comprender cómo se encuentra posicionado nuestro proyecto en un mercado que busca satisfacer la curiosidad y las necesidades de los amantes de las plantas. Este mapa nos brinda como grupo, una visión más clara de quiénes son nuestros competidores directos y cómo se destacan en términos de tecnología, alcance y calidad de identificación de plantas. Al comprender a nuestros competidores, estamos mejor preparados para desarrollar estrategias efectivas y diferenciarnos en este mercado competitivo.
+A partir de un análisis, elaboramos un mapa de competencia específico para la "identificación de plantas" en "SEEDY" para comprender cómo se encuentra posicionado nuestro proyecto en un mercado que busca satisfacer la curiosidad y las necesidades de los amantes de las plantas. Este mapa nos brinda como grupo, una visión más clara de quiénes son nuestros competidores directos y cómo se destacan en términos de tecnología, alcance y calidad de identificación de plantas. Al comprender a nuestros competidores, estamos mejor preparados para desarrollar estrategias efectivas y diferenciarnos en este mercado competitivo.
 **Mapa de Competencia de objetivo: Identificación de Plantas**
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/c24276ae-25c4-4d53-a63a-47a04805c982)
 
@@ -87,6 +88,17 @@ Por otro lado, creamos un mapa de competencia para el espacio de "Consejos de Pl
 
 **Mapa de Competencia de objetivo: Consejos de Plantas**
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/858e4094-96bd-424e-88d7-d307aa941ee0)
+
+Por último, la unión a comunidades es un objetivo que se basa en que los usuarios puedan interactuar con otros generando un aprendizaje reciproco y a la misma vez muy educativo. Por otro lado, generar el sentimiento de compartir la misma pasión por las plantas o si no sos un apasionado, poder resolver todas las dudas que lleven a consultar a las personas en distintas comunidades.
+**Mapa de Competencia de Objetivo: Unión a Comunidades**
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/1fe7de1d-0d82-407a-90ba-fddd86f723b2)
+
+
+**Contextos de la Aplicación:**
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/63575c26-55f2-4250-ac23-74201cee26e2)
+
+**Hipótesis de los ejes centrales del Proyecto:**
+La aplicación móvil Seedy representa una solución tecnológica integral que se desglosa en tres ejes principales: identificación de plantas, consejos sobre el cuidado de las plantas y la posibilidad de unirse a comunidades de amantes de la jardinería. En el eje de identificación de plantas, hipotetizamos que los usuarios encontrarán en Seedy una herramienta valiosa para identificar con precisión diversas especies de plantas, lo que enriquecerá su pasión por la jardinería o de no ser asi, resolver cualquier duda que se le presente. En el segundo eje, que se centra en brindar consejos sobre el cuidado de las plantas, esperamos que los usuarios utilicen activamente esta función para abordar desafíos y problemas específicos en el crecimiento de sus plantas. La eficacia y relevancia de estos consejos serán fundamentales para la satisfacción de los usuarios y su compromiso continuo con la aplicación. En el tercer eje, que involucra la unión a comunidades, creemos que los usuarios encontrarán un espacio donde pueden compartir sus experiencias, aprender de otros expertos en plantas y construir una comunidad en línea en la que pueden debatir y compartir su amor por la jardinería. La participación activa en estas comunidades contribuirá significativamente a la satisfacción y retención de los usuarios en la aplicación Seedy.
 
 
 
