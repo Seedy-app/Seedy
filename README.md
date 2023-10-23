@@ -2,7 +2,7 @@
 
 **Introducción**
 
-La falta de aplicaciones móviles que proporcionen información acerca del cuidado de las plantas y el desconocimiento del ciclo de vida de las mismas, es una problemática que persiste en la sociedad actual, teniendo en cuenta las transformaciones constantes de nuestro mundo tecnológico. Esta carencia de recursos puede llevar a varios inconvenientes. En primer lugar, muchas personas sin experiencia previa en el cuidado de plantas pueden enfrentar dificultades para saber cómo mantener sus plantas adecuadamente sin una guía que los ayude. Esto puede resultar en el deterioro de las plantas debido a problemas como el riego inadecuado, la falta de luz o las plagas y enfermedades.
+La falta de aplicaciones móviles que proporcionen información acerca del cuidado de las plantas y el desconocimiento del ciclo de vida de las mismas, es una problemática que persiste en la sociedad actual, teniendo en cuenta las transformaciones constantes de nuestro mundo tecnológico. Es bajo el conocimiento que brindan las aplicaciones que se encuentran centradas en brindar consejos o realizar la identificación de distintas especies. Esta carencia de recursos puede llevar a varios inconvenientes. En primer lugar, muchas personas sin experiencia previa en el cuidado de plantas pueden enfrentar dificultades para saber cómo mantener sus plantas adecuadamente sin una guía que los ayude. Esto puede resultar en el deterioro de las plantas debido a problemas como el riego inadecuado, la falta de luz o las plagas y enfermedades.
 
 En segundo lugar, la ausencia de información sobre plantas puede limitar la capacidad de las personas de poder disfrutar de los beneficios de plantar en sus hogares o jardines. Sin acceso a contenidos que les enseñen cómo cuidar apropiadamente las plantas, muchas personas pueden evitar tenerlas en sus entornos. Por lo tanto, se plantea la necesidad de abordar esta problemática.
 
@@ -76,6 +76,22 @@ A partir de aquí es donde nos vamos a centrar en las capas, las cuales estructu
 **Conclusión:**
 Esta arquitectura de capaz con el uso de tecnologías como React Native, React Express, Nodemailer, JSON Web Tokens (JWT Tokens), Multer y Sharp permiten que "Seedy" ofrezca una experiencia de usuario efectiva y una plataforma sólida para el cuidado de las plantas. AWS asegura que todo funcione sin problemas y que los datos estén seguros.
 
+**Mapa de Competencia:**
+tenemos en cuenta que el mapa de competencia es una herramienta esencial en el análisis estratégico de un proyecto, ya que nos permite identificar y comprender a los actores clave que operan en el mismo espacio. Los factores de competencia directa, indirecta, analógica y digital son categorías que nos ayudan a clasificar a los competidores y a comprender cómo influyen en el éxito de un proyecto. La competencia directa son aquellas organizaciones o aplicaciones que ofrecen un servicio similar al nuestro. La competencia indirecta se refiere a actores que no ofrecen exactamente lo mismo, pero compiten por la atención del mismo público. La competencia analógica se relaciona con las ofertas físicas, como tiendas o viveros, mientras que la competencia digital se refiere a soluciones en línea, como aplicaciones y sitios web.
+
+A partir de un análisis, elaboramos un mapa de competencia específico para la identificación de plantas en "SEEDY" para comprender cómo se encuentra posicionado nuestro proyecto en un mercado que busca satisfacer la curiosidad y las necesidades de los amantes de las plantas. Este mapa nos brinda como grupo, una visión más clara de quiénes son nuestros competidores directos y cómo se destacan en términos de tecnología, alcance y calidad de identificación de plantas. Al comprender a nuestros competidores, estamos mejor preparados para desarrollar estrategias efectivas y diferenciarnos en este mercado competitivo.
+**Mapa de Competencia de objetivo: Identificación de Plantas**
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/c24276ae-25c4-4d53-a63a-47a04805c982)
+
+Por otro lado, creamos un mapa de competencia para el espacio de "Consejos de Plantas" en "SEEDY" para comprender quiénes están realizando recomendaciones relacionadas con el cuidado de plantas. Esto nos permite conocer a nuestros competidores directos, tanto en el mundo analógico como en el digital, y evaluar qué enfoques y soluciones están utilizando para atraer a los interesados en las plantas.
+
+**Mapa de Competencia de objetivo: Consejos de Plantas**
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/858e4094-96bd-424e-88d7-d307aa941ee0)
+
+
+
+
+
 **Tecnologías utilizadas:** 🚀
 **React Native** (framework)
 
@@ -83,4 +99,9 @@ Esta arquitectura de capaz con el uso de tecnologías como React Native, React E
   - AuthStackNavigator
   - BottomTabsNavigator
 
+    **Diagramas**
+    Draw.io
+    Miro
+    Figma
+Confluence en JIRA
 **i18next** (multilenguaje)
