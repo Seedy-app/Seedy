@@ -65,9 +65,18 @@ personas que ambos miembros del grupo conocíamos para poder realizar las valida
 **Pruebas de rendimiento:** En las pruebas de rendimiento, validamos que la aplicación funcione de forma eficiente ya que si probamos bajo cargas de trabajo muy elevadas, debemos garantizar un rendimiento óptimo.
 **Pruebas de Seguridad:** Realizamos pruebas de seguridad para garantizar que la aplicación sea resistente a vulnerabilidades o amenazas.
 
-**PENDIENTE: ARQUITECTURA EN CAPAS PRIMERO Y DESPUES LO DEMÁS....**
+**Arquitectura en Capas del Proyecto Seedy**
+Para empezar a hablar de nuestra arquitectura, primeramente comenzaremos por la infraestructura subyacenete donde como grupo tomamos la decisión de optar por utilizar Amazon Web Services(AWS) para el funcionamiento de capas que explicaremos a continuación.
+Elegimos AWS como nuestro proveedor de servicios en la nube, lo cual es fundamental para el funcionamiento de la aplicación. Esta decisión se basó en varias razones esenciales para el éxito del proyecto. 
+En primer lugar, AWS nos permite ajustar la capacidad de nuestros servidores según la cantidad de usuarios que utilicen la aplicación.Esto quiere decir que si más personas empiezan a usar "Seedy", podemos escalar nuestros servidores de manera sencilla para acomodar esa demanda adicional. Además, AWS nos da herramientas sólidas de seguridad para proteger los datos de nuestros usuarios. Esto es vital para garantizar que la información personal y cualquier otro dato sensible estén a salvo y no sean vulnerables a amenazas externas. Por otro lado, optamos por AWS ya que más alla de que el procedimiento de acomodarlo a nuestro proyecto llevo tiempo, este nos permite automatizar muchas tareas de administración, lo que nos ahorra tiempo y recursos. 
+A partir de aquí es donde nos vamos a centrar en las capas, las cuales estructuramos y cada una representa uan funcionalidad específica con tecnologías específicas.
+**Capa de Presentación(Interfaz de Usuario):** En esta capa, utilizamos React Native y React Navigator para crear una interfaz de usuario atractiva y gestionar la navegación en la Aplicación.Los usuarios interactúan directamente con esta capa para acceder a la información sobre el cuidado de las plantas y para conectarse con otras personas de la comunidad. Esta capa, incluye React Express, que permite una comunicación muy eficiente en el cliente y el Servidor. 
+**Capa de Lógica de Negocio:** En lo que sería el corazón de la Aplicación, esta capa gestiona la lógica e interacción con la base de datos. En esta parte, utilizamos tecnologías como Express para crear una API que maneja solicitudes y respuestas. También implementamos JSON Web Tokens(JWT Tokens) para la autenticación y autorización de usuarios, garantizando la seguridad de los datos. Nodemailer, se utiliza para el envío de correos electrónicos, esencial para envíos de notificaciones y adquirir mejor comunicación con los usuarios.
+**Capa de acceso a Datos:** La capa de acceso a datos se encarga de interactuar con bases de datos y servicios externos. Para cargar y procesar archivos de imágenes de plantas empleamos Multer y Sharp, que son tecnologías que permiten al usuario cargar imágenes de plantas y, a través de Sharp, realizar un procesamiento de imágenes de alto rendimiento para mostrar información detallada sobre las plantas.
+**Conclusión:**
+Esta arquitectura de capaz con el uso de tecnologías como React Native, React Express, Nodemailer, JSON Web Tokens (JWT Tokens), Multer y Sharp permiten que "Seedy" ofrezca una experiencia de usuario efectiva y una plataforma sólida para el cuidado de las plantas. AWS asegura que todo funcione sin problemas y que los datos estén seguros.
 
-**Tecnologías utilizadas:**
+**Tecnologías utilizadas:** 🚀
 **React Native** (framework)
 
 **React Navigator** (navegación):
