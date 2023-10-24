@@ -1,10 +1,18 @@
 // Importamos las dependencias necesarias
-import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { Image, View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
+import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import {
+  Image,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
-import Config from '../../config/Config';
+import Config from "../../config/Config";
+import { capitalizeFirstLetter } from "../../utils/device";
 
 function CommunitiesScreen() {
   // Usamos el hook de navegación
@@ -24,12 +32,12 @@ function CommunitiesScreen() {
     try {
       const response = await fetch(Config.API_URL + "/communities");
       if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.statusText);
+        throw new Error("Network response was not ok: " + response.statusText);
       }
       const data = await response.json();
       setCommunitiesData(data);
     } catch (error) {
-      console.error('Error fetching communities:', error);
+      console.error("Error fetching communities:", error);
     } finally {
       setRefreshing(false);
     }
@@ -48,14 +56,31 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <TouchableOpacity style={styles.listCard} onPress={() => navigation.navigate(t("community"), { community: community })} >
-        <Image 
-          source={{ uri: Config.API_URL+community.picture }}
-          style={styles.communityListPic}  
-        />
+    <TouchableOpacity
+      style={styles.listCard}
+      onPress={() =>
+        navigation.navigate(t("community"), { community: community })
+      }
+    >
+      <Image
+        source={{ uri: Config.API_URL + community.picture }}
+        style={styles.communityListPic}
+      />
       <View style={styles.communityShortInfo}>
-        <Text style={styles.title}>{community.name}</Text>
-        <Text style={styles.communityDescription}>{community.description}</Text>
+        <Text style={styles.title}>
+          {capitalizeFirstLetter(community.name)}
+        </Text>
+        <Text
+          style={styles.communityDescription}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {capitalizeFirstLetter(community.description)}
+        </Text>
+
+        <Text style={styles.userCount}>{`${
+          community.userCount
+        } ${capitalizeFirstLetter(t("members"))}`}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -64,16 +89,13 @@ function CommunitiesScreen() {
   return (
     <View style={styles.communitiesContainer}>
       {/* FlatList para mostrar las comunidades */}
-      <FlatList 
+      <FlatList
         data={communitiesData}
         renderItem={({ item }) => <CommunityCard community={item} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         // Control de refresco para la lista
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
     </View>

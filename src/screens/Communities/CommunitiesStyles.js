@@ -21,13 +21,17 @@ const communitiesStyles = StyleSheet.create({
     borderRadius: 50,
   },
   communityCreatePic: {
-    borderRadius: Dimensions.get("window").width/4,
+    borderRadius: Dimensions.get("window").width / 4,
   },
   communityShortInfo: {
     paddingLeft: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    maxWidth: Dimensions.get("window").width - 80,
   },
   communityDescription: {
-    marginTop: 5,
+    color: Colors.gray,
+    flexShrink: 1
   },
   tab: {
     backgroundColor: Colors.white,
