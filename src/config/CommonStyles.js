@@ -8,6 +8,23 @@ const commonStyles = StyleSheet.create({
     paddingHorizontal: 20,
     padding: 10,
   },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',  // Opcional, para alinear verticalmente el texto
+    marginBottom: 10,  // Opcional, para añadir un poco de espacio entre las filas
+  },
+  otherOptionsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  column: {
+    flex: 1,
+  },
   eyeIcon: {
     position: "absolute",
     transform: [{ translateX: 340 }, { translateY: 10 }],
@@ -39,11 +56,6 @@ const commonStyles = StyleSheet.create({
   justTextButton: {
     fontSize: FontSizes.regular,
     color: Colors.secondary,
-  },
-  otherOptionsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 15,
   },
   error: {
     color: Colors.error,

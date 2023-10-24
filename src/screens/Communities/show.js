@@ -13,12 +13,14 @@ import MembersTab from "./show-members";
 import ChatTab from "./show-chat";
 import InfoTab from "./show-info";
 import loadingImage from "../../assets/images/loading.gif";
+import {giveUserCommunityRole} from "../../utils/api"
 
 const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});
   const [communityMembersData, setCommunityMembersData] = useState([]);
   const [isMember, setIsMember] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
   const route = useRoute();
   const community = route.params.community;
@@ -65,7 +67,7 @@ const CommunityScreen = () => {
       // Solo ejecutar si userInfo y userInfo.id existen
       fetchCommunityMembers();
     }
-  }, [userInfo]);
+  }, [userInfo, refresh]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -89,11 +91,16 @@ const CommunityScreen = () => {
     info: () => <InfoTab someProp={null} />,
   });
 
+  const join_community = async () => {
+    await giveUserCommunityRole(userInfo.id, community.id, "community_member");
+    setRefresh(!refresh);
+  };
+  
   return (
     <>
       {isLoading ? (
         <View style={styles.fullLoading}>
-          <Image source={loadingImage}  />
+          <Image source={loadingImage} />
         </View>
       ) : isMember ? (
         <TabView
@@ -109,20 +116,26 @@ const CommunityScreen = () => {
           )}
         />
       ) : (
-        <View style={{ padding: 20 }}>
-          <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-            {community.name}
-          </Text>
-          <Text style={{ marginTop: 10 }}>{community.description}</Text>
-          <TouchableOpacity
-            style={{
-              marginTop: 20,
-              backgroundColor: "blue",
-              padding: 10,
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white" }}>Unirse a la comunidad</Text>
+        <View style={styles.container}>
+          <View style={{...styles.row, margin:7}}>
+            <View style={{...styles.column, alignItems: 'center', justifyContent: 'center'}}>          
+              <Image
+                source={{ uri: Config.API_URL + community.picture }}
+                style={styles.communityShowPic}
+              />
+            </View>
+            <View style={{...styles.column, alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={styles.title}>{communityMembersData['data'].length+' '+t("members")}</Text>
+            </View>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.label}>{t("description") + ": "}</Text>
+          </View>
+          <View>
+          <Text >{community.description}</Text>
+          </View>
+          <TouchableOpacity style={styles.button} onPress={join_community}>
+            <Text style={styles.buttonText}>{t("join_community")}</Text>
           </TouchableOpacity>
         </View>
       )}
