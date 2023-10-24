@@ -28,6 +28,7 @@
   "communities_list": "Listado de comunidades",
   "communities": "Comunidades",
   "community": "Comunidad",
+  "join_community": "Unirse a la comunidad",
   "no_community_image_message": "Si no subes tu propia imagen de la comunidad, elegiremos aleatoriamente una de las nuestras.",
   "create_community": "Crear comunidad",
   "community_name_already_exists_error": "Community name already exists.",
