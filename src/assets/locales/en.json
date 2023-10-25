@@ -49,5 +49,9 @@
   "loading_image": "Loading image...",
   "need_gallery_permission": "We need permissions to access your photos.",
   "optional": "optional",
-  "not_logged_in_error": "Unauthenticated user. Please log in."
+  "not_logged_in_error": "Unauthenticated user. Please log in.",
+  "general": "general",
+  "general_category_description": "Varied discussions and diverse topics.",
+  "members": "members",
+  "loading_members": "Loading members..."
 }

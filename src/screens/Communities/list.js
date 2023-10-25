@@ -57,7 +57,7 @@ function CommunitiesScreen() {
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
     <TouchableOpacity
-      style={styles.listCard}
+      style={{...styles.listCard, padding: 15}}
       onPress={() =>
         navigation.navigate(t("community"), { community: community })
       }
@@ -66,12 +66,12 @@ function CommunitiesScreen() {
         source={{ uri: Config.API_URL + community.picture }}
         style={styles.communityListPic}
       />
-      <View style={styles.communityShortInfo}>
+      <View style={{...styles.communityShortInfo, paddingLeft: 20}}>
         <Text style={styles.title}>
           {capitalizeFirstLetter(community.name)}
         </Text>
         <Text
-          style={styles.communityDescription}
+          style={styles.cardDescription}
           numberOfLines={1}
           ellipsizeMode="tail"
         >

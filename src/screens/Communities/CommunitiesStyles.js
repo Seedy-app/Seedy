@@ -24,14 +24,8 @@ const communitiesStyles = StyleSheet.create({
     borderRadius: Dimensions.get("window").width / 4,
   },
   communityShortInfo: {
-    paddingLeft: 20,
-    flexDirection: 'row',
     flexWrap: 'wrap',
     maxWidth: Dimensions.get("window").width - 80,
-  },
-  communityDescription: {
-    color: Colors.gray,
-    flexShrink: 1
   },
   tab: {
     backgroundColor: Colors.white,

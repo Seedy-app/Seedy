@@ -3,15 +3,14 @@ import Colors from "./Colors";
 import FontSizes from "./FontSizes";
 
 const commonStyles = StyleSheet.create({
+  viewBorders: {
+    borderWidth: 1,
+    borderColor: 'black'
+  },
   container: {
     flex: 1,
     paddingHorizontal: 20,
     padding: 10,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',  // Opcional, para alinear verticalmente el texto
-    marginBottom: 10,  // Opcional, para añadir un poco de espacio entre las filas
   },
   otherOptionsContainer: {
     flexDirection: "row",
@@ -36,6 +35,10 @@ const commonStyles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
     borderRadius: 5,
+  },
+  cardDescription: {
+    color: Colors.gray,
+    flexShrink: 1
   },
   button: {
     alignItems: "center",
@@ -86,7 +89,6 @@ const commonStyles = StyleSheet.create({
   listCard: {
     backgroundColor: Colors.white,
     borderRadius: 5,
-    padding: 15,
     marginBottom: 10,
     shadowColor: Colors.shadow,
     shadowOffset: {
