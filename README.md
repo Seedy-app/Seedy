@@ -106,9 +106,13 @@ Realizamos una investigación en la cual se involucran muchos temas que se tuvie
 
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/244727f7-e484-48db-88d0-41e0295fd26b)
 
+**Encuestas:**
+Al realizar una encuesta, debemos tener en cuenta muchas cuestiones que no solo se encuentren basadas en nuestros intereses sino también en el de los usuarios que van a elegir o no descargar nuestra aplicación. Nuestro objetivo principal es a partir de las respuestas plantear que escenarios se nos presentan de cara a seguir desarrollando la aplicación y como podemos generar interés en las personas. De esta manera planteamos que una vez llegado al numero total de respuestas que queremos, vamos a adquirir conocimiento de quién es nuestro público objetivo.
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/c0be2dac-25d4-4171-955c-92b7c88b1b17)
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/858e2805-8014-48af-b881-0566aa039c91)
 
-
-
+**Resultados**
+**Análisis de los resultados:**
 
 **Tecnologías utilizadas:** 🚀
 **React Native** (framework)
