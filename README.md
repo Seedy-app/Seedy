@@ -66,9 +66,21 @@ Back-End:
 -Diagramas: Draw.io, Miro.
 -Confluence JIRA.
 
+**Necesidades y Oportunidades:**
+Las necesidades que se deben satisfacer incluyen la falta de información sobre el cuidado de las plantas, la necesidad de identificar especies vegetales desconocidas y la búsqueda de una comunidad en línea para aficionados de la jardinería. La oportunidad radica en desarrollar una aplicación como "Seedy" que aborde estas necesidades, proporcionando consejos de cuidado, identificación de plantas y una plataforma para la interacción de la comunidad.
+
+**Beneficios Esperados:**
+Los beneficios esperados de la implementación de Seedy abarcan desde un mayor conocimiento sobre el cuidado de las plantas y la identificación de especies hasta la capacidad de crear o unirte a una comunidad en línea para compartir experiencias y obtener consejos valiosos. Además, la inclusión de multilingüismo y accesibilidad a través de i18next y una gestión eficiente del proyecto y datos a través de herramientas como Confluence en JIRA y AWS Services contribuirán a una experiencia completa y enriquecedora para los usuarios.
+
+**Investigación de Mercado**
+
+**Requerimientos Funcionales**
+
+
+
 **Modelo del proceso de software:**
 
-El proceso de desarrollo de software en el proyecto "Seedy" sigue un modelo estructurado que abarca varias etapas clave. Comienza con la comunicación, donde se recopilan los requisitos del software a través de la interacción con usuarios y partes interesadas. Luego, en la etapa de planeación, se definen las tareas, se asignan recursos y se establecen plazos para el proyecto. La fase de modelado implica la creación de un modelo de la solución, incluyendo el diseño de la interfaz de usuario y la arquitectura de la aplicación.
+El proceso de desarrollo de software en el proyecto "Seedy", sigue un modelo estructurado que abarca varias etapas clave. Comienza con la comunicación, donde se recopilan los requisitos del software a través de la interacción con usuarios y partes interesadas. Luego, en la etapa de planeación, se definen las tareas, se asignan recursos y se establecen plazos para el proyecto. La fase de modelado implica la creación de un modelo de la solución, incluyendo el diseño de la interfaz de usuario y la arquitectura de la aplicación.
 
 Posteriormente, en la etapa de construcción, se produce el código y se implementan las funcionalidades utilizando tecnologías como React Native y React Navigator. Estos frameworks desempeñan un papel fundamental en el desarrollo de la aplicación. Finalmente, en la fase de despliegue, la aplicación se publica en la tienda de aplicación de Android "Google Play" para que los usuarios la descarguen y utilicen. Este enfoque estructurado garantiza un proceso de desarrollo efectivo y eficiente en el proyecto "Seedy", permitiendo la creación de una aplicación móvil moderna para el cuidado de plantas.
 
