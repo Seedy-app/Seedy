@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import commonStyles from "../../config/CommonStyles";
-import FontSizes from "../../config/FontSizes";
 import Colors from "../../config/Colors";
+import FontSize from "../../config/FontSizes";
 
 const communitiesStyles = StyleSheet.create({
   ...commonStyles,
@@ -21,19 +21,35 @@ const communitiesStyles = StyleSheet.create({
     borderRadius: 50,
   },
   communityCreatePic: {
-    borderRadius: Dimensions.get("window").width/4,
+    borderRadius: Dimensions.get("window").width / 4,
   },
   communityShortInfo: {
-    paddingLeft: 20,
-  },
-  communityDescription: {
-    marginTop: 5,
+    flexWrap: "wrap",
+    maxWidth: Dimensions.get("window").width - 80,
   },
   tab: {
     backgroundColor: Colors.white,
   },
   tabLabel: {
     color: Colors.black,
+  },
+  header: {
+    backgroundColor: Colors.primary,
+    marginBottom: 2,
+    borderRadius: 3,
+    shadowColor: Colors.shadow,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  headerText: {
+    color: Colors.white,
+    fontSize: FontSize.regular,
+    fontWeight: "bold",
   },
 });
 

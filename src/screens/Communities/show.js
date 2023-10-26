@@ -13,11 +13,13 @@ import MembersTab from "./show-members";
 import ChatTab from "./show-chat";
 import InfoTab from "./show-info";
 import loadingImage from "../../assets/images/loading.gif";
-import {giveUserCommunityRole} from "../../utils/api"
+import { giveUserCommunityRole } from "../../utils/api";
 
 const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});
   const [communityMembersData, setCommunityMembersData] = useState([]);
+  const [communityCategoriesData, setCommunityCategoriesData] = useState([]);
+  const [communityPostsData, setCommunityPostsData] = useState([]);
   const [isMember, setIsMember] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
@@ -62,11 +64,53 @@ const CommunityScreen = () => {
         console.error("Error fetching community members:", error);
       }
     };
+    const fetchCommunityCategories = async () => {
+      try {
+        const response = await fetch(
+          `${Config.API_URL}/communities/${community.id}/categories`
+        );
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok: " + response.statusText
+          );
+        }
+        const data = await response.json();
+        setCommunityCategoriesData(data);
+        setIsLoading(false); // Finalizar la carga
+      } catch (error) {
+        console.error("Error fetching community categories:", error);
+      }
+    };
+    const fetchCommunityPosts = async () => {
+      try {
+        const response = await fetch(`${Config.API_URL}/communities/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            community_id: community.id,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok: " + response.statusText
+          );
+        }
+        const data = await response.json();
+        setCommunityPostsData(data);
+        setIsLoading(false); // Finalizar la carga
+      } catch (error) {
+        console.error("Error fetching community posts:", error);
+      }
+    };
 
     if (userInfo && userInfo.id) {
       // Solo ejecutar si userInfo y userInfo.id existen
       fetchCommunityMembers();
+      fetchCommunityPosts();
     }
+    fetchCommunityCategories();
   }, [userInfo, refresh]);
 
   useLayoutEffect(() => {
@@ -85,7 +129,12 @@ const CommunityScreen = () => {
   ]);
 
   const renderScene = SceneMap({
-    posts: () => <PostsTab someProp={null} />,
+    posts: () => (
+      <PostsTab
+        communityCategories={communityCategoriesData}
+        communityPosts={communityPostsData}
+      />
+    ),
     members: () => <MembersTab communityMembers={communityMembersData.data} />,
     chat: () => <ChatTab someProp={null} />,
     info: () => <InfoTab someProp={null} />,
@@ -95,7 +144,7 @@ const CommunityScreen = () => {
     await giveUserCommunityRole(userInfo.id, community.id, "community_member");
     setRefresh(!refresh);
   };
-  
+
   return (
     <>
       {isLoading ? (
@@ -117,22 +166,35 @@ const CommunityScreen = () => {
         />
       ) : (
         <View style={styles.container}>
-          <View style={{...styles.row, margin:7}}>
-            <View style={{...styles.column, alignItems: 'center', justifyContent: 'center'}}>          
+          <View style={{ ...styles.row, margin: 7 }}>
+            <View
+              style={{
+                ...styles.column,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Image
                 source={{ uri: Config.API_URL + community.picture }}
                 style={styles.communityShowPic}
               />
             </View>
-            <View style={{...styles.column, alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={styles.title}>{communityMembersData['data'].length+' '+t("members")}</Text>
+            <View
+              style={{
+                ...styles.column,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.title}>
+                {communityMembersData["data"]
+                  ? communityMembersData["data"].length + " " + t("members")
+                  : t("loading_members")}
+              </Text>
             </View>
           </View>
-          <View style={styles.rowContainer}>
-            <Text style={styles.label}>{t("description") + ": "}</Text>
-          </View>
           <View>
-          <Text >{community.description}</Text>
+            <Text>{community.description}</Text>
           </View>
           <TouchableOpacity style={styles.button} onPress={join_community}>
             <Text style={styles.buttonText}>{t("join_community")}</Text>

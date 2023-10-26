@@ -6,7 +6,7 @@ import Colors from "../../config/Colors";
 
 // Componente para representar cada miembro en la lista
 const MemberCard = ({ member }) => (
-  <TouchableOpacity style={styles.listCard}>
+  <TouchableOpacity style={{...styles.listCard, padding: 10}}>
     <Image style={styles.midProfilePic} source={{ uri: `${Config.API_URL}${member.picture}` }} />
     <View>
       <Text style={styles.subtitle}>{member.username}</Text>

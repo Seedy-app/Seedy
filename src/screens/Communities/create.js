@@ -19,6 +19,7 @@ import {
   getRandomPicture,
   uploadPictureToServer,
   giveUserCommunityRole,
+  createCommunityCategory,
 } from "../../utils/api";
 
 function CreateCommunitiesScreen() {
@@ -93,6 +94,7 @@ function CreateCommunitiesScreen() {
         userId
       );
       await giveUserCommunityRole(userId, community_id, "community_founder");
+      await createCommunityCategory(t, community_id, t('general'), t('general_category_description'));
       if (selectedImageUri) {
         const imageUrl = await uploadPictureToServer(
           `cp_${Date.now()}`,
