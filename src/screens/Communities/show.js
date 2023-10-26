@@ -19,6 +19,7 @@ const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});
   const [communityMembersData, setCommunityMembersData] = useState([]);
   const [communityCategoriesData, setCommunityCategoriesData] = useState([]);
+  const [communityPostsData, setCommunityPostsData] = useState([]);
   const [isMember, setIsMember] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
@@ -80,10 +81,34 @@ const CommunityScreen = () => {
         console.error("Error fetching community categories:", error);
       }
     };
+    const fetchCommunityPosts = async () => {
+      try {
+        const response = await fetch(`${Config.API_URL}/communities/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            community_id: community.id,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok: " + response.statusText
+          );
+        }
+        const data = await response.json();
+        setCommunityPostsData(data);
+        setIsLoading(false); // Finalizar la carga
+      } catch (error) {
+        console.error("Error fetching community posts:", error);
+      }
+    };
 
     if (userInfo && userInfo.id) {
       // Solo ejecutar si userInfo y userInfo.id existen
       fetchCommunityMembers();
+      fetchCommunityPosts();
     }
     fetchCommunityCategories();
   }, [userInfo, refresh]);
@@ -102,10 +127,14 @@ const CommunityScreen = () => {
     { key: "chat", title: t("chat") },
     { key: "info", title: t("info") },
   ]);
-  console.log(communityCategoriesData);
 
   const renderScene = SceneMap({
-    posts: () => <PostsTab communityCategories={communityCategoriesData} />,
+    posts: () => (
+      <PostsTab
+        communityCategories={communityCategoriesData}
+        communityPosts={communityPostsData}
+      />
+    ),
     members: () => <MembersTab communityMembers={communityMembersData.data} />,
     chat: () => <ChatTab someProp={null} />,
     info: () => <InfoTab someProp={null} />,

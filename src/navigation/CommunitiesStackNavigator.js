@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../config/Colors";
 import FontSizes from "../config/FontSizes";
-import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
+import FontAwesome from "react-native-vector-icons/FontAwesome"; 
 
 const CommunitiesStack = createStackNavigator();
 

@@ -5,7 +5,7 @@ import FontSizes from "./FontSizes";
 const commonStyles = StyleSheet.create({
   viewBorders: {
     borderWidth: 1,
-    borderColor: 'black'
+    borderColor: Colors.black
   },
   container: {
     flex: 1,
@@ -108,7 +108,6 @@ const commonStyles = StyleSheet.create({
     alignItems: "center",
   },
 
-  // Texts
   title: {
     fontSize: FontSizes.large,
     fontWeight: "bold",
@@ -117,7 +116,6 @@ const commonStyles = StyleSheet.create({
     fontSize: FontSizes.large,
   },
 
-  // Profile picture
   largeProfilePic: {
     borderRadius: 50,
     marginRight: 10,
@@ -139,9 +137,9 @@ const commonStyles = StyleSheet.create({
 
   // Role
   roleContainer: {
-    borderRadius: 5, // Bordes redondeados
-    padding: 5, // Espaciado interno
-    marginLeft: "auto", // Alineación a la derecha
+    borderRadius: 5, 
+    padding: 5, 
+    marginLeft: "auto", 
   },
   roleText: {
     color: Colors.white, 

@@ -52,6 +52,9 @@
   "not_logged_in_error": "Usuario no autenticado. Por favor, inicia sesión.",
   "general": "general",
   "general_category_description": "Discusiones variadas y temas diversos.",
+  "categories": "Categorias",
   "members": "miembros",
-  "loading_members": "Cargando miembros..."
+  "loading_members": "Cargando miembros...",
+  "posts": "publicaciónes",
+  "author": "autor"
 }
