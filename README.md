@@ -1,21 +1,31 @@
 # Seedy
 
 **Introducción**
+**Objetivo del Documento**
+La finalidad del presente Documento es definir las características iniciales del proyecto que se llevará adelante durante el Seminario de Sistemas de la carrera Analista en sistemas de la Escuela de Arte Multimedial Da Vinci.
 
-La falta de aplicaciones móviles que proporcionen información acerca del cuidado de las plantas y el desconocimiento del ciclo de vida de las mismas, es una problemática que persiste en la sociedad actual, teniendo en cuenta las transformaciones constantes de nuestro mundo tecnológico. Es bajo el conocimiento que brindan las aplicaciones que se encuentran centradas en brindar consejos o realizar la identificación de distintas especies. Esta carencia de recursos puede llevar a varios inconvenientes. En primer lugar, muchas personas sin experiencia previa en el cuidado de plantas pueden enfrentar dificultades para saber cómo mantener sus plantas adecuadamente sin una guía que los ayude. Esto puede resultar en el deterioro de las plantas debido a problemas como el riego inadecuado, la falta de luz o las plagas y enfermedades.
+**Descripción del equipo:**
 
-En segundo lugar, la ausencia de información sobre plantas puede limitar la capacidad de las personas de poder disfrutar de los beneficios de plantar en sus hogares o jardines. Sin acceso a contenidos que les enseñen cómo cuidar apropiadamente las plantas, muchas personas pueden evitar tenerlas en sus entornos. Por lo tanto, se plantea la necesidad de abordar esta problemática.
+**Integrantes:**
+Markauskas, Magali
+Muzzio, Franco
+**Materias de los 3 años en Da Vinci aprobadas.**
 
-**Objetivo General de Proyecto**
+**Descripción del Proyecto:**
+**Nombre:**
+Seedy.
+**Problemática a abordar**
+La falta de aplicaciones móviles que brinden información sobre el cuidado de las plantas y el desconocimiento del ciclo de vida de las mismas son desafíos persistentes en la sociedad actual, a pesar de las continuas transformaciones tecnológicas. La mayoría de las aplicaciones existentes se centran en proporcionar consejos o identificar especies, dejando un vacío en cuanto a la educación sobre el cuidado adecuado de las plantas. Este déficit puede llevar a dificultades para los inexpertos en la jardinería, resultando en problemas como riego inadecuado, falta de luz y plagas.
+Además, la falta de información sobre plantas puede desalentar a las personas a disfrutar de los beneficios de tener plantas en sus hogares o jardines. La necesidad de abordar esta problemática es evidente.
 
-El propósito de esta sección es definir la solución para la problemática que será abordada en el proyecto que se llevará a cabo durante el Seminario Final de la carrera "Analista en Sistemas" de la Escuela de Arte Multimedial Da Vinci.
+**Solución**
+El propósito de esta sección es definir la solución para la problemática abordada en el proyecto de Seminario Final de la carrera "Analista en Sistemas" de la Escuela de Arte Multimedial Da Vinci.
 
-Para abordar esta problemática, hemos desarrollado Seedy, una aplicación móvil que proporciona información detallada sobre el cuidado de las plantas mediante la identificación de las mismas y permite aprender sobre diversas especies vegetales. Esta aplicación móvil está disponible para su descarga por parte de los usuarios y ofrece una gran cantidad de información práctica y útil.
+Para enfrentar este desafío, hemos desarrollado Seedy, una aplicación móvil que ofrece información detallada sobre el cuidado de las plantas mediante su identificación, al mismo tiempo que permite aprender sobre diversas especies vegetales. La aplicación se encuentra disponible para su descarga y proporciona información valiosa.
 
-A pesar del avance tecnológico mencionado en el párrafo precedente, son pocas las aplicaciones que permiten ayudarte con el cuidado de plantas, las cuales si no tienen la suficiente atención pueden correr riesgo. Por esta razón,
-en Seedy hemos implementado la posibilidad de generar comunidades en línea donde entusiastas de la jardinería y la horticultura pueden conectarse y compartir información y experiencias. Estas comunidades representan una oportunidad para que los usuarios interactúen con otros apasionados por las plantas y obtengan consejos valiosos.
+A pesar de los avances tecnológicos, hay una escasez de aplicaciones que brinden asistencia efectiva en el cuidado de plantas. Por esta razón, en Seedy hemos incorporado la capacidad de formar comunidades en línea, donde entusiastas de la jardinería y la horticultura pueden conectarse y compartir información y experiencias. Estas comunidades representan una oportunidad para que los usuarios interactúen con otros amantes de las plantas y obtengan consejos valiosos.
 
-En resumen, Seedy es una aplicación móvil que aborda la falta de información sobre el cuidado de las plantas y el desconocimiento de las especies, y lo hace de manera efectiva mediante el uso de tecnología y la creación de comunidades en línea, con el objetivo de que los usuarios logren contar sus experiencias, aprender y prevenir.
+En resumen, Seedy aborda la falta de información sobre el cuidado de las plantas y el desconocimiento de las especies de manera efectiva, utilizando tecnología y la creación de comunidades en línea. El objetivo es que los usuarios compartan experiencias, aprendan y prevengan problemas en el cuidado de sus plantas.
 
 **Objetivos específicos del proyecto**
 
@@ -36,6 +46,7 @@ La aplicación "Seedy" abarca desde el momento en que un usuario descarga la apl
 
 **Alcance**
 Dado que el proyecto "Seedy" involucra tanto la creación de una nueva comunidad en línea como un cambio en la forma en que las personas cuidan de sus plantas, hemos considerado recomendable comenzar el proyecto de forma gradual, enfocándonos en un conjunto inicial de funcionalidades y objetivos. Esto permitirá un cambio cultural de magnitud y un impacto significativo en la experiencia del usuario. 
+
 **El alcance inicial se concentra en las siguientes áreas:**
 
 **Función de Identificación de Plantas:** Implementar una función que permita a los usuarios tomar fotos de sus plantas y recibir información instantánea sobre la especie y los cuidados requeridos. Esta funcionalidad será la piedra angular de la aplicación.
@@ -43,6 +54,17 @@ Dado que el proyecto "Seedy" involucra tanto la creación de una nueva comunidad
 **Comunidad en Línea:** Establecer un espacio en la aplicación donde los usuarios puedan interactuar, compartir experiencias y obtener asesoramiento sobre el cuidado de las plantas. Este espacio permitirá la creación de una comunidad de amantes de la jardinería.
 
 **Contenido Educativo para los usuarios:** Proporcionar a los usuarios recursos educativos cuando lo soliciten, como guías y consejos básicos para el cuidado de plantas las cuales se precise de información específica.El fin es ayudar a los usuarios a comenzar con sus experiencias de jardinería.
+
+**Tecnologías utilizadas:** 🚀
+Front-End:
+-React Native (framework)
+-React Navigator (navegación)
+-i18next (multilenguaje)
+-Figma
+Back-End:
+-AWS Service
+-Diagramas: Draw.io, Miro.
+-Confluence JIRA.
 
 **Modelo del proceso de software:**
 
@@ -114,16 +136,4 @@ Al elaborar una encuesta, debemos tener en cuenta muchas cuestiones que no solo 
 **Resultados**
 **Análisis de los resultados:**
 
-**Tecnologías utilizadas:** 🚀
-**React Native** (framework)
 
-**React Navigator** (navegación):
-  - AuthStackNavigator
-  - BottomTabsNavigator
-
-    **Diagramas**
-    Draw.io
-    Miro
-    Figma
-Confluence en JIRA
-**i18next** (multilenguaje)
