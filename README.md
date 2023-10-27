@@ -145,6 +145,14 @@ Al elaborar una encuesta, debemos tener en cuenta muchas cuestiones que no solo 
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/c0be2dac-25d4-4171-955c-92b7c88b1b17)
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/f3f316df-72fe-4781-973b-c0ff5af0bdd2)
 
+Respuestas:
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/1bbcf767-cac1-4491-b302-8db6f7604593)
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/a04e94f2-d067-4725-9578-be7d9d2fce63)
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/8e36cbce-8620-4b39-8aa5-8c213449d98f)
+
+**Análisis de Respuestas**
+
+
 **Resultados**
 **Análisis de los resultados:**
 
