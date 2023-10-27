@@ -19,9 +19,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                 },
                 body: JSON.stringify({ email: email }),
             });
-    
-            const data = await response.json();
-    
+        
             if (response.status === 200) {
                 navigation.navigate(t("reset_password"));
             } else {

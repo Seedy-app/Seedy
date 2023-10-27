@@ -3,10 +3,26 @@ import Colors from "./Colors";
 import FontSizes from "./FontSizes";
 
 const commonStyles = StyleSheet.create({
+  viewBorders: {
+    borderWidth: 1,
+    borderColor: Colors.black
+  },
   container: {
     flex: 1,
     paddingHorizontal: 20,
     padding: 10,
+  },
+  otherOptionsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  column: {
+    flex: 1,
   },
   eyeIcon: {
     position: "absolute",
@@ -19,6 +35,10 @@ const commonStyles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
     borderRadius: 5,
+  },
+  cardDescription: {
+    color: Colors.gray,
+    flexShrink: 1
   },
   button: {
     alignItems: "center",
@@ -39,11 +59,6 @@ const commonStyles = StyleSheet.create({
   justTextButton: {
     fontSize: FontSizes.regular,
     color: Colors.secondary,
-  },
-  otherOptionsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 15,
   },
   error: {
     color: Colors.error,
@@ -74,7 +89,6 @@ const commonStyles = StyleSheet.create({
   listCard: {
     backgroundColor: Colors.white,
     borderRadius: 5,
-    padding: 15,
     marginBottom: 10,
     shadowColor: Colors.shadow,
     shadowOffset: {
@@ -94,7 +108,6 @@ const commonStyles = StyleSheet.create({
     alignItems: "center",
   },
 
-  // Texts
   title: {
     fontSize: FontSizes.large,
     fontWeight: "bold",
@@ -103,7 +116,6 @@ const commonStyles = StyleSheet.create({
     fontSize: FontSizes.large,
   },
 
-  // Profile picture
   largeProfilePic: {
     borderRadius: 50,
     marginRight: 10,
@@ -125,9 +137,9 @@ const commonStyles = StyleSheet.create({
 
   // Role
   roleContainer: {
-    borderRadius: 5, // Bordes redondeados
-    padding: 5, // Espaciado interno
-    marginLeft: "auto", // Alineación a la derecha
+    borderRadius: 5, 
+    padding: 5, 
+    marginLeft: "auto", 
   },
   roleText: {
     color: Colors.white, 

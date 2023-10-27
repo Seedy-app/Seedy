@@ -28,6 +28,7 @@
   "communities_list": "Listado de comunidades",
   "communities": "Comunidades",
   "community": "Comunidad",
+  "join_community": "Unirse a la comunidad",
   "no_community_image_message": "Si no subes tu propia imagen de la comunidad, elegiremos aleatoriamente una de las nuestras.",
   "create_community": "Crear comunidad",
   "community_name_already_exists_error": "Community name already exists.",
@@ -48,6 +49,12 @@
   "loading_image": "Cargando imagen...",
   "need_gallery_permission": "Necesitamos permisos para acceder a tus fotos.",
   "optional": "opcional",
-  "not_logged_in_error": "Usuario no autenticado. Por favor, inicia sesión."
-
+  "not_logged_in_error": "Usuario no autenticado. Por favor, inicia sesión.",
+  "general": "general",
+  "general_category_description": "Discusiones variadas y temas diversos.",
+  "categories": "Categorias",
+  "members": "miembros",
+  "loading_members": "Cargando miembros...",
+  "posts": "publicaciónes",
+  "author": "autor"
 }

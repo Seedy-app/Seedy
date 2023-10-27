@@ -260,3 +260,42 @@ export const getRandomPicture = async (t, type) => {
   }
   return null;
 };
+
+export const createCommunityCategory = async (
+  t,
+  community_id,
+  name,
+  description
+  ) => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+  
+      if (!token) {
+        console.error(t("not_logged_in_error"));
+        return { error: t("not_logged_in_error") };
+      }
+      const response = await fetch(
+        `${Config.API_URL}/communities/${community_id}/create-category`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name, 
+            description
+          }),
+        }
+      );
+      if (!response.ok) {
+        console.info(response);
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+      return false;
+    }
+  };
