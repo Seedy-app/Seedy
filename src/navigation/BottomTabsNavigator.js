@@ -6,7 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos l
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; // Importamos la librería de íconos MaterialCommunityIcons
 import Foundation from "react-native-vector-icons/Foundation"; // Importamos la librería de íconos Foundation
 import PlantIdentifierScreen from "../screens/PlantIdentifier";
-import MyPlantsScreen from "../screens/MyPlants";
+import MyPlantsScreen from "../navigation/MyPlantsNavigation";
 import MarketScreen from "../screens/Market";
 import { useTranslation } from "react-i18next";
 

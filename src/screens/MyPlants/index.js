@@ -1,14 +1,19 @@
 import React from "react";
-import { View, Text } from "react-native";
-import i18next from "../../services/i18next";
-import { useTranslation } from "react-i18next";
-import styles from "./MyPlantsStyles";
+import { View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 function MyPlantsScreen() {
-  const { t } = useTranslation();
+  const navigation = useNavigation();
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>{t("my_plants")}</Text>
+      <Text>My Plants Screen</Text>
+      <TouchableOpacity
+        style={{ backgroundColor: "blue", padding: 10, marginTop: 10 }}
+        onPress={() => navigation.navigate("RemindersScreen")}
+      >
+        <Text style={{ color: "white" }}>Go to Reminders</Text>
+      </TouchableOpacity>
     </View>
   );
 }
