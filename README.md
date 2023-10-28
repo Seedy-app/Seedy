@@ -102,8 +102,11 @@ En todas las etapas del ciclo de vida del desarrollo de software es posible apli
 **Validación:**
 **Pruebas de Aceptación:** En las pruebas de aceptación, necesitamos de usuarios finales o representantes de los usuarios para que prueben la aplicación en un entorno de prueba. Para esto, no solo contaron las correcciones del profesor, el cual simulaba la interaccion con la aplicación sino que también contactamos 
 personas que ambos miembros del grupo conocíamos para poder realizar las validaciones de la aplicación y de esta manera, lograr como resultado que la misma haya sido lo suficientemente intuitiva como nos planteamos.Por otro lado, ver como el usuario interactua con "Seedy" y sus funciones bien establecidas. Por último, llegar a la satisfacción de las necesidades reales de los usuarios que tomen la decisión de instalar nuestra aplicación.
+
 **Evaluación de Requisitos:** Esta evaluación es fundamental como grupo, ya que los requisitos iniciales del proyecto se deben cumplir y la aplicación, como objetivo principal del proyecto, debe cumplir las expectativas del cliente y de los usuarios.
+
 **Pruebas de rendimiento:** En las pruebas de rendimiento, validamos que la aplicación funcione de forma eficiente ya que si probamos bajo cargas de trabajo muy elevadas, debemos garantizar un rendimiento óptimo.
+
 **Pruebas de Seguridad:** Realizamos pruebas de seguridad para garantizar que la aplicación sea resistente a vulnerabilidades o amenazas.
 
 **Arquitectura en Capas del Proyecto Seedy**
@@ -142,10 +145,18 @@ Por último, la unión a comunidades es un objetivo que se basa en que los usuar
 **Hipótesis de los ejes centrales del Proyecto:**
 La aplicación móvil Seedy representa una solución tecnológica integral que se desglosa en tres ejes principales: identificación de plantas, consejos sobre el cuidado de las plantas y la posibilidad de unirse a comunidades de amantes de la jardinería. En el eje de identificación de plantas, hipotetizamos que los usuarios encontrarán en Seedy una herramienta valiosa para identificar con precisión diversas especies de plantas, lo que enriquecerá su pasión por la jardinería o de no ser asi, resolver cualquier duda que se le presente. En el segundo eje, que se centra en brindar consejos sobre el cuidado de las plantas, esperamos que los usuarios utilicen activamente esta función para abordar desafíos y problemas específicos en el crecimiento de sus plantas. La eficacia y relevancia de estos consejos serán fundamentales para la satisfacción de los usuarios y su compromiso continuo con la aplicación. En el tercer eje, que involucra la unión a comunidades, creemos que los usuarios encontrarán un espacio donde pueden compartir sus experiencias, aprender de otros expertos en plantas y construir una comunidad en línea en la que pueden debatir y compartir su amor por la jardinería. La participación activa en estas comunidades contribuirá significativamente a la satisfacción y retención de los usuarios en la aplicación Seedy.
 
+**Etapa de Investigación**
+1.Investigación de la Aplicación
+2.Recopilación de Datos
+3.Patrones y Síntesis
+4.Definición de User Persona
+
 **Investigación de la Aplicación**
 Realizamos una investigación en la cual se involucran muchos temas que se tuvieron en cuenta a la hora del nacimiento de la idea del proyecto "Seedy". Esta investigación, es esencial para nosotros porque es una manera de ver si previo a la conformación definitiva del grupo, cada uno de forma individual apuntaba para el mismo lado y tenia los mismos objetivos para con la Tesis Final que buscabamos presentar. Por lo tanto, a continuación presentaremos los temas que se tuvieron en cuenta y los análisis de tecnologías a utilizar que decidimos marcar en cada punto.
 
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/244727f7-e484-48db-88d0-41e0295fd26b)
+
+**Recopilación de Datos**
 
 **Encuestas:**
 Al elaborar una encuesta, debemos tener en cuenta muchas cuestiones que no solo se encuentren basadas en nuestros intereses sino también en el de los usuarios que van a elegir o no descargar nuestra aplicación. Nuestro objetivo principal es a partir de las respuestas plantear que escenarios se nos presentan de cara a seguir desarrollando la aplicación y como podemos generar interés en las personas. De esta manera planteamos que una vez llegado al numero total de respuestas que queremos, vamos a adquirir conocimiento de quién es nuestro público objetivo.
@@ -158,6 +169,14 @@ Respuestas:
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/8e36cbce-8620-4b39-8aa5-8c213449d98f)
 
 **Análisis de Respuestas**
+
+
+
+**UX personas**
+Para este Proyecto hemos creado a nuestra UX Persona. Una UX Persona es aquella representación ficticia de los usuarios finales de un producto o un servicio basadas en datos reales y observaciones de comportamiento. Además, es una herramienta para tomar decisiones y es un arquetipo de un humano real. Cuando hablamos de arquetipo, quiere decir que representará a los diferentes tipos de usuarios y se basa en investigaciones y datos empíricos. Creamos personas en base a lo que investigamos de otras, como motivaciones, objetivos, frustraciones, la biografía. Como equipo hacer hincapié en esta investigación y análisis, nos ayuda a comprender mejor las necesidades, objetivos, comportamientos y preferencias del usuario, lo que a la misma vez, nos permtie crear soluciones que satisfagan las necesidades de los usuarios de manera efectiva. En esta parte d ela documentación, vamos a representar a un usuario real, descubrir y describir personas exactas, empatizar mejor ya que es dificil empatizar con un usuario debido a que es como un numero o entidad que terminará descargando la aplicación o no. Teniendo en cuenta esto, pensar que es una persona con emociones que la lleva a tomar decisiones, nos va a permtiir empatizar mejor. 
+Entraran en juego los datos cualitativos, como cuantitativos, saber no solo lo que ocurre sino que también el por qué. Nuestro arquetipo, estará definido por investigación y análisis. Mantendremos al usuario en el centro del proceso de diseño y tomaremos decisiones basadas en las necesidades reales de los usuarios.
+
+
 
 
 **Resultados**
