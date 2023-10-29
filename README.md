@@ -143,7 +143,7 @@ Por último, la unión a comunidades es un objetivo que se basa en que los usuar
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/63575c26-55f2-4250-ac23-74201cee26e2)
 
 **Hipótesis de los ejes centrales del Proyecto:**
-La aplicación móvil Seedy representa una solución tecnológica integral que se desglosa en tres ejes principales: identificación de plantas, consejos sobre el cuidado de las plantas y la posibilidad de unirse a comunidades de amantes de la jardinería. En el eje de identificación de plantas, hipotetizamos que los usuarios encontrarán en Seedy una herramienta valiosa para identificar con precisión diversas especies de plantas, lo que enriquecerá su pasión por la jardinería o de no ser asi, resolver cualquier duda que se le presente. En el segundo eje, que se centra en brindar consejos sobre el cuidado de las plantas, esperamos que los usuarios utilicen activamente esta función para abordar desafíos y problemas específicos en el crecimiento de sus plantas. La eficacia y relevancia de estos consejos serán fundamentales para la satisfacción de los usuarios y su compromiso continuo con la aplicación. En el tercer eje, que involucra la unión a comunidades, creemos que los usuarios encontrarán un espacio donde pueden compartir sus experiencias, aprender de otros expertos en plantas y construir una comunidad en línea en la que pueden debatir y compartir su amor por la jardinería. La participación activa en estas comunidades contribuirá significativamente a la satisfacción y retención de los usuarios en la aplicación Seedy.
+La aplicación móvil Seedy representa una solución tecnológica integral que se desglosa en tres ejes principales: identificación de plantas, consejos sobre el cuidado de las plantas y la posibilidad de unirse o crear comunidades de aficionados de la jardinería. En el eje de identificación de plantas, hipotetizamos que los usuarios encontrarán en Seedy una herramienta valiosa para identificar con precisión diversas especies de plantas, lo que enriquecerá su pasión por la jardinería o de no ser asi, resolver cualquier inquietud que se le presente. En el segundo eje, que se centra en brindar consejos sobre el cuidado de las plantas, esperamos que los usuarios utilicen activamente esta función para abordar desafíos y problemas específicos en el crecimiento de sus plantas. La eficacia y relevancia de estos consejos serán fundamentales para la satisfacción de los usuarios y su compromiso continuo con la aplicación. En el tercer eje, que involucra la unión a comunidades, creemos que los usuarios encontrarán un espacio donde pueden compartir sus experiencias, aprender de otros expertos en plantas y construir una comunidad en línea en la que pueden debatir y compartir su amor por la jardinería. La participación activa en estas comunidades contribuirá significativamente a la satisfacción y retención de los usuarios en la aplicación Seedy.
 
 **Etapa de Investigación**
 1.Investigación de la Aplicación
@@ -159,7 +159,7 @@ Realizamos una investigación en la cual se involucran muchos temas que se tuvie
 **Recopilación de Datos**
 
 **Encuestas:**
-Al elaborar una encuesta, debemos tener en cuenta muchas cuestiones que no solo se encuentren basadas en nuestros intereses sino también en el de los usuarios que van a elegir o no descargar nuestra aplicación. Nuestro objetivo principal es a partir de las respuestas plantear que escenarios se nos presentan de cara a seguir desarrollando la aplicación y como podemos generar interés en las personas. De esta manera planteamos que una vez llegado al numero total de respuestas que queremos, vamos a adquirir conocimiento de quién es nuestro público objetivo.
+Al elaborar una encuesta, debemos tener en cuenta muchas cuestiones que no solo se encuentren basadas en nuestros intereses sino también en el de los usuarios que van a elegir o no descargar nuestra aplicación. Nuestro objetivo principal es que a través del análisis cuantitativo en cual tenemos en cuenta datos medibles o números, podamos adquirir respuestas de distintos tipos de usuarios para plantear que escenarios se nos presentan de cara a seguir desarrollando la aplicación y como podemos generar interés en las personas. De esta manera planteamos que una vez llegado al número total de respuestas que queremos, vamos a adquirir conocimiento de quién es nuestro público objetivo.
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/c0be2dac-25d4-4171-955c-92b7c88b1b17)
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/f3f316df-72fe-4781-973b-c0ff5af0bdd2)
 
@@ -170,6 +170,39 @@ Respuestas:
 
 **Análisis de Respuestas**
 
+**Entrevistas**
+En esta sección tenemos en cuenta que ya hemos pasado por el análisis cuantitativo en donde encuestamos a distintos tipos de usuarios de distintas edades para poder entender cuáles son sus intereses acerca tópico o las problemáticas que estamos tratando en nuestro proyecto pero en datos medibles o números. 
+Ahora nos proponemos analizar de forma cualitativa, interactuando con distintos clientes y usuarios de manera profesional, con el objetivo de comprender el por qué de la problemática contado desde distintas miradas, qué sienten las personas, qué piensan y en general llegar a apuntar a sus emociones.
+A partir de aquí nos centramos en dividirlo en distintos puntos:
+**1-Objetivos de la entrevista:** Tener en claro qué queremos obtener de la entrevista, qué información necesitamos y cómo la vamos a utilizar.
+**2-Selección de los usuarios:** A la hora de buscar usuarios, debemos saber que deben ser representativos del público objetivo de nuestro proyecto, y que deben tener experiencias y necesidades para reflejarlo en el la parte Front-end de Seedy.
+**3-Diseñar el guión:** Una vez seleccionados los usuarios adecuados, diseñamos el guión de la entrevista. En este guión incluimos preguntas abiertas y cerradas para que el momento sea flexible y como grupo, nos podamos adaptar a las respuestas y comentarios de quienes estamos entrevistando.
+**4-Planificación y preparación:** Aquí planificamos lugar o plataforma en la que se dará la entrevista, armamos el horario y el tiempo de duración y por último todo el equipo que nos hará falta como anotador, garabadora o captura de video para que quede todo bien registrado.
+
+A continuación, las preguntas que formulamos para las entrevistas son basadas en distintas categorias que asignamos. Cada uno de estas categorías, agruparán preguntas relacionadas a un área específica de interés. Estos temas ayudan a organizar y guiar la conversación, permitiendo una discusión mas estructurada en torno a cuestiones relacionadas con el conocimiento de plantas y su cuidado.
+
+**Preguntas Generales**
+1- ¿Cómo describirías tu nivel de conocimiento en plantas y sus cuidados?
+2- ¿Cuál es tu nivel de interés en aprender más sobre plantas y cómo cuidarlas?
+
+**Factores que Influyen en la Problemática del Desconocimiento de Nombres de Plantas y Cuidados:**
+1-¿Cuáles crees que son los factores más comunes que dificultan la identificación de plantas y el conocimiento de sus cuidados?
+2- ¿Qué te motiva a aprender más sobre las plantas y su cuidado?
+3- ¿Existen factores específicos, como falta de acceso a recursos, que te impiden adquirir conocimiento sobre plantas y sus cuidados?
+4- ¿Hay algún aspecto en particular sobre este tema del que aún no tengas información o te gustaría saber más?
+
+**Formas de Adquirir Maneras para Identificar Plantas y Saber Cuidados:**
+1- ¿Cómo adquiris información sobre la identificación de plantas y sus cuidados? (por ejemplo, a través de libros, aplicaciones, internet, amigos)
+2- ¿Conoces algún lugar o recurso en línea o aplicación confiable para aprender sobre plantas y su cuidado?
+3- ¿Cuál de estos aspectos crees que es prioritario al aprender sobre plantas: la capacidad de identificarlas con precisión(ejemplo: saber que especie es) o el entendimiento de cómo cuidarlas adecuadamente?
+
+**Iniciativas y Recursos:**
+1- ¿Estás al tanto de alguna iniciativa local o internacional que promueva la educación sobre plantas y su cuidado?
+2- ¿Tuviste alguna experiencia participando en proyectos o iniciativas relacionadas con la jardinería o cuidados de la vegetación?   
+3- ¿Qué tipo de información o recursos te gustaría tener a tu disposición para mejorar tu conocimiento sobre plantas y cuidados?
+
+**Cierre de Agradecimiento:**
+Gracias por tu colaboración y tiempo al responder estas preguntas. Cualquier información adicional que desees compartir será apreciada y útil para comprender mejor tus necesidades e intereses en relación con las plantas y su cuidado.
 
 
 **UX personas**
