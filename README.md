@@ -83,6 +83,9 @@ El mercado ofrece aplicaciones móviles que se centran en identificar plantas o 
 
 **Requerimientos Funcionales**
 
+**Requermientos no Funcionales**
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/d4e11e65-0806-4a91-beff-052a62e1dbb9)
+
 
 
 **Modelo del proceso de software:**
