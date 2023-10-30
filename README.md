@@ -12,18 +12,21 @@ La finalidad del presente Documento es definir las características iniciales de
 
 Markauskas, Magali
 Muzzio, Franco
+
 **Materias de los 3 años en Da Vinci aprobadas.**
 
 **Descripción del Proyecto:**
 
 **Nombre:**
 Seedy.
+
 **Problemática a abordar**
 
 La falta de aplicaciones móviles que brinden información sobre el cuidado de las plantas y el desconocimiento del ciclo de vida de las mismas son desafíos persistentes en la sociedad actual, a pesar de las continuas transformaciones tecnológicas. La mayoría de las aplicaciones existentes se centran en proporcionar consejos o identificar especies, dejando un vacío en cuanto a la educación sobre el cuidado adecuado de las plantas. Este déficit puede llevar a dificultades para los inexpertos en la jardinería, resultando en problemas como riego inadecuado, falta de luz y plagas.
 Además, la falta de información sobre plantas puede desalentar a las personas a disfrutar de los beneficios de tener plantas en sus hogares o jardines. La necesidad de abordar esta problemática es evidente.
 
 **Solución**
+
 El propósito de esta sección es definir la solución para la problemática abordada en el proyecto de Seminario Final de la carrera "Analista en Sistemas" de la Escuela de Arte Multimedial Da Vinci.
 
 Para enfrentar este desafío, hemos desarrollado Seedy, una aplicación móvil que ofrece información detallada sobre el cuidado de las plantas mediante su identificación, al mismo tiempo que permite aprender sobre diversas especies vegetales. La aplicación se encuentra disponible para su descarga y proporciona información valiosa.
@@ -220,9 +223,35 @@ Al elaborar una encuesta, debemos tener en cuenta muchas cuestiones que no solo 
 Respuestas:
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/1bbcf767-cac1-4491-b302-8db6f7604593)
 ![image](https://github.com/Seedy-app/Seedy/assets/91674008/a04e94f2-d067-4725-9578-be7d9d2fce63)
-![image](https://github.com/Seedy-app/Seedy/assets/91674008/8e36cbce-8620-4b39-8aa5-8c213449d98f)
+![image](https://github.com/Seedy-app/Seedy/assets/91674008/24bfeef0-5a6b-4f60-847c-1a8c3979b277)
+
 
 **Análisis de Respuestas**
+
+1-	En identificación de edades son 60% mujeres y
+40% hombres.
+
+2-	El 100% de los encuestados tiene plantas en su hogar.
+3-	El 86,7% tiene dificultades para identificar a sus plantas y el 13,3% no la tiene.
+4-	En la encuesta hubo participación de todas las edades en mayor o menor medida.
+5-	El 100% utiliza con frecuencia su teléfono móvil
+6-	El 66,7% de los encuestados, está interesado en conocer experiencias y conocimientos de otros expertos en distintas especies de plantas, mientras que un 20% no está interesado y el 13,3% no lo sabe.
+7-	El 66,7% estaría dispuesto a compartir sus propias experiencias y conocimientos con la comunidad, mientras que el 20% no está interesado y el 13,3% no lo sabe. Resultados similares a la pregunta anterior, únicamente que con los resultados invertidos entre el 20% y 13,3% de las respuestas anteriores.
+8-	Al 86,7% de los encuestados, le gustaría recibir consejos sobre como cuidar sus plantas de manera más eficiente, mientras que el resto del 13,3% no le gustaría.
+9-	El 73,3% se califica como regular con el cuidado de sus plantas, mientras que un pequeño porcentaje apunta a que es malo y el resto del 20% de los encuestados responde que es bueno.
+10-	El 40% de los encuestados, recurre a la ayuda de grupos de personas. El 33,3% busca información en Google, mientras que el 20% la adquiere en sitios web especializados en plantas. (opción de motor de búsqueda fue eliminado y no está disponible solo quedo en memoria y se visualiza en pantalla).
+11-	El 66,7% está interesado en utilizar una aplicación para el cuidado de plantas, mientras que un 20% de los encuestados no, y el 13,3% no sabe.
+12-	El 60% de los encuestados no está dispuesto a pagar por una aplicación de este tipo. El 33,3% sostiene que estaría dispuesto depende la necesidad que se le presente y un pequeño porcentaje si pagaría. En este punto analizamos que tan dispuesto estaria un usuario a pagar suscripciones o funciones especiales, por ejemplo.
+13-	En el Diagrama de barras se presenta una competencia entre las primeras dos barras que son de plantas de interior con un 11 (73,3%) y exterior con un 12 (80%). Por otro lado, sigue Suculentas/cactus que tienen un 10 (66,7%) sumado el 1 (6,7%) que coloco un usuario de forma manual. Por otro lado, las plantas de huerta manejan valores de 7 (46,7%). Por último, en “otros” han colocado orquídeas con resultado de 1 (6,7%).
+14-	Los interesados en una comunidad destinada a los amantes de plantas en linea son un 46,7%. Aquellos que no están interesados son el 26,7% y los que no saben manejan un 26,7% también. 
+15-	Al 80% de los encuestados les interesaría identificar a sus plantas a través de la cámara de un celular, mientras que el 13,3% no se encuentra interesado. Por último, un pequeño porcentaje le consulta a un conocido. 
+16-	Los encuestados que les gustaría tener una App que les ayude a identificar sus plantas y les brinde información acerca de las mismas son el 73,3%. El 13,3% no sabe y el 13,3% no le gustaría.
+17-	Parte final comentarios:
+-Sé poco de plantas.
+-Me gusta las plantas muchísimo.
+-Interesante, felicitaciones.
+-Me gustaría ayuda con mis plantas porque se secan.
+-Que la solución sea sencilla.
 
 
 
