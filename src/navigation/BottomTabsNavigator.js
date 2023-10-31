@@ -1,13 +1,12 @@
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; // Importamos el creador de navegación de pestañas inferior
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommunitiesStackNavigator from "./CommunitiesStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
-import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; // Importamos la librería de íconos MaterialCommunityIcons
-import Foundation from "react-native-vector-icons/Foundation"; // Importamos la librería de íconos Foundation
-import PlantIdentifierScreen from "../screens/PlantIdentifier";
+import PlantIdentifierStackNavigator from "./PlantIdentifierStackNavigator";
+import FontAwesome from "react-native-vector-icons/FontAwesome"; 
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; 
+import Foundation from "react-native-vector-icons/Foundation";
 import MyPlantsScreen from "../screens/MyPlants";
-import MarketScreen from "../screens/Market";
 import { useTranslation } from "react-i18next";
 
 // Creamos el componente BottomTabNavigator.
@@ -36,9 +35,6 @@ function MyTabs() {
           } else if (route.name === t("plant_identifier")) {
             iconName = "magnifying-glass";
             IconComponent = Foundation;
-          } else if (route.name === t("market")) {
-            iconName = "shopping";
-            IconComponent = MaterialCommunityIcons;
           } else if (route.name === t("profile")) {
             iconName = "user";
             IconComponent = FontAwesome;
@@ -75,12 +71,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name={t("plant_identifier")}
-        component={PlantIdentifierScreen}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name={t("market")}
-        component={MarketScreen}
+        component={PlantIdentifierStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen

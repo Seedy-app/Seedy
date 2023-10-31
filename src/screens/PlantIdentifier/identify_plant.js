@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text } from "react-native";
-import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
 import styles from "./PlantIdentifierStyles";
 
-function PlantIdentifierScreen() {
+
+function IdentifyPlantScreen() {
   const { t } = useTranslation();
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>{t("plant_identifier")}</Text>
+      <Text>{t("identify_plant")}</Text>
     </View>
   );
 }
 
-export default PlantIdentifierScreen;
+export default IdentifyPlantScreen;
