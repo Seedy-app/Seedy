@@ -2,7 +2,6 @@ import { StyleSheet, Dimensions } from "react-native";
 import commonStyles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
 
-const button_diameter = Dimensions.get("window").width*0.15 //El diametro del boton es el 15% del ancho del dispositivo
 
 const plantIdentifierStyles = StyleSheet.create({
     ...commonStyles,
@@ -16,11 +15,22 @@ const plantIdentifierStyles = StyleSheet.create({
       },
       captureButton: {
         backgroundColor: Colors.primary,
-        borderRadius: button_diameter/2,
-        height: button_diameter,
-        width: button_diameter,
+        borderRadius: (Dimensions.get("window").width*0.15)/2,
+        height: Dimensions.get("window").width*0.15,
+        width: Dimensions.get("window").width*0.15,
         alignItems: 'center',  
         justifyContent: "center",
-      },});
+      },
+      plantPic: {
+        width: Dimensions.get("window").width*0.75,
+        height: Dimensions.get("window").width*0.75,
+        borderRadius: (Dimensions.get("window").width*0.75)/4,
+      },
+      loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    });
 
 export default plantIdentifierStyles;

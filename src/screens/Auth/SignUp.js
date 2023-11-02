@@ -28,7 +28,7 @@ export default function SignUpScreen({ navigation }) {
     setUsername(text);
     clearTimeout(u_timeout.current);
     u_timeout.current = setTimeout(async () => {
-      const result = await checkUsernameAvailability(t, text);
+      const result = await checkUsernameAvailability(text);
       if (result.error || result.error == "") {
         setUsernameError(result.error);
       }
@@ -39,7 +39,7 @@ export default function SignUpScreen({ navigation }) {
     setEmail(text);
     clearTimeout(e_timeout.current);
     e_timeout.current = setTimeout(async () => {
-      const result = await checkEmailAvailability(t, text);
+      const result = await checkEmailAvailability(text);
       if (result.error || result.error == "") {
         setEmailError(result.error);
       }
@@ -63,7 +63,7 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     try {
-      pictureUrl = await getRandomPicture(t, 'profile_picture');
+      pictureUrl = await getRandomPicture('profile_picture');
       const response = await fetch(Config.API_URL + "/register", {
         method: "POST",
         headers: {

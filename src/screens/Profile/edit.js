@@ -71,7 +71,7 @@ function EditProfileScreen() {
     setEmail(text);
     clearTimeout(e_timeout.current);
     e_timeout.current = setTimeout(async () => {
-      const result = await checkEmailAvailability(t, text);
+      const result = await checkEmailAvailability(text);
       if (result.error || result.error == "") {
         setEmailError(result.error);
       }
@@ -82,7 +82,7 @@ function EditProfileScreen() {
     setUsername(text);
     clearTimeout(u_timeout.current);
     u_timeout.current = setTimeout(async () => {
-      const result = await checkUsernameAvailability(t, text, userId);
+      const result = await checkUsernameAvailability(text, userId);
       if (result.error || result.error == "") {
         setUsernameError(result.error);
       }

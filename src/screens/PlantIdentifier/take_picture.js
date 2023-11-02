@@ -4,6 +4,8 @@ import { Camera } from "expo-camera";
 import { useTranslation } from "react-i18next";
 import Foundation from "react-native-vector-icons/Foundation";
 import styles from "./PlantIdentifierStyles";
+import { identifyPlant, uploadPictureToServer } from "../../utils/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TakePictureScreen({ navigation }) {
   const { t } = useTranslation();
@@ -11,9 +13,19 @@ export default function TakePictureScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [isCameraReady, setCameraReady] = useState(false);
   const [cameraKey, setCameraKey] = useState(1);
+  const [userId, setUserId] = useState(null);
+
+  const fetchUserInfo = async () => {
+    const storedUserInfo = await AsyncStorage.getItem("userInfo");
+    if (storedUserInfo) {
+      const parsedInfo = JSON.parse(storedUserInfo);
+      setUserId(parsedInfo.id);
+    }
+  };
 
   useEffect(() => {
     askForCameraPermission();
+    fetchUserInfo();
   }, []);
 
   useEffect(() => {
@@ -35,10 +47,15 @@ export default function TakePictureScreen({ navigation }) {
   };
 
   const takePicture = async (cameraRef) => {
-    if (cameraRef) {
+    if (isCameraReady && cameraRef) {
       const photo = await cameraRef.takePictureAsync();
-      // Aquí puedes hacer algo con la foto, como enviarla a un servidor
-      navigation.navigate(t("identify_plant"));
+      const image = await uploadPictureToServer(
+        `plant_${Date.now()}`,
+        `users/${userId}`,
+        photo.uri
+        );
+      response = await identifyPlant(image);
+      navigation.navigate(t("identify_plant"), {results: response});
     }
   };
 
@@ -60,9 +77,9 @@ export default function TakePictureScreen({ navigation }) {
         }}
         onCameraReady={onCameraReady}
       >
-        <View style={[styles.buttonContainer, styles.viewBorders]}>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={[styles.captureButton, styles.viewBorders]}
+            style={styles.captureButton}
             onPress={() => takePicture(this.camera)}
           >
             <Foundation name="magnifying-glass" size={40} color="white" />

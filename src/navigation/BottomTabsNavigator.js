@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommunitiesStackNavigator from "./CommunitiesStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import PlantIdentifierStackNavigator from "./PlantIdentifierStackNavigator";
-import FontAwesome from "react-native-vector-icons/FontAwesome"; 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; 
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Foundation from "react-native-vector-icons/Foundation";
 import MyPlantsScreen from "../screens/MyPlants";
 import { useTranslation } from "react-i18next";
@@ -63,16 +63,16 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
+        name={t("plant_identifier")}
+        component={PlantIdentifierStackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
         name={t("communities")}
         component={CommunitiesStackNavigator}
         options={{
           headerShown: false,
         }}
-      />
-      <Tab.Screen
-        name={t("plant_identifier")}
-        component={PlantIdentifierStackNavigator}
-        options={{ headerShown: false }}
       />
       <Tab.Screen
         name={t("profile")}

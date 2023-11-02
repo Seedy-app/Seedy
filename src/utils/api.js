@@ -1,10 +1,9 @@
 import Config from "../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import i18n from 'i18next';
 
-// User
 
 export const checkUsernameAvailability = async (
-  t,
   username,
   ignore_user_id = null
 ) => {
@@ -22,18 +21,17 @@ export const checkUsernameAvailability = async (
       body: JSON.stringify(requestBody),
     });
     if (response.status === 409) {
-      return { error: t("username_already_exists_error") };
+      return { error: i18n.t("username_already_exists_error") };
     } else {
       return { error: "" };
     }
   } catch (error) {
     console.error("Error:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
 };
 
 export const checkEmailAvailability = async (
-  t,
   email,
   ignore_user_id = null
 ) => {
@@ -50,13 +48,13 @@ export const checkEmailAvailability = async (
       body: JSON.stringify(requestBody),
     });
     if (response.status === 409) {
-      return { error: t("email_already_exists_error") };
+      return { error: i18n.t("email_already_exists_error") };
     } else {
       return { error: "" };
     }
   } catch (error) {
     console.error("Error:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
 };
 
@@ -67,8 +65,8 @@ export const changeCommunityPicture = async (communityId, picture) => {
     const token = await AsyncStorage.getItem("userToken");
 
     if (!token) {
-      console.error(t("not_logged_in_error"));
-      return { error: t("not_logged_in_error") };
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
     }
 
     const response = await fetch(
@@ -92,7 +90,7 @@ export const changeCommunityPicture = async (communityId, picture) => {
     }
   } catch (error) {
     console.error("Error:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
 };
 
@@ -101,8 +99,8 @@ export const createCommunity = async (name, description, picture, user_id) => {
     const token = await AsyncStorage.getItem("userToken");
 
     if (!token) {
-      console.error(t("not_logged_in_error"));
-      return { error: t("not_logged_in_error") };
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
     }
     const response = await fetch(`${Config.API_URL}/communities/create`, {
       method: "POST",
@@ -126,7 +124,7 @@ export const createCommunity = async (name, description, picture, user_id) => {
     }
   } catch (error) {
     console.error("Error:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
 };
 
@@ -139,8 +137,8 @@ export const giveUserCommunityRole = async (
     const token = await AsyncStorage.getItem("userToken");
 
     if (!token) {
-      console.error(t("not_logged_in_error"));
-      return { error: t("not_logged_in_error") };
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
     }
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/give-role-to-user`,
@@ -170,7 +168,6 @@ export const giveUserCommunityRole = async (
 };
 
 export const checkCommunityNameAvailability = async (
-  t,
   name,
   ignore_community_id = null
 ) => {
@@ -188,13 +185,13 @@ export const checkCommunityNameAvailability = async (
       body: JSON.stringify(requestBody),
     });
     if (response.status === 409) {
-      return { error: t("community_name_already_exists_error") };
+      return { error: i18n.t("community_name_already_exists_error") };
     } else {
       return { error: "" };
     }
   } catch (error) {
     console.error("Error checking community name:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
 };
 
@@ -231,11 +228,11 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
     return responseData.imageUrl;
   } catch (error) {
     console.error("Error uploading image:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
 };
 
-export const getRandomPicture = async (t, type) => {
+export const getRandomPicture = async (type) => {
   try {
     const image_response = await fetch(
       Config.API_URL + "/image/random-filepath",
@@ -256,13 +253,12 @@ export const getRandomPicture = async (t, type) => {
     }
   } catch (error) {
     console.error("Error:", error.message);
-    return { error: t("network_error") };
+    return { error: i18n.t("network_error") };
   }
   return null;
 };
 
 export const createCommunityCategory = async (
-  t,
   community_id,
   name,
   description
@@ -271,8 +267,8 @@ export const createCommunityCategory = async (
       const token = await AsyncStorage.getItem("userToken");
   
       if (!token) {
-        console.error(t("not_logged_in_error"));
-        return { error: t("not_logged_in_error") };
+        console.error(i18n.t("not_logged_in_error"));
+        return { error: i18n.t("not_logged_in_error") };
       }
       const response = await fetch(
         `${Config.API_URL}/communities/${community_id}/create-category`,
@@ -297,5 +293,19 @@ export const createCommunityCategory = async (
     } catch (error) {
       console.error("Error:", error.message);
       return false;
+    }
+  };
+
+  export const identifyPlant = async (photo_url) => {
+    try {
+      const response = await fetch(
+
+        `https://my-api.plantnet.org/v2/identify/all?api-key=${Config.PLANTNET_API_KEY}&images=${encodeURI(Config.API_URL+photo_url)}&lang=${i18n.language}&include-related-images=true`
+        );
+        const responseData = await response.json();
+        return responseData.results;
+    } catch (error) {
+      console.error("Error:", error.message);
+      return { error: i18n.t("network_error") };
     }
   };

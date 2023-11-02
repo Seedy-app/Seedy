@@ -51,7 +51,7 @@ function CreateCommunitiesScreen() {
     };
 
     const fetchPicture = async () => {
-      const picUrl = await getRandomPicture(t, "community_picture");
+      const picUrl = await getRandomPicture("community_picture");
       if (picUrl) {
         // Asegurarse de que 'picUrl' está disponible
         setDisplayedImageUrl(Config.API_URL + picUrl);
@@ -66,7 +66,7 @@ function CreateCommunitiesScreen() {
     setName(text);
     clearTimeout(n_timeout.current);
     n_timeout.current = setTimeout(async () => {
-      const result = await checkCommunityNameAvailability(t, text);
+      const result = await checkCommunityNameAvailability(text);
       if (result.error || result.error == "") {
         setNameError(result.error);
       }
@@ -94,7 +94,7 @@ function CreateCommunitiesScreen() {
         userId
       );
       await giveUserCommunityRole(userId, community_id, "community_founder");
-      await createCommunityCategory(t, community_id, t('general'), t('general_category_description'));
+      await createCommunityCategory(community_id, t('general'), t('general_category_description'));
       if (selectedImageUri) {
         const imageUrl = await uploadPictureToServer(
           `cp_${Date.now()}`,
