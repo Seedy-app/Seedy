@@ -283,6 +283,8 @@ Respuestas:
 
 **Entrevistas**
 
+https://docs.google.com/document/d/1GI4VVvdaL6jgfcba1j3yr1dPwQfug1VeFL-OOJTFHnY/edit
+
 En esta sección tenemos en cuenta que ya hemos pasado por el análisis cuantitativo en donde encuestamos a distintos tipos de usuarios de distintas edades para poder entender cuáles son sus intereses acerca tópico o las problemáticas que estamos tratando en nuestro proyecto pero en datos medibles o números. 
 Ahora nos proponemos analizar de forma cualitativa, interactuando con distintos clientes y usuarios de manera profesional, con el objetivo de comprender el por qué de la problemática contado desde distintas miradas, qué sienten las personas, qué piensan y en general llegar a apuntar a sus emociones.
 A partir de aquí nos centramos en dividirlo en distintos puntos:
