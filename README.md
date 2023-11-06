@@ -119,7 +119,8 @@ Posteriormente, en la etapa de construcción, se produce el código y se impleme
 //insertar diagrama
 
 **Diagrama Entidad Relación**
-//insertar diagrama
+//insertar foto del diagrama
+https://miro.com/app/board/uXjVMlbLzK8=/?share_link_id=169686807203
 
 **Diagrama de Clases**
 //insertar diagrama
@@ -128,8 +129,11 @@ Posteriormente, en la etapa de construcción, se produce el código y se impleme
 //insertar diagrama
 
 
-**Manual de software**
+**Manual de Instalación:**
+https://docs.google.com/document/d/1SQQpU-8IElYpwxZr1DEDl34cnzMYWuvrP3ORfGmQDb8/edit
 
+**Requerimientos de Seguridad:**
+//Link al PDF de Requerimientos de Seguridad
 
 **Aseguramiento de la calidad del Software:**
 
