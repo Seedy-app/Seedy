@@ -1,7 +1,6 @@
 {
-  "already_have_an_account": "Already have an account?",
   "add_to_my_plants": "Add to my plants",
-  "wrong_identification": "This is not the plant",
+  "already_have_an_account": "Already have an account?",
   "author": "author",
   "categories": "categories",
   "common_names": "common names",
@@ -64,5 +63,6 @@
   "unmatched_passwords_error": "Passwords do not match.",
   "username": "Username",
   "username_already_exists_error": "Username already exists.",
-  "weak_password_error": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
+  "weak_password_error": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.",
+  "wrong_identification": "This is not the plant"
 }

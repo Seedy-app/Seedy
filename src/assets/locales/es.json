@@ -1,7 +1,6 @@
 {
-  "already_have_an_account": "¿Ya tienes una cuenta?",
   "add_to_my_plants": "Agregar a mis plantas",
-  "wrong_identification": "Esta no es la planta",
+  "already_have_an_account": "¿Ya tienes una cuenta?",
   "author": "autor",
   "categories": "Categorias",
   "common_names": "nombres comunes",
@@ -64,5 +63,6 @@
   "unmatched_passwords_error": "Las contraseñas no coinciden.",
   "username": "Nombre de usuario",
   "username_already_exists_error": "Ese usuario ya existe.",
-  "weak_password_error": "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial."
+  "weak_password_error": "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
+  "wrong_identification": "Esta no es la planta"
 }
