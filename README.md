@@ -113,13 +113,6 @@ El mercado ofrece aplicaciones móviles que se centran en identificar plantas o 
 El proceso de desarrollo de software en el proyecto "Seedy" sigue un modelo estructurado que abarca varias etapas clave. Comienza con la comunicación, donde se recopilan los requisitos del software a través de la interacción con usuarios y partes interesadas. Luego, en la etapa de planificación, se definen las tareas, se asignan recursos y se establecen plazos para el proyecto. La fase de modelado implica la creación de un modelo de la solución, incluyendo el diseño de la interfaz de usuario y la arquitectura de la aplicación. Posteriormente, en la etapa de construcción, se produce el código y se implementan las funcionalidades utilizando tecnologías como React Native y React Navigator. Estos frameworks desempeñan un papel fundamental en el desarrollo de la aplicación. Finalmente, en la fase de despliegue, la aplicación se publica en la tienda de aplicaciones de Android "Google Play" para que los usuarios la descarguen y utilicen. Este enfoque estructurado garantiza un proceso de desarrollo efectivo y eficiente en el proyecto "Seedy", permitiendo la creación de una aplicación móvil moderna para el cuidado de plantas.
 
 
-**Especificación de la Arquitectura de la Aplicación**
-
-//falta y consultar
-
-**Diagrama de la Arquitectura**
-//insertar diagrama
-
 **Diagrama Entidad Relación**
 //insertar foto del diagrama
 https://miro.com/app/board/uXjVMlbLzK8=/?share_link_id=169686807203
@@ -134,7 +127,7 @@ https://miro.com/app/board/uXjVMlbLzK8=/?share_link_id=169686807203
 https://docs.google.com/document/d/1SQQpU-8IElYpwxZr1DEDl34cnzMYWuvrP3ORfGmQDb8/edit
 
 **Requerimientos de Seguridad:**
-//Link al PDF de Requerimientos de Seguridad
+https://docs.google.com/document/d/1mnQCYTkIHsjr94UaEGlFutzZtL7xDywhZw6Q8D8GPF0/edit      //Link al PDF de Requerimientos de Seguridad a desarrollar aun
 
 **Aseguramiento de la calidad del Software:**
 
@@ -182,6 +175,17 @@ La capa de acceso a datos se encarga de interactuar con bases de datos y servici
 **Conclusión:**
 
 Esta arquitectura de capas, junto con el uso de tecnologías como React Native, React Express, Nodemailer, JSON Web Tokens (JWT Tokens), Multer y Sharp, permite que "Seedy" ofrezca una experiencia de usuario efectiva y una plataforma sólida para el cuidado de las plantas. AWS asegura que todo funcione sin problemas y que los datos estén seguros. Además, utilizamos el ORM Sequelize para la interacción con la base de datos, lo que añade eficiencia y robustez al proyecto.
+
+**Diagrama de la Arquitectura en Capas**
+//insertar diagrama
+
+
+**Elementos de Trazabilidad:**
+//Insertar Link al excel de trazabilidad.
+
+
+**Detalle de Interfaz entre Sistemas**
+//Link a la Documentación de QUE RECURSOS USAMOS DE LA API SACADOS DE ACÁ: https://my.plantnet.org/doc/openapi
 
 **Etapa de Investigación**
 
