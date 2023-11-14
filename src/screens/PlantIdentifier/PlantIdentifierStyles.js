@@ -1,6 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
 import commonStyles from "../../config/CommonStyles";
-import Colors from "../../config/Colors";
 
 
 const plantIdentifierStyles = StyleSheet.create({
@@ -11,10 +10,10 @@ const plantIdentifierStyles = StyleSheet.create({
         left: 0,              
         right: 0,             
         alignItems: 'center',  
-        marginBottom: 20,     
+        marginBottom: 20,   
+        alignSelf: 'center',  
       },
       captureButton: {
-        backgroundColor: Colors.primary,
         borderRadius: (Dimensions.get("window").width*0.15)/2,
         height: Dimensions.get("window").width*0.15,
         width: Dimensions.get("window").width*0.15,

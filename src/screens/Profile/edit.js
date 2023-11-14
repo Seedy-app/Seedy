@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"; // No olvides importar useContext
-import { Image, TouchableOpacity, View, Text } from "react-native";
+import { Image, View } from "react-native";
+import { Text, Button } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,7 +12,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos l
 import styles from "./ProfileStyles";
 import CustomInput from "../CustomInput";
 import Config from "../../config/Config";
-import Colors from "../../config/Colors";
 import { selectImageFromGallery } from "../../utils/device";
 import { uploadPictureToServer } from "../../utils/api";
 import loadingImage from "../../assets/images/loading.gif";
@@ -142,17 +142,15 @@ function EditProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{t("username") + ":"}</Text>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
-        placeholder={t("username")}
+        label={t("username")}
         value={username}
         onChangeText={handleUsernameChange}
       />
-      <Text style={styles.label}>{t("email") + ":"}</Text>
       {emailError && <Text style={styles.error}>{emailError}</Text>}
       <CustomInput
-        placeholder={t("email")}
+        label={t("email")}
         value={email}
         onChangeText={handleEmailChange}
         keyboardType="email-address"
@@ -171,20 +169,17 @@ function EditProfileScreen() {
           />
         )}
       </View>
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: Colors.secondary }]}
+      <Button
+        mode="contained"
         onPress={HandleSelectImage}
+        icon={() => <FontAwesome name="picture-o" size={16} color="white" />}
+        style={styles.button}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FontAwesome name="picture-o" size={16} color={Colors.white} />
-          <Text style={[styles.buttonText, { marginLeft: 8 }]}>
-            {t("select_image")}
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>{t("save")}</Text>
-      </TouchableOpacity>
+        {t("select_image")}
+      </Button>
+      <Button mode="contained" onPress={handleSubmit} style={styles.button}>
+        {t("save")}
+      </Button>
     </View>
   );
 }

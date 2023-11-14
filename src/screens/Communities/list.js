@@ -2,13 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
-  Image,
   View,
-  Text,
   FlatList,
-  TouchableOpacity,
   RefreshControl,
 } from "react-native";
+import { Card, Paragraph, Avatar } from 'react-native-paper';
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
 import Config from "../../config/Config";
@@ -56,44 +54,27 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <TouchableOpacity
-      style={{...styles.listCard, padding: 15}}
-      onPress={() =>
-        navigation.navigate(t("community"), { community: community })
-      }
-    >
-      <Image
-        source={{ uri: Config.API_URL + community.picture }}
-        style={styles.communityListPic}
+    <Card onPress={() => navigation.navigate(t("community"), { community })}>
+      <Card.Title
+        title={capitalizeFirstLetter(community.name)}
+        subtitle={`${community.userCount} ${capitalizeFirstLetter(t("members"))}`}
+        left={(props) => <Avatar.Image {...props} source={{ uri: Config.API_URL + community.picture }} size={50} />}
       />
-      <View style={{...styles.communityShortInfo, paddingLeft: 20}}>
-        <Text style={styles.title}>
-          {capitalizeFirstLetter(community.name)}
-        </Text>
-        <Text
-          style={styles.cardDescription}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
+      <Card.Content>
+        <Paragraph numberOfLines={1} ellipsizeMode="tail">
           {capitalizeFirstLetter(community.description)}
-        </Text>
-
-        <Text style={styles.userCount}>{`${
-          community.userCount
-        } ${capitalizeFirstLetter(t("members"))}`}</Text>
-      </View>
-    </TouchableOpacity>
+        </Paragraph>
+      </Card.Content>
+    </Card>
   );
 
   // Renderizamos el componente principal
   return (
     <View style={styles.communitiesContainer}>
-      {/* FlatList para mostrar las comunidades */}
       <FlatList
         data={communitiesData}
         renderItem={({ item }) => <CommunityCard community={item} />}
         keyExtractor={(item) => item.id.toString()}
-        // Control de refresco para la lista
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }

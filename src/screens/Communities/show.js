@@ -1,13 +1,13 @@
 // Importamos las dependencias necesarias
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { View, Image } from "react-native";
+import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./CommunitiesStyles";
 import Config from "../../config/Config";
-import { TabBar } from "react-native-tab-view";
 import PostsTab from "./show-posts";
 import MembersTab from "./show-members";
 import ChatTab from "./show-chat";
@@ -164,45 +164,22 @@ const CommunityScreen = () => {
             />
           )}
         />
-      ) : (
-        <View style={styles.container}>
-          <View style={{ ...styles.row, margin: 7 }}>
-            <View
-              style={{
-                ...styles.column,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                source={{ uri: Config.API_URL + community.picture }}
-                style={styles.communityShowPic}
-              />
-            </View>
-            <View
-              style={{
-                ...styles.column,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={styles.title}>
-                {communityMembersData["data"]
-                  ? communityMembersData["data"].length + " " + t("members")
-                  : t("loading_members")}
-              </Text>
-            </View>
+        ) : (
+          <View style={styles.container}>
+            <Card>
+              <Card.Content>
+                <Title>{community.name}</Title>
+                <Paragraph>{community.description}</Paragraph>
+              </Card.Content>
+              <Card.Cover source={{ uri: Config.API_URL + community.picture }} />
+              <Card.Actions>
+                <Button onPress={join_community}>{t("join_community")}</Button>
+              </Card.Actions>
+            </Card>
           </View>
-          <View>
-            <Text>{community.description}</Text>
-          </View>
-          <TouchableOpacity style={styles.button} onPress={join_community}>
-            <Text style={styles.buttonText}>{t("join_community")}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </>
-  );
-};
+        )}
+      </>
+    );
+  };
 
 export default CommunityScreen;

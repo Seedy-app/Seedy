@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View } from "react-native";
+import { Text, Button } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import CustomInput from "../CustomInput";
@@ -25,7 +26,7 @@ export default function ForgotPasswordScreen({ navigation }) {
       return;
     }
     try {
-      const token = await AsyncStorage.getItem('userToken');
+      const token = await AsyncStorage.getItem("userToken");
 
       if (!token) {
         console.error(t("not_logged_in_error"));
@@ -58,33 +59,26 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { justifyContent: "center" }]}>
-      <Text style={styles.label}>{t("token") + ":"}</Text>
-      <CustomInput
-        placeholder={t("token")}
-        value={token}
-        onChangeText={setToken}
-      />
-      <Text style={styles.label}>{t("new_password") + ":"}</Text>
+      <CustomInput label={t("token")} value={token} onChangeText={setToken} />
       {passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CustomInput
-        placeholder={t("new_password")}
+        label={t("new_password")}
         isPassword
         value={newPassword}
         onChangeText={setNewPassword}
         secureTextEntry={true}
       />
-      <Text style={styles.label}>{t("confirm_new_password") + ":"}</Text>
       <CustomInput
-        placeholder={t("confirm_new_password")}
+        label={t("confirm_new_password")}
         value={confirmNewPassword}
         isConfirmPassword
         onChangeText={setConfirmNewPassword}
         secureTextEntry={true}
       />
       {Error && <Text style={styles.error}>{Error}</Text>}
-      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
+      <Button mode="contained" onPress={handleResetPassword}>
         <Text style={styles.buttonText}>{t("reset_password")}</Text>
-      </TouchableOpacity>
+      </Button>
     </View>
   );
 }

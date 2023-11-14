@@ -41,14 +41,7 @@ const commonStyles = StyleSheet.create({
     flexShrink: 1
   },
   button: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: Colors.primary,
+    margin: Dimensions.get("window").height/200,
   },
   buttonText: {
     fontSize: FontSizes.large,
@@ -67,12 +60,7 @@ const commonStyles = StyleSheet.create({
     fontSize: FontSizes.regular,
   },
   input: {
-    height: 40,
-    borderColor: Colors.gray,
-    borderWidth: 1,
     marginBottom: 10,
-    padding: 10,
-    borderRadius: 5,
   },
   underInputMessage: {
     fontSize: FontSizes.small,
@@ -88,7 +76,6 @@ const commonStyles = StyleSheet.create({
   },
   listCard: {
     backgroundColor: Colors.white,
-    borderRadius: 5,
     marginBottom: 10,
     shadowColor: Colors.shadow,
     shadowOffset: {
@@ -97,9 +84,6 @@ const commonStyles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
-    flexDirection: "row",
-    alignItems: "center",
   },
 
   fullLoading: {
@@ -109,7 +93,6 @@ const commonStyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: FontSizes.large,
     fontWeight: "bold",
   },
   subtitle: {
