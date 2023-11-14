@@ -1,16 +1,17 @@
 // Importamos las dependencias necesarias
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, View, Text, TouchableOpacity } from "react-native";
+import { Image, View } from "react-native";
+import { Text, Button } from "react-native-paper";
 import CustomInput from "../CustomInput";
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
-import Colors from "../../config/Colors";
 import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import loadingImage from "../../assets/images/loading.gif";
+import { useTheme } from 'react-native-paper';
+
 
 import {
   checkCommunityNameAvailability,
@@ -31,6 +32,8 @@ function CreateCommunitiesScreen() {
   const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
 
   const n_timeout = useRef(null);
+
+  const theme = useTheme();
 
   const navigation = useNavigation();
 
@@ -94,7 +97,11 @@ function CreateCommunitiesScreen() {
         userId
       );
       await giveUserCommunityRole(userId, community_id, "community_founder");
-      await createCommunityCategory(community_id, t('general'), t('general_category_description'));
+      await createCommunityCategory(
+        community_id,
+        t("general"),
+        t("general_category_description")
+      );
       if (selectedImageUri) {
         const imageUrl = await uploadPictureToServer(
           `cp_${Date.now()}`,
@@ -111,19 +118,14 @@ function CreateCommunitiesScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{t("name") + ":"}</Text>
       {nameError && <Text style={styles.error}>{nameError}</Text>}
+      <CustomInput label={t("name")} onChangeText={handleCommunityNameChange} />
       <CustomInput
-        placeholder={t("name")}
-        onChangeText={handleCommunityNameChange}
-      />
-      <Text style={styles.label}>{t("description") + ":"}</Text>
-      <CustomInput
-        placeholder={t("description")}
+        label={t("description")}
         onChangeText={(text) => setDescription(text)}
       />
 
-      <Text style={styles.label}>
+      <Text variant="labelLarge">
         {t("picture") + " (" + t("optional") + "):"}
       </Text>
       <View style={styles.formPicPreviewView}>
@@ -139,23 +141,21 @@ function CreateCommunitiesScreen() {
           />
         )}
       </View>
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: Colors.secondary }]}
+      <Button
+        icon="panorama"
+        mode="contained"
         onPress={handleSelectImage}
+        labelStyle={{ fontSize: theme.fonts.default.fontSize }}
+        style={styles.button}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FontAwesome name="picture-o" size={16} color={Colors.white} />
-          <Text style={[styles.buttonText, { marginLeft: 8 }]}>
-            {t("select_image")}
-          </Text>
-        </View>
-      </TouchableOpacity>
+          {t("select_image")}
+      </Button>
       <Text style={styles.underInputMessage}>
         {t("no_community_image_message")}
       </Text>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <Button mode="contained" style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>{t("create")}</Text>
-      </TouchableOpacity>
+      </Button>
     </View>
   );
 }

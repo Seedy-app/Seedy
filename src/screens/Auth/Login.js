@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import CustomInput from "../CustomInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
+import { Text, Button, TouchableRipple} from "react-native-paper";
 import { AuthContext } from "../../../src/contexts/AuthContext";
-import i18next from "../../services/i18next";
 import { useTranslation } from "react-i18next";
-import styles from './AuthStyles';
-import Config from '../../config/Config';
+import styles from "./AuthStyles";
+import Config from "../../config/Config";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
 
   const login = async () => {
-    const response = await fetch(Config.API_URL+"/login", {
+    const response = await fetch(Config.API_URL + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,35 +39,31 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={[styles.container, {justifyContent:'center'}]}>
-      <Text style={styles.label}>{t("username")+":"}</Text>
+    <View style={[styles.container, { justifyContent: "center" }]}>
       <CustomInput
-        placeholder={t("username")}
+        label={t("username")}
         onChangeText={(text) => setUsername(text)}
       />
-      <Text style={styles.label}>{t("password")+":"}</Text>
       <CustomInput
-        placeholder={t("password")}
+        label={t("password")}
         isPassword
         onChangeText={(text) => setPassword(text)}
       />
-      <TouchableOpacity style={styles.button} onPress={login}>
+      <Button mode="contained" onPress={login}>
         <Text style={styles.buttonText}>{t("login")}</Text>
-      </TouchableOpacity>
+      </Button>
       <View style={styles.otherOptionsContainer}>
         <Text style={styles.registerText}>{t("dont_have_an_account")}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(t("singup"))}>
+        <TouchableRipple onPress={() => navigation.navigate(t("singup"))}>
           <Text style={styles.justTextButton}>{t("singup")}</Text>
-        </TouchableOpacity>
+        </TouchableRipple>
       </View>
-      <View style={styles.otherOptionsContainer}> 
-      <Text style={styles.registerText}>{t("forgot_your_password")}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(t("forgot_your_password"))}>
+      <View style={styles.otherOptionsContainer}>
+        <Text style={styles.registerText}>{t("forgot_your_password")}</Text>
+        <TouchableRipple onPress={() => navigation.navigate(t("forgot_your_password"))}>
           <Text style={styles.justTextButton}>{t("reset_it")}</Text>
-        </TouchableOpacity>
+        </TouchableRipple>
       </View>
     </View>
   );
 }
-
-

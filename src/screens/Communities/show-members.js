@@ -1,20 +1,23 @@
 import React from "react";
-import { TouchableOpacity, View, Text, Image, FlatList } from "react-native";
+import { View, FlatList, Text } from "react-native";
+import { Card, Avatar } from 'react-native-paper';
 import Config from "../../config/Config";
 import styles from "./CommunitiesStyles";
 import Colors from "../../config/Colors";
 
 // Componente para representar cada miembro en la lista
 const MemberCard = ({ member }) => (
-  <TouchableOpacity style={{...styles.listCard, padding: 10}}>
-    <Image style={styles.midProfilePic} source={{ uri: `${Config.API_URL}${member.picture}` }} />
-    <View>
-      <Text style={styles.subtitle}>{member.username}</Text>
-    </View>
-    <View style={[styles.roleContainer, { backgroundColor: Colors[member.role] }]}>
-      <Text style={styles.roleText}>{member.role_display_name}</Text>
-    </View>
-  </TouchableOpacity>
+  <Card style={{ ...styles.listCard, padding: 10 }}>
+    <Card.Title
+      title={member.username}
+      left={(props) => <Avatar.Image {...props} size={40} source={{ uri: `${Config.API_URL}${member.picture}` }} />}
+      right={(props) => (
+        <View {...props} style={[styles.roleContainer, { backgroundColor: Colors[member.role] }]}>
+          <Text style={styles.roleText}>{member.role_display_name}</Text>
+        </View>
+      )}
+    />
+  </Card>
 );
 
 const MembersTab = ({ communityMembers }) => {

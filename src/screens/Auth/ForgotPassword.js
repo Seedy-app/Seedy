@@ -1,46 +1,44 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import i18next from "../../services/i18next";
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Text, Button } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import CustomInput from "../CustomInput";
-import styles from './AuthStyles';
-import Config from '../../config/Config';
+import styles from "./AuthStyles";
+import Config from "../../config/Config";
 
 export default function ForgotPasswordScreen({ navigation }) {
-    const { t } = useTranslation();
-    const [email, setEmail] = useState('');
+  const { t } = useTranslation();
+  const [email, setEmail] = useState("");
 
-    const handleForgotPassword = async () => {
-        try {
-            const response = await fetch(Config.API_URL+'/forgot-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email }),
-            });
-        
-            if (response.status === 200) {
-                navigation.navigate(t("reset_password"));
-            } else {
-                alert(t("send_email_error"));
-            }
-        } catch (error) {
-            alert(t("network_error"));
-        }
-    };
-    
+  const handleForgotPassword = async () => {
+    try {
+      const response = await fetch(Config.API_URL + "/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      });
 
-    return (
-        <View style={[styles.container, {justifyContent:'center'}]}>
-            <Text style={styles.label}>{t("email")+":"}</Text>
-            <CustomInput
-                placeholder={t("email")}
-                onChangeText={(text) => setEmail(text)}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleForgotPassword}>
-                <Text style={styles.buttonText}>{t("send")}</Text>
-            </TouchableOpacity>
-        </View>
-    );
+      if (response.status === 200) {
+        navigation.navigate(t("reset_password"));
+      } else {
+        alert(t("send_email_error"));
+      }
+    } catch (error) {
+      alert(t("network_error"));
+    }
+  };
+
+  return (
+    <View style={[styles.container, { justifyContent: "center" }]}>
+      <CustomInput label={t("email")} onChangeText={(text) => setEmail(text)} />
+      <Button
+        mode="contained"
+        onPress={handleForgotPassword}
+      >
+        <Text style={styles.buttonText}>{t("send")}</Text>
+      </Button>
+    </View>
+  );
 }

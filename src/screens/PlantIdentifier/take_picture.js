@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { Camera } from "expo-camera";
-import { useTranslation } from "react-i18next";
-import Foundation from "react-native-vector-icons/Foundation";
+import { IconButton } from "react-native-paper";
 import styles from "./PlantIdentifierStyles";
 import { identifyPlant, uploadPictureToServer } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
+import { useTheme } from 'react-native-paper';
+
 
 export default function TakePictureScreen({ navigation }) {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const [hasPermission, setHasPermission] = useState(null);
   const [isCameraReady, setCameraReady] = useState(false);
@@ -53,9 +56,9 @@ export default function TakePictureScreen({ navigation }) {
         `plant_${Date.now()}`,
         `users/${userId}`,
         photo.uri
-        );
+      );
       response = await identifyPlant(image);
-      navigation.navigate(t("identify_plant"), {results: response});
+      navigation.navigate(t("identify_plant"), { results: response });
     }
   };
 
@@ -63,7 +66,7 @@ export default function TakePictureScreen({ navigation }) {
     return <View />;
   }
   if (hasPermission === false) {
-    return <Text>{t("no_acces_to_camera")}</Text>;
+    return <Text style={styles.someTextStyle}>{t("no_acces_to_camera")}</Text>;
   }
 
   return (
@@ -78,12 +81,13 @@ export default function TakePictureScreen({ navigation }) {
         onCameraReady={onCameraReady}
       >
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.captureButton}
+          <IconButton
+            icon="magnify"
+            iconColor ="white"
+            size={40}
+            style={[styles.captureButton, {backgroundColor: theme.colors.primary}]}
             onPress={() => takePicture(this.camera)}
-          >
-            <Foundation name="magnifying-glass" size={40} color="white" />
-          </TouchableOpacity>
+          />
         </View>
       </Camera>
     </View>
