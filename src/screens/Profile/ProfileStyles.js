@@ -1,6 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
 import commonStyles from "../../config/CommonStyles";
-import FontSizes from "../../config/FontSizes";
 import Colors from "../../config/Colors";
 
 const profileStyles = StyleSheet.create({
@@ -9,18 +8,14 @@ const profileStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
       },
-      profileButtons: {
-        marginTop: 10,
-      },
       userInfo: {
         flexDirection: 'column'
       },
       email: {
-        fontSize: FontSizes.regular,
         color: Colors.gray
       },
       FormProfilePic: {
-        borderRadius: Dimensions.get("window").width/2,
+        borderRadius: Dimensions.get("window").scale*100,
       },
 });
 

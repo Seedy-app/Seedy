@@ -1,18 +1,20 @@
 import React from "react";
 import styles from "./CommunitiesStyles";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, Dimensions } from "react-native";
+import { Card, IconButton } from "react-native-paper";
 import { capitalizeFirstLetter } from "../../utils/device";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Colors from "../../config/Colors";
 import FontSizes from "../../config/FontSizes";
 import { useTranslation } from "react-i18next";
+import { useTheme } from 'react-native-paper';
+
 
 const PostsTab = ({ communityCategories, communityPosts }) => {
   const { t } = useTranslation();
-
+  const theme = useTheme();
+  const marginRightPlusIcon = Dimensions.get("window").scale * 4;
   const CategoryCard = ({ category }) => (
-    <TouchableOpacity style={{ ...styles.listCard, padding: 5 }}>
-      <View style={styles.communityShortInfo}>
+    <Card style={{ ...styles.listCard, padding: 5 }}>
+      <Card.Content>
         <Text style={styles.title}>{capitalizeFirstLetter(category.name)}</Text>
         <Text
           style={styles.communityDescription}
@@ -21,67 +23,61 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
         >
           {capitalizeFirstLetter(category.description)}
         </Text>
-      </View>
-    </TouchableOpacity>
+      </Card.Content>
+    </Card>
   );
 
   const PostCard = ({ post }) => (
-    <TouchableOpacity style={{ ...styles.listCard, padding: 5 }}>
-      <View style={styles.communityShortInfo}>
+    <Card style={{ ...styles.listCard, padding: 5 }}>
+      <Card.Content>
         <Text style={styles.subtitle}>{capitalizeFirstLetter(post.title)}</Text>
-        <Text style={{ fontSize: FontSizes.xsmall }}>{`${capitalizeFirstLetter(
-          t("author")
-        )}: ${post.user_id}`}</Text>
-      </View>
-    </TouchableOpacity>
+        <Text style={{ fontSize: FontSizes.xsmall }}>
+          {`${capitalizeFirstLetter(t("author"))}: ${post.user_id}`}
+        </Text>
+      </Card.Content>
+    </Card>
   );
 
   return (
     <View>
       <View style={[styles.row, styles.header]}>
-        <View style={{ marginLeft: 5 }}>
-          <Text style={styles.headerText}>
-            {capitalizeFirstLetter(t("categories"))}
-          </Text>
-        </View>
-        <View>
-          <FontAwesome
-            name="plus"
-            size={FontSizes.large}
-            color={Colors.white}
-            style={{ marginRight: 10 }}
-          />
-        </View>
-      </View>
-      <View style={styles.row}>
-        <FlatList
-          data={communityCategories}
-          renderItem={({ item }) => <CategoryCard category={item} />}
-          keyExtractor={(item) => item.id.toString()}
+        <Text style={styles.headerText}>
+          {capitalizeFirstLetter(t("categories"))}
+        </Text>
+        <IconButton
+          icon="plus"
+          size={FontSizes.large}
+          iconColor={theme.colors.background}
+          style={{ marginRight: marginRightPlusIcon }}
+          onPress={() => {
+            /* acción al presionar */
+          }}
         />
       </View>
+      <FlatList
+        data={communityCategories}
+        renderItem={({ item }) => <CategoryCard category={item} />}
+        keyExtractor={(item) => item.id.toString()}
+      />
       <View style={[styles.row, styles.header]}>
-        <View style={{ marginLeft: 5 }}>
-          <Text style={styles.headerText}>
-            {capitalizeFirstLetter(t("posts"))}
-          </Text>
-        </View>
-        <View>
-          <FontAwesome
-            name="plus"
-            size={FontSizes.large}
-            color={Colors.white}
-            style={{ marginRight: 10 }}
-          />
-        </View>
-      </View>
-      <View style={styles.row}>
-        <FlatList
-          data={communityPosts}
-          renderItem={({ item }) => <PostCard post={item} />}
-          keyExtractor={(item) => item.id.toString()}
+        <Text style={styles.headerText}>
+          {capitalizeFirstLetter(t("posts"))}
+        </Text>
+        <IconButton
+          icon="plus"
+          size={FontSizes.large}
+          iconColor={theme.colors.background}
+          style={{ marginRight: marginRightPlusIcon }}
+          onPress={() => {
+            /* acción al presionar */
+          }}
         />
       </View>
+      <FlatList
+        data={communityPosts}
+        renderItem={({ item }) => <PostCard post={item} />}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </View>
   );
 };

@@ -1,18 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  TouchableOpacity,
-  View,
-  Text,
-  Image,
-  ScrollView,
-  RefreshControl,
-} from "react-native";
+import { View, Image, ScrollView, RefreshControl } from "react-native";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./ProfileStyles";
 import Config from "../../config/Config";
+import { Button, Text } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -37,10 +32,11 @@ function ProfileScreen() {
     setRefreshing(false);
   };
 
-  // useEffect para recuperar la información del usuario cuando se monta el componente
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUserInfo();
+    }, [])
+  );
 
   const logout = async () => {
     await AsyncStorage.removeItem("userToken");
@@ -56,21 +52,28 @@ function ProfileScreen() {
       }
     >
       <View style={styles.profileContainer}>
-        <Image source={{ uri: Config.API_URL+userInfo.picture }} style={styles.largeProfilePic} />
+        <Image
+          source={{ uri: Config.API_URL + userInfo.picture }}
+          style={styles.largeProfilePic}
+        />
         <View style={styles.userInfo}>
-          <Text style={styles.title}>{userInfo.username}</Text>
+          <Text variant="titleLarge" style={styles.title}>
+            {userInfo.username}
+          </Text>
           <Text style={styles.email}>{userInfo.email}</Text>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.button}
+      <Button
+        mode="contained"
         onPress={() => navigation.navigate(t("edit_profile"))}
+        style={styles.button}
       >
         <Text style={styles.buttonText}>{t("edit_profile")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={logout}>
+      </Button>
+
+      <Button mode="contained" onPress={logout} style={styles.button}>
         <Text style={styles.buttonText}>{t("logout")}</Text>
-      </TouchableOpacity>
+      </Button>
     </ScrollView>
   );
 }

@@ -5,7 +5,7 @@ import FontSizes from "./FontSizes";
 const commonStyles = StyleSheet.create({
   viewBorders: {
     borderWidth: 1,
-    borderColor: Colors.black
+    borderColor: Colors.black,
   },
   container: {
     flex: 1,
@@ -18,8 +18,8 @@ const commonStyles = StyleSheet.create({
     marginTop: 15,
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   column: {
     flex: 1,
@@ -28,27 +28,12 @@ const commonStyles = StyleSheet.create({
     position: "absolute",
     transform: [{ translateX: 340 }, { translateY: 10 }],
   },
-  input: {
-    height: 40,
-    borderColor: Colors.gray,
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 5,
-  },
   cardDescription: {
     color: Colors.gray,
-    flexShrink: 1
+    flexShrink: 1,
   },
   button: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: Colors.primary,
+    margin: Dimensions.get("window").scale * 2,
   },
   buttonText: {
     fontSize: FontSizes.large,
@@ -66,30 +51,21 @@ const commonStyles = StyleSheet.create({
   label: {
     fontSize: FontSizes.regular,
   },
-  input: {
-    height: 40,
-    borderColor: Colors.gray,
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 5,
-  },
   underInputMessage: {
     fontSize: FontSizes.small,
     color: Colors.gray,
   },
   formPicPreview: {
-    width: Dimensions.get("window").width / 1.25,
-    height: Dimensions.get("window").width / 1.25,
+    width: Dimensions.get("window").scale * 125,
+    height: Dimensions.get("window").scale * 125,
   },
   formPicPreviewView: {
     justifyContent: "center",
     alignItems: "center",
   },
   listCard: {
-    backgroundColor: Colors.white,
-    borderRadius: 5,
-    marginBottom: 10,
+    marginTop: "1%",
+    marginBottom: "1%",
     shadowColor: Colors.shadow,
     shadowOffset: {
       width: 0,
@@ -97,9 +73,6 @@ const commonStyles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
-    flexDirection: "row",
-    alignItems: "center",
   },
 
   fullLoading: {
@@ -109,7 +82,6 @@ const commonStyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: FontSizes.large,
     fontWeight: "bold",
   },
   subtitle: {
@@ -137,13 +109,13 @@ const commonStyles = StyleSheet.create({
 
   // Role
   roleContainer: {
-    borderRadius: 5, 
-    padding: 5, 
-    marginLeft: "auto", 
+    borderRadius: 5,
+    padding: 5,
+    marginLeft: "auto",
   },
   roleText: {
-    color: Colors.white, 
-    fontWeight: "bold" 
+    color: Colors.white,
+    fontWeight: "bold",
   },
 });
 

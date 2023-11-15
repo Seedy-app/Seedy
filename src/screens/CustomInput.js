@@ -1,10 +1,10 @@
 import React from "react";
-import { View, TextInput, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { View } from "react-native";
+import { TextInput } from "react-native-paper";
 import styles from "../config/CommonStyles";
 
 const CustomInput = ({
-  placeholder,
+  label,
   isPassword,
   isConfirmPassword,
   onChangeText,
@@ -15,15 +15,14 @@ const CustomInput = ({
     React.useState(true);
 
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
-
   const toggleConfirmPasswordVisibility = () =>
     setConfirmPasswordVisible(!isConfirmPasswordVisible);
 
   return (
-    <View>
+    <View style={styles.inputContainer}>
       <TextInput
-        style={styles.input}
-        placeholder={placeholder}
+        style={[styles.input, { paddingRight: 40 }]} // Ajusta el padding para evitar que el ícono se oculte
+        label={label}
         onChangeText={onChangeText}
         secureTextEntry={
           (isPassword && isPasswordVisible) ||
@@ -31,31 +30,29 @@ const CustomInput = ({
         }
         value={value}
         autoCapitalize="none"
+        right={
+          (isPassword || isConfirmPassword) && (
+            <TextInput.Icon
+              icon={
+                isPassword
+                  ? isPasswordVisible
+                    ? "eye-off"
+                    : "eye"
+                  : isConfirmPasswordVisible
+                  ? "eye-off"
+                  : "eye"
+              }
+              size={20}
+              color="grey"
+              onPress={
+                isPassword
+                  ? togglePasswordVisibility
+                  : toggleConfirmPasswordVisibility
+              }
+            />
+          )
+        }
       />
-      {isPassword && (
-        <TouchableOpacity
-          style={styles.eyeIcon}
-          onPress={togglePasswordVisibility}
-        >
-          <Icon
-            name={isPasswordVisible ? "eye-slash" : "eye"}
-            size={20}
-            color="grey"
-          />
-        </TouchableOpacity>
-      )}
-      {isConfirmPassword && (
-        <TouchableOpacity
-          style={styles.eyeIcon}
-          onPress={toggleConfirmPasswordVisibility}
-        >
-          <Icon
-            name={isConfirmPasswordVisible ? "eye-slash" : "eye"}
-            size={20}
-            color="grey"
-          />
-        </TouchableOpacity>
-      )}
     </View>
   );
 };

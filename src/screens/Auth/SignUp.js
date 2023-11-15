@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import CustomInput from "../CustomInput";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
+import { Text, Button, TouchableRipple } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
@@ -63,7 +64,7 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
     try {
-      pictureUrl = await getRandomPicture('profile_picture');
+      pictureUrl = await getRandomPicture("profile_picture");
       const response = await fetch(Config.API_URL + "/register", {
         method: "POST",
         headers: {
@@ -82,55 +83,47 @@ export default function SignUpScreen({ navigation }) {
         setError(t("register_error"));
       }
     } catch (error) {
-      console.log(error);
       setError(t("network_error"));
     }
   };
 
   return (
     <View style={[styles.container, { justifyContent: "center" }]}>
-      <Text style={styles.label}>{t("username") + ":"}</Text>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
-      <CustomInput
-        placeholder={t("username")}
-        onChangeText={handleUsernameChange}
-      />
-      <Text style={styles.label}>{t("email") + ":"}</Text>
+      <CustomInput label={t("username")} onChangeText={handleUsernameChange} />
       {emailError && <Text style={styles.error}>{emailError}</Text>}
       <CustomInput
-        placeholder={t("email")}
+        label={t("email")}
         keyboardType="email-address"
         onChangeText={handleEmailChange}
       />
-      <Text style={styles.label}>{t("password") + ":"}</Text>
       {passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CustomInput
-        placeholder={t("password")}
+        label={t("password")}
         isPassword
         onChangeText={(text) => setPassword(text)}
       />
-      <Text style={styles.label}>{t("confirm_password") + ":"}</Text>
       <CustomInput
-        placeholder={t("confirm_password")}
+        label={t("confirm_password")}
         isConfirmPassword
         onChangeText={(text) => setConfirmPassword(text)}
       />
       {Error && <Text style={styles.error}>{Error}</Text>}
-      <TouchableOpacity
+      <Button
+        mode="contained"
         style={[
-          styles.button,
           (usernameError || emailError) && styles.buttonDisabled,
         ]}
         onPress={register}
         disabled={(usernameError || emailError) != ""}
       >
         <Text style={styles.buttonText}>{t("register")}</Text>
-      </TouchableOpacity>
+      </Button>
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>{t("already_have_an_account")}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(t("login"))}>
+        <TouchableRipple onPress={() => navigation.navigate(t("login"))}>
           <Text style={styles.justTextButton}>{t("login")}</Text>
-        </TouchableOpacity>
+        </TouchableRipple>
       </View>
     </View>
   );

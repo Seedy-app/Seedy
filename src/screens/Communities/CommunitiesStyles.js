@@ -10,22 +10,8 @@ const communitiesStyles = StyleSheet.create({
     backgroundColor: Colors.white,
     padding: 10,
   },
-  communityListPic: {
-    width: 60,
-    height: 60,
-    borderRadius: 25,
-  },
-  communityShowPic: {
-    width: 120,
-    height: 120,
-    borderRadius: 50,
-  },
   communityCreatePic: {
-    borderRadius: Dimensions.get("window").width / 4,
-  },
-  communityShortInfo: {
-    flexWrap: "wrap",
-    maxWidth: Dimensions.get("window").width - 80,
+    borderRadius: Dimensions.get("window").scale * 15,
   },
   tab: {
     backgroundColor: Colors.white,
@@ -34,9 +20,12 @@ const communitiesStyles = StyleSheet.create({
     color: Colors.black,
   },
   header: {
+    paddingLeft: Dimensions.get("window").scale * 7,
+    alignItems: "center",
     backgroundColor: Colors.primary,
-    marginBottom: 2,
-    borderRadius: 3,
+    marginTop: Dimensions.get("window").scale * 2,
+    marginBottom: Dimensions.get("window").scale * 2,
+    borderRadius: Dimensions.get("window").scale * 10,
     shadowColor: Colors.shadow,
     shadowOffset: {
       width: 0,
@@ -50,6 +39,32 @@ const communitiesStyles = StyleSheet.create({
     color: Colors.white,
     fontSize: FontSize.regular,
     fontWeight: "bold",
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    padding: Dimensions.get("window").scale * 10,
+    marginLeft: Dimensions.get("window").scale * 10,
+    marginRight: Dimensions.get("window").scale * 10,
+    borderRadius: Dimensions.get("window").scale * 15,
+  },
+  modalContent: {
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  modalText: {
+    marginTop: Dimensions.get("window").scale * 5,
+    marginBottom: Dimensions.get("window").scale * 5,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  input: {
+    width: "100%",
+    marginBottom: Dimensions.get("window").scale * 10,
   },
 });
 
