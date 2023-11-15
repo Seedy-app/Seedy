@@ -172,7 +172,7 @@ function EditProfileScreen() {
       <Button
         mode="contained"
         onPress={HandleSelectImage}
-        icon={() => <FontAwesome name="picture-o" size={16} color="white" />}
+        icon="panorama"
         style={styles.button}
       >
         {t("select_image")}

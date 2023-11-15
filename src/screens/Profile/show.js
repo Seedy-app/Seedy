@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Image, ScrollView, RefreshControl } from "react-native";
 import { AuthContext } from "../../../src/contexts/AuthContext";
@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./ProfileStyles";
 import Config from "../../config/Config";
 import { Button, Text } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 
 function ProfileScreen() {
   const navigation = useNavigation();
@@ -31,10 +32,11 @@ function ProfileScreen() {
     setRefreshing(false);
   };
 
-  // useEffect para recuperar la información del usuario cuando se monta el componente
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUserInfo();
+    }, [])
+  );
 
   const logout = async () => {
     await AsyncStorage.removeItem("userToken");

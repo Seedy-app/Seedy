@@ -1,15 +1,17 @@
 import React from "react";
 import styles from "./CommunitiesStyles";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { Card, IconButton } from 'react-native-paper';
+import { View, Text, FlatList, Dimensions } from "react-native";
+import { Card, IconButton } from "react-native-paper";
 import { capitalizeFirstLetter } from "../../utils/device";
-import Colors from "../../config/Colors";
 import FontSizes from "../../config/FontSizes";
 import { useTranslation } from "react-i18next";
+import { useTheme } from 'react-native-paper';
+
 
 const PostsTab = ({ communityCategories, communityPosts }) => {
   const { t } = useTranslation();
-
+  const theme = useTheme();
+  const marginRightPlusIcon = Dimensions.get("window").scale * 4;
   const CategoryCard = ({ category }) => (
     <Card style={{ ...styles.listCard, padding: 5 }}>
       <Card.Content>
@@ -45,9 +47,11 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
         <IconButton
           icon="plus"
           size={FontSizes.large}
-          color={Colors.white}
-          style={{ marginRight: 10 }}
-          onPress={() => {/* acción al presionar */}}
+          iconColor={theme.colors.background}
+          style={{ marginRight: marginRightPlusIcon }}
+          onPress={() => {
+            /* acción al presionar */
+          }}
         />
       </View>
       <FlatList
@@ -62,9 +66,11 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
         <IconButton
           icon="plus"
           size={FontSizes.large}
-          color={Colors.white}
-          style={{ marginRight: 10 }}
-          onPress={() => {/* acción al presionar */}}
+          iconColor={theme.colors.background}
+          style={{ marginRight: marginRightPlusIcon }}
+          onPress={() => {
+            /* acción al presionar */
+          }}
         />
       </View>
       <FlatList

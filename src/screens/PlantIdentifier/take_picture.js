@@ -80,7 +80,7 @@ export default function TakePictureScreen({ navigation }) {
         }}
         onCameraReady={onCameraReady}
       >
-        <View style={styles.buttonContainer}>
+        <View style={styles.captureButtonContainer}>
           <IconButton
             icon="magnify"
             iconColor ="white"

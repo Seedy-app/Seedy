@@ -2,7 +2,14 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { View, Image } from "react-native";
-import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import {
+  Button,
+  Card,
+  Title,
+  Paragraph,
+  IconButton,
+  useTheme,
+} from "react-native-paper";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,6 +21,7 @@ import ChatTab from "./show-chat";
 import InfoTab from "./show-info";
 import loadingImage from "../../assets/images/loading.gif";
 import { giveUserCommunityRole } from "../../utils/api";
+import { capitalizeFirstLetter } from "../../utils/device";
 
 const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -24,6 +32,7 @@ const CommunityScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
 
+  const theme = useTheme();
   const route = useRoute();
   const community = route.params.community;
   const navigation = useNavigation();
@@ -83,15 +92,27 @@ const CommunityScreen = () => {
     };
     const fetchCommunityPosts = async () => {
       try {
+        const token = await AsyncStorage.getItem("userToken");
+        if (!token) {
+          console.error(t("not_logged_in_error"));
+          return { error: t("not_logged_in_error") };
+        }
         const response = await fetch(`${Config.API_URL}/communities/posts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
+
           body: JSON.stringify({
             community_id: community.id,
           }),
         });
+        if (response.status === 404) {
+          setCommunityPostsData([]);
+          setIsLoading(false);
+          return;
+        }
         if (!response.ok) {
           throw new Error(
             "Network response was not ok: " + response.statusText
@@ -115,7 +136,17 @@ const CommunityScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: community.name,
+      headerTitle: capitalizeFirstLetter(community.name),
+      headerRight: () => (
+        <IconButton
+          icon="cog"
+          iconColor={theme.colors.primary}
+          size={24}
+          onPress={() =>
+            navigation.navigate(t("community_settings"), { community })
+          }
+        />
+      ),
     });
   }, [navigation]);
 
@@ -164,22 +195,22 @@ const CommunityScreen = () => {
             />
           )}
         />
-        ) : (
-          <View style={styles.container}>
-            <Card>
-              <Card.Content>
-                <Title>{community.name}</Title>
-                <Paragraph>{community.description}</Paragraph>
-              </Card.Content>
-              <Card.Cover source={{ uri: Config.API_URL + community.picture }} />
-              <Card.Actions>
-                <Button onPress={join_community}>{t("join_community")}</Button>
-              </Card.Actions>
-            </Card>
-          </View>
-        )}
-      </>
-    );
-  };
+      ) : (
+        <View style={styles.container}>
+          <Card>
+            <Card.Content>
+              <Title>{community.name}</Title>
+              <Paragraph>{community.description}</Paragraph>
+            </Card.Content>
+            <Card.Cover source={{ uri: Config.API_URL + community.picture }} />
+            <Card.Actions>
+              <Button onPress={join_community}>{t("join_community")}</Button>
+            </Card.Actions>
+          </Card>
+        </View>
+      )}
+    </>
+  );
+};
 
 export default CommunityScreen;

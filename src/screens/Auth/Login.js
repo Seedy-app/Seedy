@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
       // Actualiza el estado de la aplicación para reflejar que el usuario ha iniciado sesión
       signIn(token);
     } else {
-      console.log("Invalid credentials");
+      console.error("Invalid credentials");
     }
   };
 

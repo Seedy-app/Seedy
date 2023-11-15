@@ -1,6 +1,6 @@
 // Importamos las dependencias necesarias
-import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import {
   View,
   FlatList,
@@ -41,10 +41,11 @@ function CommunitiesScreen() {
     }
   };
 
-  // Usamos useEffect para obtener los datos cuando el componente se monta
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   // Función que se ejecuta cuando el usuario intenta refrescar la lista
   const onRefresh = () => {
@@ -54,7 +55,7 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <Card onPress={() => navigation.navigate(t("community"), { community })}>
+    <Card onPress={() => navigation.navigate(t("community"), { community })} style={styles.listCard}>
       <Card.Title
         title={capitalizeFirstLetter(community.name)}
         subtitle={`${community.userCount} ${capitalizeFirstLetter(t("members"))}`}

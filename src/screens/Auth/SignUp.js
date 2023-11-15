@@ -83,7 +83,6 @@ export default function SignUpScreen({ navigation }) {
         setError(t("register_error"));
       }
     } catch (error) {
-      console.log(error);
       setError(t("network_error"));
     }
   };

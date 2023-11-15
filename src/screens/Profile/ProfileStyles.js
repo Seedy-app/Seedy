@@ -15,7 +15,7 @@ const profileStyles = StyleSheet.create({
         color: Colors.gray
       },
       FormProfilePic: {
-        borderRadius: Dimensions.get("window").width/2,
+        borderRadius: Dimensions.get("window").scale*100,
       },
 });
 
