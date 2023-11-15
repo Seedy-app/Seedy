@@ -54,7 +54,7 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <Card onPress={() => navigation.navigate(t("community"), { community })}>
+    <Card onPress={() => navigation.navigate(t("community"), { community })} style={styles.listCard}>
       <Card.Title
         title={capitalizeFirstLetter(community.name)}
         subtitle={`${community.userCount} ${capitalizeFirstLetter(t("members"))}`}
