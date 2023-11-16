@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { Camera } from "expo-camera";
 import { IconButton } from "react-native-paper";
 import styles from "./PlantIdentifierStyles";
 import { identifyPlant, uploadPictureToServer } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
-import { useTheme } from 'react-native-paper';
-
+import { useTheme } from "react-native-paper";
 
 export default function TakePictureScreen({ navigation }) {
   const { t } = useTranslation();
@@ -51,14 +50,42 @@ export default function TakePictureScreen({ navigation }) {
 
   const takePicture = async (cameraRef) => {
     if (isCameraReady && cameraRef) {
-      const photo = await cameraRef.takePictureAsync();
-      const image = await uploadPictureToServer(
-        `plant_${Date.now()}`,
-        `users/${userId}`,
-        photo.uri
-      );
-      response = await identifyPlant(image);
-      navigation.navigate(t("identify_plant"), { results: response });
+      try {
+        const photo = await cameraRef.takePictureAsync();
+        const image = await uploadPictureToServer(
+          `plant_${Date.now()}`,
+          `users/${userId}`,
+          photo.uri
+        );
+        const response = await identifyPlant(image);
+        if (response.status === 200) {
+          const results = await response.json();
+          navigation.navigate(t("identify_plant"), { results });
+        } else {
+          Alert.alert(
+            t("identification_error_title"),
+            t("identification_error_message"),
+            [
+              {
+                text: t("try_again"),
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      } catch (error) {
+        console.error("takePicture error:", error);
+        Alert.alert(
+          t("unexpected_error_title"),
+          t("unexpected_error_message"),
+          [
+            {
+              text: t("ok"),
+            },
+          ],
+          { cancelable: false }
+        );
+      }
     }
   };
 
@@ -83,9 +110,12 @@ export default function TakePictureScreen({ navigation }) {
         <View style={styles.captureButtonContainer}>
           <IconButton
             icon="magnify"
-            iconColor ="white"
+            iconColor="white"
             size={40}
-            style={[styles.captureButton, {backgroundColor: theme.colors.primary}]}
+            style={[
+              styles.captureButton,
+              { backgroundColor: theme.colors.primary },
+            ]}
             onPress={() => takePicture(this.camera)}
           />
         </View>

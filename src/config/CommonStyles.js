@@ -3,6 +3,10 @@ import Colors from "./Colors";
 import FontSizes from "./FontSizes";
 
 const commonStyles = StyleSheet.create({
+  input: {
+    width: "100%",
+    marginBottom: Dimensions.get("window").scale * 5,
+  },
   viewBorders: {
     borderWidth: 1,
     borderColor: Colors.black,
@@ -34,6 +38,7 @@ const commonStyles = StyleSheet.create({
   },
   button: {
     margin: Dimensions.get("window").scale * 2,
+    width: "100%"
   },
   buttonText: {
     fontSize: FontSizes.large,
