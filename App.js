@@ -7,6 +7,7 @@ import MyTabs from "./src/navigation/BottomTabsNavigator";
 import { AuthContext } from "./src/contexts/AuthContext";
 import { Provider as PaperProvider } from "react-native-paper";
 import SeedyTheme from "./src/config/SeedyTheme";
+import * as Font from 'expo-font';
 
 // Crea el stack de navegación de nivel superior
 const RootStack = createStackNavigator();
@@ -14,6 +15,19 @@ const RootStack = createStackNavigator();
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  async function loadFonts() {
+    await Font.loadAsync({
+      'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
+      // Carga otras fuentes según sea necesario
+    });
+    setFontsLoaded(true); // Actualizar el estado una vez que las fuentes se carguen
+  }
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
 
   useEffect(() => {
     // Cargar el token al inicio de la aplicación
@@ -44,7 +58,7 @@ function App() {
     },
   };
 
-  if (isLoading) {
+  if (isLoading || !fontsLoaded) {
     // Puedes mostrar una pantalla de carga mientras se recupera el token
     return null; // Reemplaza esto con tu pantalla de carga
   }

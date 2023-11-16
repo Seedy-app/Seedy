@@ -322,7 +322,6 @@ export const identifyPlant = async (photo_url) => {
   }
 };
 
-
 export const firstOrCreatePlant = async (plant) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
@@ -340,8 +339,10 @@ export const firstOrCreatePlant = async (plant) => {
       body: JSON.stringify({
         scientific_name: plant.species.scientificNameWithoutAuthor,
         family: plant.species.family.scientificNameWithoutAuthor,
-        images: JSON.stringify(plant.images.map(image => image.url.o)),
-        ...(plant.species.commonNames && { common_names: plant.species.commonNames })
+        images: JSON.stringify(plant.images.map((image) => image.url.o)),
+        ...(plant.species.commonNames && {
+          common_names: plant.species.commonNames,
+        }),
       }),
     });
     if (!response.ok) {
@@ -349,7 +350,7 @@ export const firstOrCreatePlant = async (plant) => {
       return null;
     } else {
       const data = await response.json();
-    return data.id;
+      return data.id;
     }
   } catch (error) {
     console.error("Error:", error.message);
@@ -358,8 +359,6 @@ export const firstOrCreatePlant = async (plant) => {
 };
 
 export const associatePlantToUser = async (plant_id) => {
-  console.log(plant_id);
-
   try {
     const token = await AsyncStorage.getItem("userToken");
 
@@ -382,7 +381,7 @@ export const associatePlantToUser = async (plant_id) => {
     } else if (response.status === 200) {
       return 0; // Ya existe
     } else {
-      return -1; 
+      return -1;
     }
   } catch (error) {
     console.error("Error:", error.message);
@@ -399,13 +398,16 @@ export const isPlantAssociatedWithMe = async (plant_id) => {
       return { error: i18n.t("not_logged_in_error") };
     }
 
-    const response = await fetch(`${Config.API_URL}/plant/${plant_id}/isAssociated`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${Config.API_URL}/plant/${plant_id}/isAssociated`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.info(response);
