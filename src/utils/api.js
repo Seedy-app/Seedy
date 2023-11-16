@@ -311,10 +311,10 @@ export const identifyPlant = async (photo_url) => {
       }),
     });
     if (!response.ok) {
-      console.info(response);
-      return response;
+      return null;
     } else {
-      return response;
+      const results = await response.json();
+      return results;
     }
   } catch (error) {
     console.error("Error:", error.message);

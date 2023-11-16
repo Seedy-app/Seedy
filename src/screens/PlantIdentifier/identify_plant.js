@@ -137,22 +137,20 @@ function IdentifyPlantScreen({ route, navigation }) {
           ))}
         </View>
       </ScrollView>
-      <Card.Actions style={{ flexDirection: 'column' }}>
+      <Card.Actions style={{ flexDirection: "column" }}>
         <Button
           mode="contained"
           onPress={HandleAddToMyPlants}
           disabled={userHasPlant}
-          style={ styles.button }
+          style={styles.button}
         >
-          {userHasPlant
-            ? t("duplicated_plant_message")
-            : t("add_to_my_plants")}
+          {userHasPlant ? t("duplicated_plant_message") : t("add_to_my_plants")}
         </Button>
         <Button
           mode="contained"
           buttonColor={theme.colors.error}
           onPress={ChangeResultNumber}
-          style={ styles.button }
+          style={styles.button}
         >
           {t("wrong_identification")}
         </Button>

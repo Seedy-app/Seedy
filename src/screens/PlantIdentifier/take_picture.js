@@ -57,9 +57,8 @@ export default function TakePictureScreen({ navigation }) {
           `users/${userId}`,
           photo.uri
         );
-        const response = await identifyPlant(image);
-        if (response.status === 200) {
-          const results = await response.json();
+        const results = await identifyPlant(image);
+        if (results) {
           navigation.navigate(t("identify_plant"), { results });
         } else {
           Alert.alert(
