@@ -1,7 +1,6 @@
 import Config from "../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import i18n from 'i18next';
-
+import i18n from "i18next";
 
 export const checkUsernameAvailability = async (
   username,
@@ -31,10 +30,7 @@ export const checkUsernameAvailability = async (
   }
 };
 
-export const checkEmailAvailability = async (
-  email,
-  ignore_user_id = null
-) => {
+export const checkEmailAvailability = async (email, ignore_user_id = null) => {
   try {
     const requestBody = { email };
     if (ignore_user_id) {
@@ -208,14 +204,13 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
   });
 
   try {
-
     const response = await fetch(
       `${Config.API_URL}/image/upload/${encodeURIComponent(folderName)}`,
       {
         method: "POST",
         body: formData,
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
       }
     );
@@ -262,50 +257,169 @@ export const createCommunityCategory = async (
   community_id,
   name,
   description
-  ) => {
-    try {
-      const token = await AsyncStorage.getItem("userToken");
-  
-      if (!token) {
-        console.error(i18n.t("not_logged_in_error"));
-        return { error: i18n.t("not_logged_in_error") };
+) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/${community_id}/create-category`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name,
+          description,
+        }),
       }
-      const response = await fetch(
-        `${Config.API_URL}/communities/${community_id}/create-category`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            name, 
-            description
-          }),
-        }
-      );
-      if (!response.ok) {
-        console.info(response);
-        return false;
-      } else {
-        return true;
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
+    );
+    if (!response.ok) {
+      console.info(response);
       return false;
+    } else {
+      return true;
     }
-  };
+  } catch (error) {
+    console.error("Error:", error.message);
+    return false;
+  }
+};
 
-  export const identifyPlant = async (photo_url) => {
-    try {
-      const response = await fetch(
+export const identifyPlant = async (photo_url) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
 
-        `https://my-api.plantnet.org/v2/identify/all?api-key=${Config.PLANTNET_API_KEY}&images=${encodeURI(Config.API_URL+photo_url)}&lang=${i18n.language}&include-related-images=true`
-        );
-        const responseData = await response.json();
-        return responseData.results;
-    } catch (error) {
-      console.error("Error:", error.message);
-      return { error: i18n.t("network_error") };
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
     }
-  };
+    const response = await fetch(`${Config.API_URL}/plant/identify`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        photo_url: Config.API_URL + photo_url,
+        lang: i18n.language,
+      }),
+    });
+    if (!response.ok) {
+      return null;
+    } else {
+      const results = await response.json();
+      return results;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: i18n.t("network_error") };
+  }
+};
+
+
+export const firstOrCreatePlant = async (plant) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(`${Config.API_URL}/plant/firstOrCreate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        scientific_name: plant.species.scientificNameWithoutAuthor,
+        family: plant.species.family.scientificNameWithoutAuthor,
+        images: JSON.stringify(plant.images.map(image => image.url.o)),
+        ...(plant.species.commonNames && { common_names: plant.species.commonNames })
+      }),
+    });
+    if (!response.ok) {
+      console.info(response);
+      return null;
+    } else {
+      const data = await response.json();
+    return data.id;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: i18n.t("network_error") };
+  }
+};
+
+export const associatePlantToUser = async (plant_id) => {
+  console.log(plant_id);
+
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+
+    const response = await fetch(`${Config.API_URL}/plant/associate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ plant_id }),
+    });
+
+    if (response.status === 201) {
+      return 1; // Creado exitosamente
+    } else if (response.status === 200) {
+      return 0; // Ya existe
+    } else {
+      return -1; 
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: i18n.t("network_error") };
+  }
+};
+
+export const isPlantAssociatedWithMe = async (plant_id) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+
+    const response = await fetch(`${Config.API_URL}/plant/${plant_id}/isAssociated`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.info(response);
+      return false;
+    } else {
+      const data = await response.json();
+      if (data.associated) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: i18n.t("network_error"), associated: false };
+  }
+};
