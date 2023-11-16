@@ -62,10 +62,7 @@ const communitiesStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  input: {
-    width: "100%",
-    marginBottom: Dimensions.get("window").scale * 10,
-  },
+
 });
 
 export default communitiesStyles;
