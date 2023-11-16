@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommunitiesStackNavigator from "./CommunitiesStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import PlantIdentifierStackNavigator from "./PlantIdentifierStackNavigator";
-import MyPlantsScreen from "../screens/MyPlants";
+import MyPlantsStackNavigator from "./MyPlantsStackNavigator";
 import { useTranslation } from "react-i18next";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"; // Importa MaterialIcons
 
@@ -18,13 +18,13 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === t("my_plants")) {
+          if (route.name === "My Plants Stack Navigator") {
             iconName = "local-florist";
-          } else if (route.name === t("communities")) {
+          } else if (route.name === "Plant Identifier Stack Navigator") {
             iconName = "group";
-          } else if (route.name === t("plant_identifier")) {
+          } else if (route.name === "Communities Stack Navigator") {
             iconName = "search";
-          } else if (route.name === t("profile")) {
+          } else if (route.name === "Profile Stack Navigator") {
             iconName = "person";
           }
 
@@ -35,22 +35,22 @@ function MyTabs() {
       })}
     >
       <Tab.Screen
-        name={t("my_plants")}
-        component={MyPlantsScreen}
+        name="My Plants Stack Navigator"
+        component={MyPlantsStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("plant_identifier")}
+        name="Plant Identifier Stack Navigator"
         component={PlantIdentifierStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("communities")}
+        name="Communities Stack Navigator"
         component={CommunitiesStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("profile")}
+        name="Profile Stack Navigator"
         component={ProfileStackNavigator}
         options={{ headerShown: false }}
       />
