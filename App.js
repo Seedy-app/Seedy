@@ -19,10 +19,10 @@ function App() {
 
   async function loadFonts() {
     await Font.loadAsync({
-      'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
+      'Roboto': require('./src/assets/fonts/Roboto-Regular.ttf'),
       // Carga otras fuentes según sea necesario
     });
-    setFontsLoaded(true); // Actualizar el estado una vez que las fuentes se carguen
+    setFontsLoaded(true); 
   }
 
   useEffect(() => {
