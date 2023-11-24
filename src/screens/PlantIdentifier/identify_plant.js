@@ -42,7 +42,7 @@ function IdentifyPlantScreen({ route, navigation }) {
     associated_code = await associatePlantToUser(plantId);
     switch (associated_code) {
       case 1:
-        navigation.navigate(t("my_plants"));
+        setUserHasPlant(true);
         break;
       case 0:
         Alert.alert(
@@ -55,7 +55,6 @@ function IdentifyPlantScreen({ route, navigation }) {
           ],
           { cancelable: false }
         );
-        navigation.navigate(t("my_plants"));
         break;
       case -1:
         Alert.alert(
@@ -70,7 +69,6 @@ function IdentifyPlantScreen({ route, navigation }) {
         );
         break;
       default:
-        navigation.navigate(t("my_plants"));
         break;
     }
   };

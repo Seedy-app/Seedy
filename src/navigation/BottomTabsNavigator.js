@@ -18,13 +18,13 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === "My Plants Stack Navigator") {
+          if (route.name === t("My Plants")) {
             iconName = "local-florist";
-          } else if (route.name === "Plant Identifier Stack Navigator") {
+          } else if (route.name === t("Communities")) {
             iconName = "group";
-          } else if (route.name === "Communities Stack Navigator") {
+          } else if (route.name === t("Plant Identifier")) {
             iconName = "search";
-          } else if (route.name === "Profile Stack Navigator") {
+          } else if (route.name === t("Profile")) {
             iconName = "person";
           }
 
@@ -35,22 +35,22 @@ function MyTabs() {
       })}
     >
       <Tab.Screen
-        name="My Plants Stack Navigator"
+        name={t("My Plants")}
         component={MyPlantsStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Plant Identifier Stack Navigator"
+        name={t("Plant Identifier")}
         component={PlantIdentifierStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Communities Stack Navigator"
+        name={t("Communities")}
         component={CommunitiesStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Profile Stack Navigator"
+        name={t("Profile")}
         component={ProfileStackNavigator}
         options={{ headerShown: false }}
       />
