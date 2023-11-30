@@ -425,3 +425,31 @@ export const isPlantAssociatedWithMe = async (plant_id) => {
     return { error: i18n.t("network_error"), associated: false };
   }
 };
+export const getPlants = async () => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+
+    const response = await fetch(`${Config.API_URL}/plant`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      console.info(response);
+      return null;
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return { error: i18n.t("network_error"), associated: false };
+  }
+};

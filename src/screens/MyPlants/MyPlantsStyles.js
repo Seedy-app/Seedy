@@ -26,19 +26,19 @@ const myPlantsStyles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   centeredImage: {
-    width: 200, 
+    width: 200,
     height: 200,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   noPlantsText: {
     marginTop: 10,
     fontSize: 16,
     textAlign: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   cardBackground: {
     width: "100%",
@@ -85,6 +85,31 @@ const myPlantsStyles = StyleSheet.create({
   },
   infoLabel: {
     fontWeight: "bold",
+  },
+  dialog: {
+    borderWidth: 2,
+    borderRadius: Dimensions.get("window").scale * 10,
+    overflow: "hidden",
+  },
+  dialogImage: {
+    width: 300,
+    height: 400,
+    borderRadius: Dimensions.get("window").scale * 10,
+  },
+  listImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  listTitle: {
+    fontWeight: "bold",
+  },
+  listSubtitle: {
+    color: "grey",
+  },
+  dialogImageContainer: {
+    alignItems: "center",
+    marginBottom: 20,
   },
 });
 
