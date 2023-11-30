@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, TouchableOpacity, Text, Image } from "react-native";
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  Image,
+  Alert,
+} from "react-native";
 import {
   Dialog,
   Paragraph,
@@ -8,7 +15,6 @@ import {
   Provider,
   Card,
   useTheme,
-  Alert,
 } from "react-native-paper";
 import { getPlants, associatePlantToUser } from "../../utils/api";
 import { capitalizeFirstLetter } from "../../utils/device";
@@ -42,23 +48,19 @@ const AddPlantScreen = () => {
 
   useEffect(() => {
     if (searchQuery) {
-      const filtered = options
-        .filter(
-          (option) =>
-            (option.scientific_name &&
-              option.scientific_name
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase())) ||
-            (option.family &&
-              option.family
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase())) ||
-            (option.common_names &&
-              option.common_names.some((name) =>
-                name.toLowerCase().includes(searchQuery.toLowerCase())
-              ))
-        )
-        .slice(0, 8);
+      const filtered = options.filter(
+        (option) =>
+          (option.scientific_name &&
+            option.scientific_name
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())) ||
+          (option.family &&
+            option.family.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (option.common_names &&
+            option.common_names.some((name) =>
+              name.toLowerCase().includes(searchQuery.toLowerCase())
+            ))
+      );
       setFilteredOptions(filtered);
     } else {
       setFilteredOptions([]);
@@ -118,13 +120,14 @@ const AddPlantScreen = () => {
 
   return (
     <Provider>
-      <View>
-        <Searchbar
-          placeholder="Buscar planta"
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-        />
-        {searchQuery && (
+      <View style={{ flex: 1 }}>
+          <Searchbar
+            style={styles.searchBar}
+            placeholder={t("search_plant")}
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+          />
+        {
           <FlatList
             data={filteredOptions}
             keyExtractor={(item) => item.id.toString()}
@@ -152,40 +155,49 @@ const AddPlantScreen = () => {
                 </Card>
               </TouchableOpacity>
             )}
-          />
-        )}
-        
-        <Dialog
-          visible={isDialogVisible}
-          onDismiss={handleCancel}
-          style={{ ...styles.dialog, borderColor: theme.colors.primary }}
-        >
-          <Dialog.Title>{t("confirm_selection")}</Dialog.Title>
-          <Dialog.Content>
-            <View style={styles.dialogImageContainer}>
-              <Image
-                source={{
-                  uri: JSON.parse(tempSelectedPlant?.images || "[]")[0],
+            ListFooterComponent={() => (
+              <Paragraph
+                style={{
+                  ...styles.disclaimer,
+                  backgroundColor: theme.colors.primary,
                 }}
-                style={styles.dialogImage}
-                resizeMode="cover"
-              />
-            </View>
-            <Paragraph>
-              {t("confirm_add_plant_selection_text")}
-              {tempSelectedPlant?.scientific_name}?
-            </Paragraph>
-          </Dialog.Content>
-          <Dialog.Actions style={{ justifyContent: "flex-end" }}>
-            <Button textColor={theme.colors.primary} onPress={handleCancel}>
-              {capitalizeFirstLetter(t("cancel"))}
-            </Button>
-            <Button textColor={theme.colors.primary} onPress={handleConfirmAdd}>
-              {capitalizeFirstLetter(t("accept"))}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
+              >
+                {t("search_plant_disclaimer")}
+              </Paragraph>
+            )}
+          />
+        }
       </View>
+      <Dialog
+        visible={isDialogVisible}
+        onDismiss={handleCancel}
+        style={{ ...styles.dialog, borderColor: theme.colors.primary }}
+      >
+        <Dialog.Title>{t("confirm_selection")}</Dialog.Title>
+        <Dialog.Content>
+          <View style={styles.dialogImageContainer}>
+            <Image
+              source={{
+                uri: JSON.parse(tempSelectedPlant?.images || "[]")[0],
+              }}
+              style={styles.dialogImage}
+              resizeMode="cover"
+            />
+          </View>
+          <Paragraph>
+            {t("confirm_add_plant_selection_text")}
+            {tempSelectedPlant?.scientific_name}?
+          </Paragraph>
+        </Dialog.Content>
+        <Dialog.Actions style={{ justifyContent: "flex-end" }}>
+          <Button textColor={theme.colors.primary} onPress={handleCancel}>
+            {capitalizeFirstLetter(t("cancel"))}
+          </Button>
+          <Button textColor={theme.colors.primary} onPress={handleConfirmAdd}>
+            {capitalizeFirstLetter(t("accept"))}
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
     </Provider>
   );
 };

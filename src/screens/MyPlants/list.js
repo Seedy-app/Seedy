@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   View,
@@ -7,6 +7,7 @@ import {
   RefreshControl,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -18,8 +19,8 @@ import {
   List,
   IconButton,
   Menu,
+  Searchbar,
 } from "react-native-paper";
-import { useFocusEffect } from '@react-navigation/native';
 import styles from "./MyPlantsStyles";
 import { useTranslation } from "react-i18next";
 import { hexToRGBA, capitalizeFirstLetter } from "../../utils/device";
@@ -27,7 +28,6 @@ import Config from "../../config/Config";
 import EmptyImage from "../../assets/images/depressed-plant.gif";
 
 function ListMyPlantsScreen() {
-  const itemsPerPage = 5;
   const theme = useTheme();
   const { t } = useTranslation();
   const [plants, setPlants] = useState([]);
@@ -36,23 +36,13 @@ function ListMyPlantsScreen() {
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMorePages, setHasMorePages] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allPlants, setAllPlants] = useState([]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const loadUserPlants = async () => {
-      };
-      
-      loadUserPlants();
-    }, [])
-  );
-
-  useFocusEffect(
-    React.useCallback(() => {
-      loadPlants();
-    }, [page]) 
-  );
+  useEffect(() => {
+    loadPlants();
+  }, []);
 
   const openModal = (plant) => {
     setSelectedPlant(plant);
@@ -77,16 +67,31 @@ function ListMyPlantsScreen() {
     setSelectedImage(image);
   };
 
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filtered = allPlants.filter(
+      (plant) =>
+        plant.scientific_name.toLowerCase().includes(query.toLowerCase()) ||
+        plant.family.toLowerCase().includes(query.toLowerCase())
+    );
+    setPlants(filtered.slice(0, 5));
   };
 
-  const handlePrevPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
+  const loadMorePlants = () => {
+    if (loadingMore || plants.length >= allPlants.length) return;
 
-  const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
+    setLoadingMore(true);
+    const nextPlants = allPlants
+      .filter(
+        (plant) =>
+          plant.scientific_name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          plant.family.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .slice(0, plants.length + 5);
+    setPlants(nextPlants);
+    setLoadingMore(false);
   };
 
   const removePlantFromUser = async (plantId) => {
@@ -116,11 +121,11 @@ function ListMyPlantsScreen() {
     }
   };
 
-  async function fetchUserPlants(userId, page, itemsPerPage) {
+  async function fetchUserPlants(userId) {
     try {
       const token = await AsyncStorage.getItem("userToken");
       const response = await fetch(
-        `${Config.API_URL}/plant/getUserPlants/${userId}?page=${page}&limit=${itemsPerPage}`,
+        `${Config.API_URL}/plant/getUserPlants/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -133,13 +138,8 @@ function ListMyPlantsScreen() {
       }
 
       const responseData = await response.json();
-      setPlants((prevPlants) =>
-        page === 1
-          ? responseData.plants
-          : [...prevPlants, ...responseData.plants]
-      );
-      setHasMorePages(responseData.hasMore);
-      return responseData.plants;
+      setAllPlants(responseData.plants);
+      setPlants(responseData.plants.slice(0, 5));
     } catch (error) {
       console.error("Error fetching plants:", error);
     }
@@ -150,116 +150,106 @@ function ListMyPlantsScreen() {
     if (userInfo) {
       const { id } = JSON.parse(userInfo);
       try {
-        const userPlants = await fetchUserPlants(id, page, itemsPerPage);
-        if (userPlants) {
-          setPlants(userPlants);
-        }
+        await fetchUserPlants(id);
       } catch (error) {
         console.error("Error fetching plants:", error);
       }
     }
   };
 
-  const renderPlantCard = ({ item: plant, index }) => (
-    <Card
-      onPress={() => openModal(plant)}
-      key={index}
-      style={[
-        styles.plantCard,
-        { borderColor: hexToRGBA(theme.colors.primary, 0.5) },
-      ]}
-    >
-      <ImageBackground
-        source={{
-          uri:
-            JSON.parse(plant.images).length > 0
-              ? JSON.parse(plant.images)[0]
-              : null,
-        }}
-        style={styles.cardBackground}
-        resizeMode="cover"
+  const renderPlantCard = ({ item: plant }) => {
+    return (
+      <Card
+        onPress={() => openModal(plant)}
+        style={[
+          styles.plantCard,
+          { borderColor: hexToRGBA(theme.colors.primary, 0.5) },
+        ]}
       >
-        <View
-          style={{
-            ...styles.overlayContainer,
-            backgroundColor: hexToRGBA(theme.colors.primary, 0.7),
+        <ImageBackground
+          source={{
+            uri:
+              JSON.parse(plant.images).length > 0
+                ? JSON.parse(plant.images)[0]
+                : null,
           }}
+          style={styles.cardBackground}
+          resizeMode="cover"
         >
-          <Card.Title
-            title={plant.scientific_name}
-            subtitle={
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.plantCardSubtitle}>
-                  {capitalizeFirstLetter(t("family"))}:{" "}
-                </Text>
-                <Text style={styles.plantCardSubtitle}>{plant.family}</Text>
-              </View>
-            }
-            titleStyle={styles.plantCardTitle}
-          />
-          <Card.Content>
-            <Text style={{ ...styles.plantCardContent, fontWeight: "bold" }}>
-              {capitalizeFirstLetter(t("common_names"))}:
-            </Text>
-            {plant.common_names.map((commonNames, commonNamesIndex) => (
-              <List.Item
-                key={commonNamesIndex}
-                title={commonNames}
-                titleStyle={styles.plantCardContent}
-                left={() => <List.Icon icon="sprout" color="white" />}
-              />
-            ))}
-          </Card.Content>
-        </View>
-      </ImageBackground>
-    </Card>
-  );
-
-  const PaginationFooter = () => (
-    <View style={styles.paginationContainer}>
-      <IconButton
-        icon="arrow-left-bold-outline"
-        onPress={handlePrevPage}
-        size={30}
-        iconColor={theme.colors.primary}
-        disabled={page === 1}
-      />
-      <IconButton
-        icon="arrow-right-bold-outline"
-        onPress={handleNextPage}
-        size={30}
-        iconColor={theme.colors.primary}
-        disabled={!hasMorePages}
-      />
-    </View>
-  );
+          <View
+            style={{
+              ...styles.overlayContainer,
+              backgroundColor: hexToRGBA(theme.colors.primary, 0.7),
+            }}
+          >
+            <Card.Title
+              title={plant.scientific_name}
+              subtitle={
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.plantCardSubtitle}>
+                    {capitalizeFirstLetter(t("family"))}:{" "}
+                  </Text>
+                  <Text style={styles.plantCardSubtitle}>{plant.family}</Text>
+                </View>
+              }
+              titleStyle={styles.plantCardTitle}
+            />
+            <Card.Content>
+              <Text style={{ ...styles.plantCardContent, fontWeight: "bold" }}>
+                {capitalizeFirstLetter(t("common_names"))}:
+              </Text>
+              {plant.common_names.map((commonName, index) => (
+                <List.Item
+                  key={index}
+                  title={commonName}
+                  titleStyle={styles.plantCardContent}
+                  left={() => <List.Icon icon="sprout" color="white" />}
+                />
+              ))}
+            </Card.Content>
+          </View>
+        </ImageBackground>
+      </Card>
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
+      <Searchbar
+        style={{ ...styles.searchBar, borderColor: theme.colors.primary }}
+        iconColor={theme.colors.placeholderTextColor}
+        placeholderTextColor={theme.colors.secondary}
+        placeholder={t("search_plant")}
+        onChangeText={handleSearch}
+        value={searchQuery}
+      />
       {plants.length > 0 ? (
         <FlatList
           data={plants}
           renderItem={renderPlantCard}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{
             paddingHorizontal: 10,
             paddingVertical: 10,
           }}
           style={{ flex: 1 }}
           refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              onEndReached={handleLoadMore}
-              onEndReachedThreshold={0.5}
-            />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          ListFooterComponent={hasMorePages ? PaginationFooter : null}
+          onEndReached={loadMorePlants}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={() =>
+            loadingMore ? <ActivityIndicator size="large" /> : null
+          }
         />
       ) : (
         <View style={styles.centeredView}>
           <Image source={EmptyImage} style={styles.centeredImage} />
-          <Text style={{...styles.noPlantsText, color: theme.colors.secondary}}>{t("my_plants_empty_message")}</Text>
+          <Text
+            style={{ ...styles.noPlantsText, color: theme.colors.secondary }}
+          >
+            {t("my_plants_empty_message")}
+          </Text>
         </View>
       )}
 

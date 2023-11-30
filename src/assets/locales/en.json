@@ -74,6 +74,7 @@
   "reset_password": "Reset password",
   "save": "Save",
   "scientific_name": "scientific name",
+  "search_plant_disclaimer": "If the plant you are looking for does not appear in our manual search engine, we ask that you use the identifier to recognize it. We are constantly working to improve and expand our search capabilities, learning and growing every day to offer you a better service.",
   "select_image": "Select Image",
   "select_pp": "Select profile picture",
   "send": "Send",
@@ -90,5 +91,7 @@
   "username": "Username",
   "username_already_exists_error": "Username already exists.",
   "weak_password_error": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.",
-  "wrong_identification": "This is not the plant"
+  "wrong_identification": "This is not the plant",
+  "search_plant": "Search plant"
+
 }
