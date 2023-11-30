@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommunitiesStackNavigator from "./CommunitiesStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import PlantIdentifierStackNavigator from "./PlantIdentifierStackNavigator";
-import MyPlantsScreen from "../screens/MyPlants";
+import MyPlantsStackNavigator from "./MyPlantsStackNavigator";
 import { useTranslation } from "react-i18next";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"; // Importa MaterialIcons
 
@@ -18,13 +18,13 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === t("my_plants")) {
+          if (route.name === t("My Plants")) {
             iconName = "local-florist";
-          } else if (route.name === t("communities")) {
+          } else if (route.name === t("Communities")) {
             iconName = "group";
-          } else if (route.name === t("plant_identifier")) {
+          } else if (route.name === t("Plant Identifier")) {
             iconName = "search";
-          } else if (route.name === t("profile")) {
+          } else if (route.name === t("Profile")) {
             iconName = "person";
           }
 
@@ -35,22 +35,22 @@ function MyTabs() {
       })}
     >
       <Tab.Screen
-        name={t("my_plants")}
-        component={MyPlantsScreen}
+        name={t("My Plants")}
+        component={MyPlantsStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("plant_identifier")}
+        name={t("Plant Identifier")}
         component={PlantIdentifierStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("communities")}
+        name={t("Communities")}
         component={CommunitiesStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("profile")}
+        name={t("Profile")}
         component={ProfileStackNavigator}
         options={{ headerShown: false }}
       />

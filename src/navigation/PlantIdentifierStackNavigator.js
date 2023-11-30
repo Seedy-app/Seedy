@@ -6,15 +6,15 @@ import IdentifyPlantScreen from "../screens/PlantIdentifier/identify_plant";
 import { useTranslation } from "react-i18next";
 
 
-const ProfileStack = createStackNavigator();
+const PlantIdentifierStack = createStackNavigator();
 
 function PlantIdentifierStackNavigator() {
   const { t } = useTranslation();
   return (
-    <ProfileStack.Navigator initialRouteName={t("take_picture")}>
-      <ProfileStack.Screen name={t("take_picture")} component={TakePictureScreen} options={{ headerShown: false }}/>
-      <ProfileStack.Screen name={t("identify_plant")} component={IdentifyPlantScreen} />
-    </ProfileStack.Navigator>
+    <PlantIdentifierStack.Navigator initialRouteName={t("take_picture")}>
+      <PlantIdentifierStack.Screen name={t("take_picture")} component={TakePictureScreen} options={{ headerShown: false }}/>
+      <PlantIdentifierStack.Screen name={t("identify_plant")} component={IdentifyPlantScreen} />
+    </PlantIdentifierStack.Navigator>
   );
 }
 

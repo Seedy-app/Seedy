@@ -122,6 +122,16 @@ const commonStyles = StyleSheet.create({
     color: Colors.white,
     fontWeight: "bold",
   },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+  },
+  menu: {
+    margin: 10
+  },
+  
 });
 
 export default commonStyles;
