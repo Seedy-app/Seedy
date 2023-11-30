@@ -111,6 +111,12 @@ const myPlantsStyles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
+  disclaimer: {
+    margin: "2%",
+    padding: "2%",
+    color: "white",
+    borderRadius: 15,
+  },
 });
 
 export default myPlantsStyles;
