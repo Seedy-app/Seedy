@@ -94,7 +94,6 @@ function CreateCommunitiesScreen() {
         name,
         description,
         displayedImageUrl.replace(Config.API_URL, ""),
-        userId
       );
       await giveUserCommunityRole(userId, community_id, "community_founder");
       await createCommunityCategory(

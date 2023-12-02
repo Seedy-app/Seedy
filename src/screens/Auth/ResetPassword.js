@@ -26,17 +26,10 @@ export default function ForgotPasswordScreen({ navigation }) {
       return;
     }
     try {
-      const token = await AsyncStorage.getItem("userToken");
-
-      if (!token) {
-        console.error(t("not_logged_in_error"));
-        return { error: t("not_logged_in_error") };
-      }
       const response = await fetch(Config.API_URL + "/reset-password", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           token: token,

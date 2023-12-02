@@ -68,7 +68,7 @@ export const changeCommunityPicture = async (communityId, picture) => {
     const response = await fetch(
       `${Config.API_URL}/communities/${communityId}/change-image`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ export const changeCommunityPicture = async (communityId, picture) => {
   }
 };
 
-export const createCommunity = async (name, description, picture, user_id) => {
+export const createCommunity = async (name, description, picture) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
@@ -108,7 +108,6 @@ export const createCommunity = async (name, description, picture, user_id) => {
         name,
         description,
         picture,
-        user_id,
       }),
     });
     if (!response.ok) {
@@ -168,6 +167,12 @@ export const checkCommunityNameAvailability = async (
   ignore_community_id = null
 ) => {
   try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
     const requestBody = { name };
     if (ignore_community_id) {
       requestBody.ignore_community_id = ignore_community_id;
@@ -176,6 +181,7 @@ export const checkCommunityNameAvailability = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
 
       body: JSON.stringify(requestBody),
