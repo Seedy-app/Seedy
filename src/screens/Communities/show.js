@@ -51,8 +51,20 @@ const CommunityScreen = () => {
   useEffect(() => {
     const fetchCommunityMembers = async () => {
       try {
+        const token = await AsyncStorage.getItem("userToken");
+
+        if (!token) {
+          console.error(t("not_logged_in_error"));
+        }
         const response = await fetch(
-          `${Config.API_URL}/communities/${community.id}/members`
+          `${Config.API_URL}/communities/${community.id}/members`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error(
@@ -75,8 +87,20 @@ const CommunityScreen = () => {
     };
     const fetchCommunityCategories = async () => {
       try {
+        const token = await AsyncStorage.getItem("userToken");
+
+        if (!token) {
+          console.error(t("not_logged_in_error"));
+        }
         const response = await fetch(
-          `${Config.API_URL}/communities/${community.id}/categories`
+          `${Config.API_URL}/communities/${community.id}/categories`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error(

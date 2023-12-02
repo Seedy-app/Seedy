@@ -1,15 +1,12 @@
 // Importamos las dependencias necesarias
 import React, { useState } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import {
-  View,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import { Card, Paragraph, Avatar } from 'react-native-paper';
+import { View, FlatList, RefreshControl } from "react-native";
+import { Card, Paragraph, Avatar } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
 import Config from "../../config/Config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { capitalizeFirstLetter } from "../../utils/device";
 
 function CommunitiesScreen() {
@@ -28,7 +25,18 @@ function CommunitiesScreen() {
   // Función para obtener los datos de las comunidades desde la API
   const fetchData = async () => {
     try {
-      const response = await fetch(Config.API_URL + "/communities");
+      const token = await AsyncStorage.getItem("userToken");
+
+      if (!token) {
+        console.error(t("not_logged_in_error"));
+      }
+      const response = await fetch(Config.API_URL + "/communities", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error("Network response was not ok: " + response.statusText);
       }
@@ -55,11 +63,22 @@ function CommunitiesScreen() {
 
   // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
-    <Card onPress={() => navigation.navigate(t("community"), { community })} style={styles.listCard}>
+    <Card
+      onPress={() => navigation.navigate(t("community"), { community })}
+      style={styles.listCard}
+    >
       <Card.Title
         title={capitalizeFirstLetter(community.name)}
-        subtitle={`${community.userCount} ${capitalizeFirstLetter(t("members"))}`}
-        left={(props) => <Avatar.Image {...props} source={{ uri: Config.API_URL + community.picture }} size={50} />}
+        subtitle={`${community.userCount} ${capitalizeFirstLetter(
+          t("members")
+        )}`}
+        left={(props) => (
+          <Avatar.Image
+            {...props}
+            source={{ uri: Config.API_URL + community.picture }}
+            size={50}
+          />
+        )}
       />
       <Card.Content>
         <Paragraph numberOfLines={1} ellipsizeMode="tail">
