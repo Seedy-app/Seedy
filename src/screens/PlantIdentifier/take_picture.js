@@ -54,7 +54,7 @@ export default function TakePictureScreen({ navigation }) {
         const photo = await cameraRef.takePictureAsync();
         const image = await uploadPictureToServer(
           `plant_${Date.now()}`,
-          `users/${userId}`,
+          `plants`,
           photo.uri
         );
         const results = await identifyPlant(image);

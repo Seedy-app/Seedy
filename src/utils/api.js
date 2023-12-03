@@ -200,6 +200,13 @@ export const checkCommunityNameAvailability = async (
 // Image
 
 export const uploadPictureToServer = async (filename, filepath, imageUri) => {
+  const token = await AsyncStorage.getItem("userToken");
+
+  if (!token) {
+    console.error(i18n.t("not_logged_in_error"));
+    return { error: i18n.t("not_logged_in_error") };
+  }
+
   const folderName = filepath;
 
   const formData = new FormData();
@@ -217,12 +224,12 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
         body: formData,
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
 
     const responseData = await response.json();
-
     if (!response.ok) {
       throw new Error(responseData.message || "Failed to upload image.");
     }
