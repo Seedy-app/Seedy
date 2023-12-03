@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, Dimensions } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import {
   Button,
@@ -65,7 +65,7 @@ const CommunitySettingsScreen = () => {
   const hideDeleteModal = () => setIsDeleteModalVisible(false);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Button
         mode="contained"
         icon="trash-can"
@@ -102,14 +102,14 @@ const CommunitySettingsScreen = () => {
                 mode="contained"
                 buttonColor={theme.colors.danger}
                 onPress={handleDelete}
-                style={styles.button}
+                style={{ ...styles.button, width:"45%" }}
               >
                 {capitalizeFirstLetter(t("confirm"))}
               </Button>
               <Button
                 mode="contained"
                 onPress={hideDeleteModal}
-                style={styles.button}
+                style={{ ...styles.button, width:"45%" }}
               >
                 {capitalizeFirstLetter(t("cancel"))}
               </Button>

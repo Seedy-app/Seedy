@@ -35,6 +35,7 @@ export default function ForgotPasswordScreen({ navigation }) {
       <CustomInput label={t("email")} onChangeText={(text) => setEmail(text)} />
       <Button
         mode="contained"
+        style={styles.button}
         onPress={handleForgotPassword}
       >
         <Text style={styles.buttonText}>{t("send")}</Text>

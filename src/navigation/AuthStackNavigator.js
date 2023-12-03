@@ -13,10 +13,46 @@ function AuthStackNavigator() {
   const { t } = useTranslation();
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name={t("login")} component={LoginScreen} />
-      <Stack.Screen name={t("singup")} component={SignUpScreen} />
-      <Stack.Screen name={t("forgot_your_password")} component={ForgotPasswordScreen} />
-      <Stack.Screen name={t("reset_password")} component={ResetPasswordScreen} />
+      <Stack.Screen
+        name={t("login")}
+        component={LoginScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <Stack.Screen
+        name={t("singup")}
+        component={SignUpScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <Stack.Screen
+        name={t("forgot_your_password")}
+        component={ForgotPasswordScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <Stack.Screen
+        name={t("reset_password")}
+        component={ResetPasswordScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }

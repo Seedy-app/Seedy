@@ -127,11 +127,7 @@ function IdentifyPlantScreen({ route, navigation }) {
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={{ flexDirection: "row" }}>
           {image_urls.map((url, index) => (
-            <Image
-              key={index}
-              source={{ uri: url }}
-              style={{ ...styles.plantPic, borderColor: theme.colors.primary }}
-            />
+            <Image key={index} source={{ uri: url }} style={styles.plantPic} />
           ))}
         </View>
       </ScrollView>

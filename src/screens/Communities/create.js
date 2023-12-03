@@ -10,8 +10,7 @@ import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import loadingImage from "../../assets/images/loading.gif";
-import { useTheme } from 'react-native-paper';
-
+import { useTheme } from "react-native-paper";
 
 import {
   checkCommunityNameAvailability,
@@ -93,7 +92,7 @@ function CreateCommunitiesScreen() {
       const community_id = await createCommunity(
         name,
         description,
-        displayedImageUrl.replace(Config.API_URL, ""),
+        displayedImageUrl.replace(Config.API_URL, "")
       );
       await giveUserCommunityRole(userId, community_id, "community_founder");
       await createCommunityCategory(
@@ -116,7 +115,7 @@ function CreateCommunitiesScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container }}>
       {nameError && <Text style={styles.error}>{nameError}</Text>}
       <CustomInput label={t("name")} onChangeText={handleCommunityNameChange} />
       <CustomInput
@@ -147,7 +146,7 @@ function CreateCommunitiesScreen() {
         labelStyle={{ fontSize: theme.fonts.default.fontSize }}
         style={styles.button}
       >
-          {t("select_image")}
+        {t("select_image")}
       </Button>
       <Text style={styles.underInputMessage}>
         {t("no_community_image_message")}

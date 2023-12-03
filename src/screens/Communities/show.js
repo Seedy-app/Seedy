@@ -220,13 +220,18 @@ const CommunityScreen = () => {
           )}
         />
       ) : (
-        <View style={styles.container}>
-          <Card>
+        <View style={{...styles.container}}>
+          <Card style={styles.communityPreview}>
             <Card.Content>
-              <Title>{community.name}</Title>
+              <Title style={styles.title}>
+                {capitalizeFirstLetter(community.name)}
+              </Title>
               <Paragraph>{community.description}</Paragraph>
             </Card.Content>
-            <Card.Cover source={{ uri: Config.API_URL + community.picture }} />
+            <Card.Cover
+              source={{ uri: Config.API_URL + community.picture }}
+              style={styles.communityPreviewCover}
+            />
             <Card.Actions>
               <Button onPress={join_community}>{t("join_community")}</Button>
             </Card.Actions>

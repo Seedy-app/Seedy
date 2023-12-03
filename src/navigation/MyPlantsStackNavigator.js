@@ -5,7 +5,7 @@ import ListMyPlantsScreen from "../screens/MyPlants/list";
 import AddPlantScreen from "../screens/MyPlants/add_plant";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { IconButton, useTheme } from 'react-native-paper';
+import { IconButton, useTheme } from "react-native-paper";
 import { Dimensions } from "react-native";
 
 const MyPlantsStack = createStackNavigator();
@@ -32,11 +32,21 @@ function MyPlantsStackNavigator() {
               />
             );
           },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
         }}
       />
       <MyPlantsStack.Screen
         name={t("add_plant")}
         component={AddPlantScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
       />
     </MyPlantsStack.Navigator>
   );

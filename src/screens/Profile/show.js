@@ -6,12 +6,13 @@ import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./ProfileStyles";
 import Config from "../../config/Config";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
 
 function ProfileScreen() {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const theme = useTheme();
   const { signOut } = useContext(AuthContext); // Crea una instancia del contexto
 
   // Estado para almacenar la información del usuario
@@ -63,17 +64,19 @@ function ProfileScreen() {
           <Text style={styles.email}>{userInfo.email}</Text>
         </View>
       </View>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate(t("edit_profile"))}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>{t("edit_profile")}</Text>
-      </Button>
+      <View style={{paddingHorizontal:"5%"}}>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate(t("edit_profile"))}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>{t("edit_profile")}</Text>
+        </Button>
 
-      <Button mode="contained" onPress={logout} style={styles.button}>
-        <Text style={styles.buttonText}>{t("logout")}</Text>
-      </Button>
+        <Button mode="contained" onPress={logout} style={styles.button}>
+          <Text style={styles.buttonText}>{t("logout")}</Text>
+        </Button>
+      </View>
     </ScrollView>
   );
 }

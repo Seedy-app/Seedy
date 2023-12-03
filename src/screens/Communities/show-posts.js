@@ -39,7 +39,7 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={[styles.row, styles.header]}>
         <Text style={styles.headerText}>
           {capitalizeFirstLetter(t("categories"))}
