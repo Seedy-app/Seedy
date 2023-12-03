@@ -34,19 +34,41 @@ function CommunitiesStackNavigator() {
               />
             );
           },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
         }}
       />
       <CommunitiesStack.Screen
         name={t("community")}
         component={CommunityScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
       />
       <CommunitiesStack.Screen
         name={t("create_community")}
         component={CreateCommunityScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
       />
       <CommunitiesStack.Screen
         name={t("community_settings")}
         component={CommunitySettingsScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
       />
     </CommunitiesStack.Navigator>
   );

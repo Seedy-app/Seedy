@@ -112,6 +112,7 @@ export default function SignUpScreen({ navigation }) {
       <Button
         mode="contained"
         style={[
+          styles.button,
           (usernameError || emailError) && styles.buttonDisabled,
         ]}
         onPress={register}

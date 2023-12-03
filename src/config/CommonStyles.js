@@ -6,6 +6,8 @@ const commonStyles = StyleSheet.create({
   input: {
     width: "100%",
     marginBottom: Dimensions.get("window").scale * 5,
+    borderWidth: 1,
+    borderColor: "black"
   },
   viewBorders: {
     borderWidth: 1,
@@ -13,8 +15,8 @@ const commonStyles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    padding: 10,
+    padding: "1%",
+    backgroundColor: Colors.white,
   },
   otherOptionsContainer: {
     flexDirection: "row",
@@ -39,6 +41,8 @@ const commonStyles = StyleSheet.create({
   button: {
     margin: Dimensions.get("window").scale * 2,
     width: "100%",
+    borderWidth: 1,
+    borderColor: "black",
   },
   buttonText: {
     fontSize: FontSizes.large,
@@ -63,6 +67,8 @@ const commonStyles = StyleSheet.create({
   formPicPreview: {
     width: Dimensions.get("window").scale * 125,
     height: Dimensions.get("window").scale * 125,
+    borderWidth: 1,
+    borderColor: "black"
   },
   formPicPreviewView: {
     justifyContent: "center",
@@ -72,12 +78,15 @@ const commonStyles = StyleSheet.create({
     marginTop: "1%",
     marginBottom: "1%",
     shadowColor: Colors.shadow,
+    backgroundColor: Colors. white,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    borderWidth: 1,
+    borderColor: "black",
   },
 
   fullLoading: {
@@ -92,31 +101,37 @@ const commonStyles = StyleSheet.create({
   subtitle: {
     fontSize: FontSizes.large,
   },
-
   largeProfilePic: {
-    borderRadius: 50,
-    marginRight: 10,
-    width: 100,
-    height: 100,
+    borderRadius: Dimensions.get("window").scale * 20,
+    marginRight: "5%",
+    width: Dimensions.get("window").scale * 40,
+    height: Dimensions.get("window").scale * 40,
+    borderWidth: 1,
+    borderColor: "black",
   },
   midProfilePic: {
-    borderRadius: 25,
-    marginRight: 10,
-    width: 50,
-    height: 50,
+    borderRadius: Dimensions.get("window").scale * 10,
+    marginRight: "5%",
+    width: Dimensions.get("window").scale * 20,
+    height: Dimensions.get("window").scale * 20,
+    borderWidth: 1,
+    borderColor: "black",
   },
   smallProfilePic: {
-    borderRadius: 12,
-    marginRight: 10,
-    width: 25,
-    height: 25,
+    borderRadius: Dimensions.get("window").scale * 5,
+    marginRight: "5%",
+    width: Dimensions.get("window").scale * 10,
+    height: Dimensions.get("window").scale * 10,
+    borderWidth: 1,
+    borderColor: "black",
   },
 
   // Role
   roleContainer: {
     borderRadius: 5,
     padding: 5,
-    marginLeft: "auto",
+    borderWidth: 1,
+    borderColor: "black",
   },
   roleText: {
     color: Colors.white,
@@ -128,6 +143,7 @@ const commonStyles = StyleSheet.create({
   searchBar: {
     margin: "2%",
     borderWidth: 1,
+    borderColor: "black",
   },
   centeredImage: {
     width: Dimensions.get("window").scale * 100,

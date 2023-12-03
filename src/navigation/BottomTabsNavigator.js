@@ -32,6 +32,11 @@ function MyTabs() {
         },
         tabBarActiveTintColor: "limegreen",
         tabBarInactiveTintColor: "gray",
+        tabBarStyle: { 
+          borderTopColor: 'black', 
+          borderTopWidth: 1, 
+          borderTopStyle: 'solid',
+        },
       })}
     >
       <Tab.Screen

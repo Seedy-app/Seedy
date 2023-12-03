@@ -141,7 +141,7 @@ function EditProfileScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container}}>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
         label={t("username")}

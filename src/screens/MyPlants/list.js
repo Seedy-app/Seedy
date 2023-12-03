@@ -25,6 +25,7 @@ import styles from "./MyPlantsStyles";
 import { useTranslation } from "react-i18next";
 import { hexToRGBA, capitalizeFirstLetter } from "../../utils/device";
 import Config from "../../config/Config";
+import Colors from "../../config/Colors";
 import EmptyImage from "../../assets/images/depressed-plant.gif";
 
 function ListMyPlantsScreen() {
@@ -159,13 +160,7 @@ function ListMyPlantsScreen() {
 
   const renderPlantCard = ({ item: plant }) => {
     return (
-      <Card
-        onPress={() => openModal(plant)}
-        style={[
-          styles.plantCard,
-          { borderColor: hexToRGBA(theme.colors.primary, 0.5) },
-        ]}
-      >
+      <Card onPress={() => openModal(plant)} style={styles.plantCard}>
         <ImageBackground
           source={{
             uri:
@@ -215,145 +210,155 @@ function ListMyPlantsScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Searchbar
-        style={{ ...styles.searchBar, borderColor: theme.colors.primary }}
-        iconColor={theme.colors.placeholderTextColor}
-        placeholderTextColor={theme.colors.secondary}
-        placeholder={t("search_plant")}
-        onChangeText={handleSearch}
-        value={searchQuery}
-      />
-      {plants.length > 0 ? (
-        <FlatList
-          data={plants}
-          renderItem={renderPlantCard}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={{
-            paddingHorizontal: 10,
-            paddingVertical: 10,
-          }}
-          style={{ flex: 1 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          onEndReached={loadMorePlants}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={() =>
-            loadingMore ? <ActivityIndicator size="large" /> : null
-          }
+      <View style={{ borderBottomWidth: 1, borderBottomColor: Colors.black, backgroundColor: Colors.white }}>
+        <Searchbar
+          style={styles.searchBar}
+          iconColor={theme.colors.placeholderTextColor}
+          placeholderTextColor={theme.colors.secondary}
+          placeholder={t("search_plant")}
+          onChangeText={handleSearch}
+          value={searchQuery}
         />
-      ) : (
-        <View style={styles.centeredView}>
-          <Image source={EmptyImage} style={styles.centeredImage} />
-          <Text
-            style={{ ...styles.screenCenterText, color: theme.colors.secondary }}
+      </View>
+      <View style={styles.container}>
+        {plants.length > 0 ? (
+          <FlatList
+            data={plants}
+            renderItem={renderPlantCard}
+            keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={{
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+            }}
+            style={{ flex: 1 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            onEndReached={loadMorePlants}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() =>
+              loadingMore ? <ActivityIndicator size="large" /> : null
+            }
+          />
+        ) : (
+          <View style={styles.centeredView}>
+            <Image source={EmptyImage} style={styles.centeredImage} />
+            <Text
+              style={{
+                ...styles.screenCenterText,
+                color: theme.colors.secondary,
+              }}
+            >
+              {t("my_plants_empty_message")}
+            </Text>
+          </View>
+        )}
+
+        <Portal>
+          <Modal
+            visible={isModalVisible}
+            onDismiss={closeModal}
+            contentContainerStyle={styles.modalContainerStyle}
           >
-            {t("my_plants_empty_message")}
-          </Text>
-        </View>
-      )}
-
-      <Portal>
-        <Modal
-          visible={isModalVisible}
-          onDismiss={closeModal}
-          contentContainerStyle={styles.modalContainerStyle}
-        >
-          {selectedPlant && (
-            <>
-              <View style={styles.optionsButtonStyle}>
-                <Menu
-                  visible={menuVisible}
-                  onDismiss={closeMenu}
-                  style={styles.menu}
-                  anchor={
-                    <IconButton
-                      icon="dots-horizontal"
-                      color="red"
-                      size={20}
-                      onPress={openMenu}
+            {selectedPlant && (
+              <>
+                <View style={styles.optionsButtonStyle}>
+                  <Menu
+                    visible={menuVisible}
+                    onDismiss={closeMenu}
+                    style={styles.menu}
+                    anchor={
+                      <IconButton
+                        icon="dots-horizontal"
+                        color="red"
+                        size={20}
+                        onPress={openMenu}
+                      />
+                    }
+                  >
+                    <Menu.Item
+                      onPress={() => removePlantFromUser(selectedPlant.id)}
+                      title={t("remove_from_my_plants")}
                     />
-                  }
-                >
-                  <Menu.Item
-                    onPress={() => removePlantFromUser(selectedPlant.id)}
-                    title={t("remove_from_my_plants")}
-                  />
-                </Menu>
-              </View>
-
-              <IconButton
-                icon="close"
-                color="black"
-                size={20}
-                style={styles.closeButtonStyle}
-                onPress={closeModal}
-              />
-
-              <View style={styles.modalInfoContainer}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text style={styles.infoLabel}>
-                    {capitalizeFirstLetter(t("scientific_name"))}:
-                  </Text>
-                  <Text> {selectedPlant.scientific_name}</Text>
+                  </Menu>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+
+                <IconButton
+                  icon="close"
+                  color="black"
+                  size={20}
+                  style={styles.closeButtonStyle}
+                  onPress={closeModal}
+                />
+
+                <View style={styles.modalInfoContainer}>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={styles.infoLabel}>
+                      {capitalizeFirstLetter(t("scientific_name"))}:
+                    </Text>
+                    <Text> {selectedPlant.scientific_name}</Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={styles.infoLabel}>
+                      {capitalizeFirstLetter(t("family"))}:
+                    </Text>
+                    <Text> {selectedPlant.family}</Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={styles.infoLabel}>
+                      {capitalizeFirstLetter(t("common_names"))}:
+                    </Text>
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                    >
+                      <Text>{selectedPlant.common_names.join(", ") + "."}</Text>
+                    </ScrollView>
+                  </View>
                   <Text style={styles.infoLabel}>
-                    {capitalizeFirstLetter(t("family"))}:
+                    {capitalizeFirstLetter(t("images"))}:
                   </Text>
-                  <Text> {selectedPlant.family}</Text>
-                </View>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text style={styles.infoLabel}>
-                    {capitalizeFirstLetter(t("common_names"))}:
-                  </Text>
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <Text>{selectedPlant.common_names.join(", ") + "."}</Text>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.imagesScrollViewStyle}
+                  >
+                    {JSON.parse(selectedPlant.images).map((image, index) => (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => handleImageSelect(image)}
+                      >
+                        <Image
+                          source={{ uri: image }}
+                          style={styles.imageStyle}
+                        />
+                      </TouchableOpacity>
+                    ))}
                   </ScrollView>
                 </View>
-                <Text style={styles.infoLabel}>
-                  {capitalizeFirstLetter(t("images"))}:
-                </Text>
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  style={styles.imagesScrollViewStyle}
-                >
-                  {JSON.parse(selectedPlant.images).map((image, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => handleImageSelect(image)}
-                    >
-                      <Image
-                        source={{ uri: image }}
-                        style={styles.imageStyle}
-                      />
-                    </TouchableOpacity>
-                  ))}
-                </ScrollView>
-              </View>
-            </>
-          )}
-        </Modal>
-        <Modal
-          visible={selectedImage !== null}
-          onDismiss={() => setSelectedImage(null)}
-        >
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-            }}
+              </>
+            )}
+          </Modal>
+          <Modal
+            visible={selectedImage !== null}
+            onDismiss={() => setSelectedImage(null)}
           >
-            <Image
-              source={{ uri: selectedImage }}
-              style={{ width: "90%", height: "90%" }}
-              resizeMode="contain"
-            />
-          </View>
-        </Modal>
-      </Portal>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+              }}
+            >
+              <Image
+                source={{ uri: selectedImage }}
+                style={{ ...styles.viewBorders, width: "90%", height: "90%" }}
+                resizeMode="contain"
+              />
+            </View>
+          </Modal>
+        </Portal>
+      </View>
     </View>
   );
 }

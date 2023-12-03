@@ -22,6 +22,8 @@ const plantIdentifierStyles = StyleSheet.create({
     width: Dimensions.get("window").scale * 25,
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "black",
   },
   plantPic: {
     marginVertical: Dimensions.get("window").scale * 5,
@@ -29,7 +31,8 @@ const plantIdentifierStyles = StyleSheet.create({
     width: Dimensions.get("window").scale * 100,
     height: Dimensions.get("window").scale * 100,
     borderRadius: (Dimensions.get("window").scale * 70) / 4,
-    borderWidth: Dimensions.get("window").scale * 2,
+    borderWidth: 1,
+    borderColor: "black",
   },
   loadingContainer: {
     flex: 1,

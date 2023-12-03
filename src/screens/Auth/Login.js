@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import CustomInput from "../CustomInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
-import { Text, Button, TouchableRipple} from "react-native-paper";
+import { Text, Button, TouchableRipple } from "react-native-paper";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import styles from "./AuthStyles";
@@ -49,7 +49,7 @@ export default function LoginScreen({ navigation }) {
         isPassword
         onChangeText={(text) => setPassword(text)}
       />
-      <Button mode="contained" onPress={login}>
+      <Button mode="contained" style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>{t("login")}</Text>
       </Button>
       <View style={styles.otherOptionsContainer}>
@@ -60,7 +60,9 @@ export default function LoginScreen({ navigation }) {
       </View>
       <View style={styles.otherOptionsContainer}>
         <Text style={styles.registerText}>{t("forgot_your_password")}</Text>
-        <TouchableRipple onPress={() => navigation.navigate(t("forgot_your_password"))}>
+        <TouchableRipple
+          onPress={() => navigation.navigate(t("forgot_your_password"))}
+        >
           <Text style={styles.justTextButton}>{t("reset_it")}</Text>
         </TouchableRipple>
       </View>

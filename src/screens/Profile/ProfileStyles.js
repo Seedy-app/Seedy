@@ -7,6 +7,7 @@ const profileStyles = StyleSheet.create({
     profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        margin: "5%"
       },
       userInfo: {
         flexDirection: 'column'

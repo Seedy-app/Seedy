@@ -5,7 +5,8 @@ const myPlantsStyles = StyleSheet.create({
   ...commonStyles,
 
   plantCard: {
-    borderWidth: 5,
+    borderWidth: 1,
+    borderColor: "black",
     borderRadius: 50,
     overflow: "hidden",
     marginBottom: "1%",
@@ -46,6 +47,7 @@ const myPlantsStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    ...commonStyles.viewBorders
   },
   modalInfoContainer: {
     marginHorizontal: "5%",
@@ -66,6 +68,7 @@ const myPlantsStyles = StyleSheet.create({
     width: Dimensions.get("window").scale * 50,
     height: Dimensions.get("window").scale * 50,
     marginRight: 10,
+    ...commonStyles.viewBorders
   },
   infoLabel: {
     fontWeight: "bold",
@@ -79,6 +82,8 @@ const myPlantsStyles = StyleSheet.create({
     width: 300,
     height: 400,
     borderRadius: Dimensions.get("window").scale * 10,
+    borderWidth: 1,
+    borderColor: "black"
   },
   listImage: {
     width: 50,
@@ -100,6 +105,8 @@ const myPlantsStyles = StyleSheet.create({
     padding: "2%",
     color: "white",
     borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "black"
   },
 });
 

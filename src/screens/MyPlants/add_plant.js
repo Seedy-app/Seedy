@@ -120,7 +120,7 @@ const AddPlantScreen = () => {
 
   return (
     <Provider>
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
           <Searchbar
             style={styles.searchBar}
             placeholder={t("search_plant")}

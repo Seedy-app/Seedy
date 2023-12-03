@@ -69,7 +69,7 @@ export default function ForgotPasswordScreen({ navigation }) {
         secureTextEntry={true}
       />
       {Error && <Text style={styles.error}>{Error}</Text>}
-      <Button mode="contained" onPress={handleResetPassword}>
+      <Button mode="contained" style={styles.button} onPress={handleResetPassword}>
         <Text style={styles.buttonText}>{t("reset_password")}</Text>
       </Button>
     </View>

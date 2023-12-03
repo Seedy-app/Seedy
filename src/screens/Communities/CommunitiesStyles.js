@@ -34,6 +34,7 @@ const communitiesStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    ...commonStyles.viewBorders
   },
   headerText: {
     color: Colors.white,
@@ -62,7 +63,22 @@ const communitiesStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-
+  communityCardTitle: {
+    fontSize: FontSize.large,
+  },
+  communityCardSubitle: {
+    fontSize: FontSize.regular,
+  },
+  communityPreview: {
+    borderWidth: 1,
+    borderColor: "black",
+  },
+  communityPreviewCover: {
+    marginVertical: "4%",
+    marginHorizontal: "1%",
+    borderWidth: 1,
+    borderColor: "black",
+  },
 });
 
 export default communitiesStyles;
