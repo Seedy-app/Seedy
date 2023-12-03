@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, Image } from "react-native";
 import { Camera } from "expo-camera";
-import { IconButton } from "react-native-paper";
+import { IconButton, Text } from "react-native-paper";
 import styles from "./PlantIdentifierStyles";
 import { identifyPlant, uploadPictureToServer } from "../../utils/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
+import IdentifyingImage from "../../assets/images/identifying.gif";
 
 export default function TakePictureScreen({ navigation }) {
   const { t } = useTranslation();
@@ -15,19 +15,10 @@ export default function TakePictureScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [isCameraReady, setCameraReady] = useState(false);
   const [cameraKey, setCameraKey] = useState(1);
-  const [userId, setUserId] = useState(null);
-
-  const fetchUserInfo = async () => {
-    const storedUserInfo = await AsyncStorage.getItem("userInfo");
-    if (storedUserInfo) {
-      const parsedInfo = JSON.parse(storedUserInfo);
-      setUserId(parsedInfo.id);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     askForCameraPermission();
-    fetchUserInfo();
   }, []);
 
   useEffect(() => {
@@ -52,12 +43,14 @@ export default function TakePictureScreen({ navigation }) {
     if (isCameraReady && cameraRef) {
       try {
         const photo = await cameraRef.takePictureAsync();
+        setIsLoading(true);
         const image = await uploadPictureToServer(
           `plant_${Date.now()}`,
           `plants`,
           photo.uri
         );
         const results = await identifyPlant(image);
+        setIsLoading(false);
         if (results) {
           navigation.navigate(t("identify_plant"), { results });
         } else {
@@ -84,6 +77,8 @@ export default function TakePictureScreen({ navigation }) {
           ],
           { cancelable: false }
         );
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -97,28 +92,39 @@ export default function TakePictureScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Camera
-        key={cameraKey}
-        style={{ flex: 1 }}
-        type={Camera.Constants.Type.back}
-        ref={(ref) => {
-          this.camera = ref;
-        }}
-        onCameraReady={onCameraReady}
-      >
-        <View style={styles.captureButtonContainer}>
-          <IconButton
-            icon="magnify"
-            iconColor="white"
-            size={40}
-            style={[
-              styles.captureButton,
-              { backgroundColor: theme.colors.primary },
-            ]}
-            onPress={() => takePicture(this.camera)}
-          />
+      {isLoading ? (
+        <View style={styles.centeredView}>
+          <Image source={IdentifyingImage} style={styles.centeredImage} />
+          <Text
+            style={{ ...styles.screenCenterText, color: theme.colors.secondary }}
+          >
+            {t("identifying_plant_text")}
+          </Text>
         </View>
-      </Camera>
+      ) : (
+        <Camera
+          key={cameraKey}
+          style={{ flex: 1 }}
+          type={Camera.Constants.Type.back}
+          ref={(ref) => {
+            this.camera = ref;
+          }}
+          onCameraReady={onCameraReady}
+        >
+          <View style={styles.captureButtonContainer}>
+            <IconButton
+              icon="magnify"
+              iconColor="white"
+              size={40}
+              style={[
+                styles.captureButton,
+                { backgroundColor: theme.colors.primary },
+              ]}
+              onPress={() => takePicture(this.camera)}
+            />
+          </View>
+        </Camera>
+      )}
     </View>
   );
 }

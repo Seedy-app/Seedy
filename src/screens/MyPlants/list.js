@@ -246,7 +246,7 @@ function ListMyPlantsScreen() {
         <View style={styles.centeredView}>
           <Image source={EmptyImage} style={styles.centeredImage} />
           <Text
-            style={{ ...styles.noPlantsText, color: theme.colors.secondary }}
+            style={{ ...styles.screenCenterText, color: theme.colors.secondary }}
           >
             {t("my_plants_empty_message")}
           </Text>

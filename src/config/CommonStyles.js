@@ -38,7 +38,7 @@ const commonStyles = StyleSheet.create({
   },
   button: {
     margin: Dimensions.get("window").scale * 2,
-    width: "100%"
+    width: "100%",
   },
   buttonText: {
     fontSize: FontSizes.large,
@@ -122,15 +122,30 @@ const commonStyles = StyleSheet.create({
     color: Colors.white,
     fontWeight: "bold",
   },
-
   menu: {
-    margin: 10
+    margin: 10,
   },
   searchBar: {
     margin: "2%",
     borderWidth: 1,
   },
-  
+  centeredImage: {
+    width: Dimensions.get("window").scale * 100,
+    height: Dimensions.get("window").scale * 100,
+    resizeMode: "contain",
+  },
+  screenCenterText: {
+    marginTop: "5%",
+    marginHorizontal: "10%",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default commonStyles;
