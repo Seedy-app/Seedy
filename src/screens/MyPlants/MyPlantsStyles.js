@@ -24,22 +24,6 @@ const myPlantsStyles = StyleSheet.create({
     fontSize: 14,
     color: "white",
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  centeredImage: {
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-  },
-  noPlantsText: {
-    marginTop: 10,
-    fontSize: 16,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
   cardBackground: {
     width: "100%",
     height: Dimensions.get("window").height / 2.5,
