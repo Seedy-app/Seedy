@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./CommunitiesStyles";
 import { View, Text, FlatList, Dimensions } from "react-native";
-import { Card, IconButton } from "react-native-paper";
+import { Card, IconButton, useTheme } from "react-native-paper";
 import { capitalizeFirstLetter } from "../../utils/device";
 import FontSizes from "../../config/FontSizes";
 import { useTranslation } from "react-i18next";
-import { useTheme } from 'react-native-paper';
-
+import { useNavigation } from "@react-navigation/native";
 
 const PostsTab = ({ communityCategories, communityPosts }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const navigation = useNavigation();
   const marginRightPlusIcon = Dimensions.get("window").scale * 4;
   const CategoryCard = ({ category }) => (
     <Card style={{ ...styles.listCard, padding: 5 }}>
@@ -40,7 +40,13 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.row, styles.header]}>
+      <View
+        style={{
+          ...styles.row,
+          ...styles.header,
+          backgroundColor: theme.colors.primary,
+        }}
+      >
         <Text style={styles.headerText}>
           {capitalizeFirstLetter(t("categories"))}
         </Text>
@@ -59,7 +65,13 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
         renderItem={({ item }) => <CategoryCard category={item} />}
         keyExtractor={(item) => item.id.toString()}
       />
-      <View style={[styles.row, styles.header]}>
+      <View
+        style={{
+          ...styles.row,
+          ...styles.header,
+          backgroundColor: theme.colors.primary,
+        }}
+      >
         <Text style={styles.headerText}>
           {capitalizeFirstLetter(t("posts"))}
         </Text>
@@ -68,9 +80,7 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
           size={FontSizes.large}
           iconColor={theme.colors.background}
           style={{ marginRight: marginRightPlusIcon }}
-          onPress={() => {
-            /* acción al presionar */
-          }}
+          onPress={() => navigation.navigate(t("create_post"))}
         />
       </View>
       <FlatList

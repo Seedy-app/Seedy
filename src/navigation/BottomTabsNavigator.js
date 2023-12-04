@@ -6,11 +6,13 @@ import PlantIdentifierStackNavigator from "./PlantIdentifierStackNavigator";
 import MyPlantsStackNavigator from "./MyPlantsStackNavigator";
 import { useTranslation } from "react-i18next";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"; // Importa MaterialIcons
+import { useTheme } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <Tab.Navigator
@@ -30,8 +32,8 @@ function MyTabs() {
 
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "limegreen",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.secondary,
         tabBarStyle: { 
           borderTopColor: 'black', 
           borderTopWidth: 1, 

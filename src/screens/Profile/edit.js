@@ -8,7 +8,6 @@ import {
   checkEmailAvailability,
 } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FontAwesome from "react-native-vector-icons/FontAwesome"; // Importamos la librería de íconos FontAwesome
 import styles from "./ProfileStyles";
 import CustomInput from "../CustomInput";
 import Config from "../../config/Config";

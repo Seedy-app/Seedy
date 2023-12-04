@@ -21,7 +21,7 @@ const CustomInput = ({
   return (
     <View style={styles.inputContainer}>
       <TextInput
-        style={[styles.input, { paddingRight: 40 }]} // Ajusta el padding para evitar que el ícono se oculte
+        style={[styles.input, { paddingRight: 40 }]}
         label={label}
         onChangeText={onChangeText}
         secureTextEntry={

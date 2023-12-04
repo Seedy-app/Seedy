@@ -2,12 +2,16 @@ import { StyleSheet, Dimensions } from "react-native";
 import Colors from "./Colors";
 import FontSizes from "./FontSizes";
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
+const screenScale = Dimensions.get("window").scale;
+
 const commonStyles = StyleSheet.create({
   input: {
     width: "100%",
-    marginBottom: Dimensions.get("window").scale * 5,
+    marginBottom: screenScale * 5,
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
   },
   viewBorders: {
     borderWidth: 1,
@@ -39,8 +43,7 @@ const commonStyles = StyleSheet.create({
     flexShrink: 1,
   },
   button: {
-    margin: Dimensions.get("window").scale * 2,
-    width: "100%",
+    marginVertical: screenScale * 2,
     borderWidth: 1,
     borderColor: "black",
   },
@@ -65,20 +68,21 @@ const commonStyles = StyleSheet.create({
     color: Colors.gray,
   },
   formPicPreview: {
-    width: Dimensions.get("window").scale * 125,
-    height: Dimensions.get("window").scale * 125,
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.8,
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
   },
   formPicPreviewView: {
     justifyContent: "center",
     alignItems: "center",
+    margin: "1%",
   },
   listCard: {
     marginTop: "1%",
     marginBottom: "1%",
     shadowColor: Colors.shadow,
-    backgroundColor: Colors. white,
+    backgroundColor: Colors.white,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -102,26 +106,26 @@ const commonStyles = StyleSheet.create({
     fontSize: FontSizes.large,
   },
   largeProfilePic: {
-    borderRadius: Dimensions.get("window").scale * 20,
+    borderRadius: screenScale * 20,
     marginRight: "5%",
-    width: Dimensions.get("window").scale * 40,
-    height: Dimensions.get("window").scale * 40,
+    width: screenScale * 40,
+    height: screenScale * 40,
     borderWidth: 1,
     borderColor: "black",
   },
   midProfilePic: {
-    borderRadius: Dimensions.get("window").scale * 10,
+    borderRadius: screenScale * 10,
     marginRight: "5%",
-    width: Dimensions.get("window").scale * 20,
-    height: Dimensions.get("window").scale * 20,
+    width: screenScale * 20,
+    height: screenScale * 20,
     borderWidth: 1,
     borderColor: "black",
   },
   smallProfilePic: {
-    borderRadius: Dimensions.get("window").scale * 5,
+    borderRadius: screenScale * 5,
     marginRight: "5%",
-    width: Dimensions.get("window").scale * 10,
-    height: Dimensions.get("window").scale * 10,
+    width: screenScale * 10,
+    height: screenScale * 10,
     borderWidth: 1,
     borderColor: "black",
   },
@@ -146,8 +150,8 @@ const commonStyles = StyleSheet.create({
     borderColor: "black",
   },
   centeredImage: {
-    width: Dimensions.get("window").scale * 100,
-    height: Dimensions.get("window").scale * 100,
+    width: screenScale * 100,
+    height: screenScale * 100,
     resizeMode: "contain",
   },
   screenCenterText: {
@@ -161,6 +165,17 @@ const commonStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    padding: screenScale * 10,
+    flex: 1,
+    alignSelf: 'center',
+    maxHeight: screenHeight * .5,
+    width: screenWidth * .9,
+    borderRadius: screenScale * 15,
+    borderWidth: 1,
+    borderColor: "black",
   },
 });
 

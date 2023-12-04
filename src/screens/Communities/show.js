@@ -216,6 +216,7 @@ const CommunityScreen = () => {
               {...props}
               style={styles.tab}
               labelStyle={styles.tabLabel}
+              indicatorStyle={{ backgroundColor: theme.colors.primary }}
             />
           )}
         />

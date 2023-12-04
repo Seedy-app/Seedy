@@ -97,19 +97,20 @@ const CommunitySettingsScreen = () => {
               style={styles.input}
               autoCapitalize="none"
             />
+
             <View style={styles.modalButtons}>
               <Button
                 mode="contained"
                 buttonColor={theme.colors.danger}
                 onPress={handleDelete}
-                style={{ ...styles.button, width:"45%" }}
+                style={{ ...styles.button, marginHorizontal: "5%" }}
               >
                 {capitalizeFirstLetter(t("confirm"))}
               </Button>
               <Button
                 mode="contained"
                 onPress={hideDeleteModal}
-                style={{ ...styles.button, width:"45%" }}
+                style={{ ...styles.button, marginHorizontal: "5%" }}
               >
                 {capitalizeFirstLetter(t("cancel"))}
               </Button>
