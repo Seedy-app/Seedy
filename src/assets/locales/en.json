@@ -71,6 +71,7 @@
   "posts": "posts",
   "profile": "Profile",
   "register": "Register",
+  "insert_link": "insert link",
   "register_error": "There was a problem registering the account.",
   "remove_from_my_plants": "Remove from my plants",
   "remove_plant_error": "Failed to remove plant",

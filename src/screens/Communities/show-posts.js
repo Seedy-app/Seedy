@@ -7,7 +7,7 @@ import FontSizes from "../../config/FontSizes";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const PostsTab = ({ communityCategories, communityPosts }) => {
+const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const navigation = useNavigation();
@@ -80,7 +80,7 @@ const PostsTab = ({ communityCategories, communityPosts }) => {
           size={FontSizes.large}
           iconColor={theme.colors.background}
           style={{ marginRight: marginRightPlusIcon }}
-          onPress={() => navigation.navigate(t("create_post"))}
+          onPress={() => navigation.navigate(t("create_post"), { communityId })}
         />
       </View>
       <FlatList

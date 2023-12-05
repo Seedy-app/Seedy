@@ -20,7 +20,7 @@ import MembersTab from "./show-members";
 import ChatTab from "./show-chat";
 import InfoTab from "./show-info";
 import loadingImage from "../../assets/images/loading.gif";
-import { giveUserCommunityRole } from "../../utils/api";
+import { giveUserCommunityRole, getCommunityCategories } from "../../utils/api";
 import { capitalizeFirstLetter } from "../../utils/device";
 
 const CommunityScreen = () => {
@@ -87,27 +87,7 @@ const CommunityScreen = () => {
     };
     const fetchCommunityCategories = async () => {
       try {
-        const token = await AsyncStorage.getItem("userToken");
-
-        if (!token) {
-          console.error(t("not_logged_in_error"));
-        }
-        const response = await fetch(
-          `${Config.API_URL}/communities/${community.id}/categories`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error(
-            "Network response was not ok: " + response.statusText
-          );
-        }
-        const data = await response.json();
+        let data = await getCommunityCategories(community.id)
         setCommunityCategoriesData(data);
         setIsLoading(false); // Finalizar la carga
       } catch (error) {
@@ -182,12 +162,12 @@ const CommunityScreen = () => {
     { key: "chat", title: t("chat") },
     { key: "info", title: t("info") },
   ]);
-
   const renderScene = SceneMap({
     posts: () => (
       <PostsTab
         communityCategories={communityCategoriesData}
         communityPosts={communityPostsData}
+        communityId={community.id}
       />
     ),
     members: () => <MembersTab communityMembers={communityMembersData.data} />,

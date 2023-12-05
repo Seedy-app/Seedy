@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ScrollView,
   SafeAreaView,
@@ -6,32 +6,57 @@ import {
   View,
   KeyboardAvoidingView,
 } from "react-native";
-import { Button, Modal, Portal } from "react-native-paper";
+import { Button, Modal, Portal, useTheme, TextInput } from "react-native-paper";
 import styles from "./CommunitiesStyles";
 import CustomInput from "../CustomInput";
-import { capitalizeFirstLetter } from "../../utils/device";
+import {
+  capitalizeFirstLetter,
+  selectImageFromGallery,
+} from "../../utils/device";
 import { useTranslation } from "react-i18next";
-import { RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import {
+  RichEditor,
+  RichToolbar,
+  actions,
+} from "react-native-pell-rich-editor";
+import { uploadPictureToServer, getCommunityCategories } from "../../utils/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Config from "../../config/Config";
 
-const CreatePostScreen = () => {
+const CreatePostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const { communityId } = route.params;
   const RichText = useRef();
+  const [userInfo, setUserInfo] = useState({});
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLinkModalVisible, setLinkModalVisible] = useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [categories, setCategories] = useState([
-    "Categoría 1",
-    "Categoría 2",
-    "Categoría 3",
-    "Categoría 4",
-    "Categoría 5",
-    "Categoría 6",
-    "Categoría 7",
-    "Categoría 8",
-  ]); // Ejemplo de categorías, puedes ajustar esto según tus necesidades
+  const [categories, setCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState(categories);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const storedUserInfo = await AsyncStorage.getItem("userInfo");
+      if (storedUserInfo) {
+        setUserInfo(JSON.parse(storedUserInfo));
+      }
+    };
+    const fetchCommunityCategories = async () => {
+      try {
+        let data = await getCommunityCategories(communityId);
+        setCategories(data);
+        setFilteredCategories(data);
+      } catch (error) {
+        console.error("Error fetching community categories:", error);
+      }
+    };
+    fetchUserInfo();
+    fetchCommunityCategories();
+  }, []);
 
   const selectCategory = (category) => {
     setCategory(category);
@@ -40,15 +65,31 @@ const CreatePostScreen = () => {
   const handleSearch = (query) => {
     setSearchQuery(query);
     const updatedList = categories.filter((cat) =>
-      cat.toLowerCase().includes(query.toLowerCase())
+      cat.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredCategories(updatedList);
   };
   const handleSubmit = () => {
     if (!category) {
-      alert(t('no_category_selected_error'));
+      alert(t("no_category_selected_error"));
       return;
     }
+  };
+
+  const handleInsertImage = async () => {
+    const image = await selectImageFromGallery();
+    const imageUrl = await uploadPictureToServer(
+      `image_${Date.now()}`,
+      `users/${userInfo.id}/posts/`,
+      image
+    );
+    if (imageUrl) {
+      RichText.current?.insertImage(Config.API_URL + imageUrl);
+    }
+  };
+
+  const handleInsertLink = () => {
+    setLinkModalVisible(true);
   };
 
   return (
@@ -66,7 +107,32 @@ const CreatePostScreen = () => {
             />
           </View>
           <View>
-            <RichToolbar style={styles.toolbar} editor={RichText} />
+            <RichToolbar
+              style={styles.toolbar}
+              editor={RichText}
+              actions={[
+                actions.heading1,
+                actions.setBold,
+                actions.setItalic,
+                actions.setUnderline,
+                actions.insertBulletsList,
+                actions.insertOrderedList,
+                actions.insertImage,
+                actions.insertLink,
+                // "insertPlant",
+              ]}
+              iconMap={{
+                heading1: require("../../assets/images/icons/title.png"),
+                bold: require("../../assets/images/icons/bold.png"),
+                italic: require("../../assets/images/icons/italic.png"),
+                underline: require("../../assets/images/icons/underline.png"),
+                insertImage: require("../../assets/images/icons/image.png"),
+                insertLink: require("../../assets/images/icons/link.png"),
+                // insertPlant: require("../../assets/images/icons/flower.png"),
+              }}
+              onPressAddImage={handleInsertImage}
+              onInsertLink={handleInsertLink}
+            />
             <RichEditor
               containerStyle={styles.editorContainer}
               ref={RichText}
@@ -82,7 +148,7 @@ const CreatePostScreen = () => {
               onPress={() => setModalVisible(true)}
             >
               {category
-                ? category
+                ? capitalizeFirstLetter(category.name)
                 : capitalizeFirstLetter(t("select_category"))}
             </Button>
           </View>
@@ -112,10 +178,33 @@ const CreatePostScreen = () => {
                 mode="text"
                 textColor="black"
               >
-                {cat}
+                {capitalizeFirstLetter(cat.name)}
               </Button>
             ))}
           </ScrollView>
+        </Modal>
+      </Portal>
+      <Portal>
+        <Modal
+          visible={isLinkModalVisible}
+          onDismiss={() => setLinkModalVisible(false)}
+          contentContainerStyle={styles.modalContainer}
+        >
+          <CustomInput
+            label="URL"
+            value={linkUrl}
+            onChangeText={(text) => setLinkUrl(text)}
+          />
+          <Button
+            mode="contained"
+            onPress={() => {
+              RichText.current?.insertLink(linkUrl, linkUrl);
+              setLinkUrl("");
+              setLinkModalVisible(false);
+            }}
+          >
+            {capitalizeFirstLetter(t("insert_link"))}
+          </Button>
         </Modal>
       </Portal>
     </SafeAreaView>

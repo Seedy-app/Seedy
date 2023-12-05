@@ -97,6 +97,7 @@
   "unmatched_passwords_error": "Las contraseñas no coinciden.",
   "username": "Nombre de usuario",
   "username_already_exists_error": "Ese usuario ya existe.",
+  "insert_link": "insertar enlace",
   "weak_password_error": "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
   "wrong_identification": "Esta no es la planta"
 }
