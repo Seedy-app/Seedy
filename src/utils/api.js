@@ -338,6 +338,43 @@ export const getCommunityCategories = async (
   }
 };
 
+export const createPost = async (title, body, category_id)=> {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/categories/${category_id}/posts/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          body,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(
+        "Network response was not ok: " + response.statusText
+      );
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+
 export const identifyPlant = async (photo_url) => {
   try {
     const token = await AsyncStorage.getItem("userToken");

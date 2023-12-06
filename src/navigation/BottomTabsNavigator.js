@@ -32,8 +32,6 @@ function MyTabs() {
 
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.secondary,
         tabBarStyle: { 
           borderTopColor: 'black', 
           borderTopWidth: 1, 

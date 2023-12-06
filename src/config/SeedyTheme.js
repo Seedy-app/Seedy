@@ -8,7 +8,6 @@ const SeedyTheme = {
     accent: "#8BC34A", // Verde claro, para acentos y elementos secundarios
     background: "#FFFFFF", // Fondo blanco
     text: "#333333", // Texto en color oscuro para contraste
-    surface: "#F5F5F5", // Superficies ligeramente grises para tarjetas, menús, etc.
     danger: "#FF5722", // Rojo-anaranjado, para botones de peligro o alerta
   },
   fonts: {

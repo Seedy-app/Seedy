@@ -1,7 +1,7 @@
 // Importamos las dependencias necesarias
 import React, { useState } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { View, FlatList, RefreshControl, Image } from "react-native";
+import { View, FlatList, RefreshControl, Image, Text } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import styles from "./CommunitiesStyles";
@@ -67,29 +67,24 @@ function CommunitiesScreen() {
       onPress={() => navigation.navigate(t("community"), { community })}
       style={styles.listCard}
     >
-      <Card.Title
-        title={capitalizeFirstLetter(community.name)}
-        titleStyle={{ ...styles.communityCardTitle, marginLeft: "3%" }}
-        subtitle={`${community.userCount} ${capitalizeFirstLetter(
-          t("members")
-        )}`}
-        subtitleStyle={{ ...styles.communityCardSubtitle, marginLeft: "3%" }}
-        left={(props) => (
+      <Card.Content>
+        <View style={{ flexDirection: "row" }}>
           <Image
-            {...props}
             source={{ uri: Config.API_URL + community.picture }}
             style={styles.midProfilePic}
           />
-        )}
-      />
-      <Card.Content>
-        <Paragraph
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          style={{ ...styles.communityCardSubtitle }}
-        >
-          {capitalizeFirstLetter(community.description)}
-        </Paragraph>
+          <View style={{ maxWidth: "80%" }}>
+            <Text style={{ ...styles.communityCardTitle }}>
+              {capitalizeFirstLetter(community.name)}
+            </Text>
+            <Text>{`${community.userCount} ${capitalizeFirstLetter(
+              t("members")
+            )}`}</Text>
+            <Paragraph numberOfLines={1} ellipsizeMode="tail">
+              {capitalizeFirstLetter(community.description)}
+            </Paragraph>
+          </View>
+        </View>
       </Card.Content>
     </Card>
   );

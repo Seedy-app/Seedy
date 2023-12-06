@@ -91,6 +91,7 @@ const commonStyles = StyleSheet.create({
     shadowRadius: 3.84,
     borderWidth: 1,
     borderColor: "black",
+    justifyContent: "center",
   },
 
   fullLoading: {
@@ -123,9 +124,9 @@ const commonStyles = StyleSheet.create({
   },
   smallProfilePic: {
     borderRadius: screenScale * 5,
-    marginRight: "5%",
-    width: screenScale * 10,
-    height: screenScale * 10,
+    marginRight: "3%",
+    width: screenScale * 11,
+    height: screenScale * 11,
     borderWidth: 1,
     borderColor: "black",
   },

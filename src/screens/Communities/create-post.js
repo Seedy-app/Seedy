@@ -5,6 +5,7 @@ import {
   Dimensions,
   View,
   KeyboardAvoidingView,
+  Alert
 } from "react-native";
 import { Button, Modal, Portal, useTheme, TextInput } from "react-native-paper";
 import styles from "./CommunitiesStyles";
@@ -19,23 +20,25 @@ import {
   RichToolbar,
   actions,
 } from "react-native-pell-rich-editor";
-import { uploadPictureToServer, getCommunityCategories } from "../../utils/api";
+import {
+  uploadPictureToServer,
+  getCommunityCategories,
+  createPost,
+} from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Config from "../../config/Config";
 
 const CreatePostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const { communityId } = route.params;
   const RichText = useRef();
   const [userInfo, setUserInfo] = useState({});
-  const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [category, setCategory] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLinkModalVisible, setLinkModalVisible] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState(categories);
   useEffect(() => {
@@ -63,16 +66,27 @@ const CreatePostScreen = ({ route, navigation }) => {
     setModalVisible(false);
   };
   const handleSearch = (query) => {
-    setSearchQuery(query);
     const updatedList = categories.filter((cat) =>
       cat.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredCategories(updatedList);
   };
-  const handleSubmit = () => {
-    if (!category) {
-      alert(t("no_category_selected_error"));
-      return;
+  const handleSubmit = async () => {
+    try {
+      if (!category) {
+        alert(t("no_category_selected_error"));
+        return;
+      }
+      const post_response = await createPost(title, body, category.id);
+      if (post_response) {
+        Alert.alert(
+          capitalizeFirstLetter(t("success")),
+          capitalizeFirstLetter(t("succesful_post_text"))
+        );
+        navigation.goBack()
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 

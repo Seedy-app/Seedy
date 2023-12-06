@@ -44,6 +44,7 @@
   "identify_plant": "Identificar planta",
   "identifying_plant_text": "Identificando tu planta... ¿Misterio de la jungla o joya del jardín? ¡Ya veremos! 🌿🔍",
   "images": "imagenes",
+  "insert_link": "insertar enlace",
   "invalid_email_error": "Por favor, introduce una dirección de correo electrónico válida.",
   "join_community": "Unirse a la comunidad",
   "loading_image": "Cargando imagen...",
@@ -87,6 +88,7 @@
   "send_email_error": "Ocurrió un error al enviar el correo.",
   "show_profile": "Mostrar profile",
   "singup": "Registrarse",
+  "succesful_post_text": "¡Perfecto! 🌱 Tu publicación ha sido creada exitosamente. 🎉",
   "success": "éxito",
   "take_picture": "Tomar foto",
   "title": "título",
@@ -97,7 +99,6 @@
   "unmatched_passwords_error": "Las contraseñas no coinciden.",
   "username": "Nombre de usuario",
   "username_already_exists_error": "Ese usuario ya existe.",
-  "insert_link": "insertar enlace",
   "weak_password_error": "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
   "wrong_identification": "Esta no es la planta"
 }

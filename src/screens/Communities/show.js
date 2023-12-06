@@ -1,6 +1,10 @@
 // Importamos las dependencias necesarias
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import {
+  useRoute,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { View, Image } from "react-native";
 import {
   Button,
@@ -48,95 +52,97 @@ const CommunityScreen = () => {
   }, []); // Sin dependencias, se ejecuta solo una vez al montar el componente
 
   // Para obtener los miembros de la comunidad
-  useEffect(() => {
-    const fetchCommunityMembers = async () => {
-      try {
-        const token = await AsyncStorage.getItem("userToken");
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchCommunityMembers = async () => {
+        try {
+          const token = await AsyncStorage.getItem("userToken");
 
-        if (!token) {
-          console.error(t("not_logged_in_error"));
+          if (!token) {
+            console.error(t("not_logged_in_error"));
+          }
+          const response = await fetch(
+            `${Config.API_URL}/communities/${community.id}/members`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok: " + response.statusText
+            );
+          }
+          const data = await response.json();
+          setCommunityMembersData(data);
+          if (userInfo && userInfo.id) {
+            // Asegurarse de que userInfo y userInfo.id existen
+            const userIsMember = data.data.some(
+              (member) => member.id === userInfo.id
+            );
+            setIsMember(userIsMember);
+          }
+          setIsLoading(false); // Finalizar la carga
+        } catch (error) {
+          console.error("Error fetching community members:", error);
         }
-        const response = await fetch(
-          `${Config.API_URL}/communities/${community.id}/members`,
-          {
-            method: "GET",
+      };
+      const fetchCommunityCategories = async () => {
+        try {
+          let data = await getCommunityCategories(community.id);
+          setCommunityCategoriesData(data);
+          setIsLoading(false); // Finalizar la carga
+        } catch (error) {
+          console.error("Error fetching community categories:", error);
+        }
+      };
+      const fetchCommunityPosts = async () => {
+        try {
+          const token = await AsyncStorage.getItem("userToken");
+          if (!token) {
+            console.error(t("not_logged_in_error"));
+            return { error: t("not_logged_in_error") };
+          }
+          const response = await fetch(`${Config.API_URL}/communities/posts`, {
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
+
+            body: JSON.stringify({
+              community_id: community.id,
+            }),
+          });
+          if (response.status === 404) {
+            setCommunityPostsData([]);
+            setIsLoading(false);
+            return;
           }
-        );
-        if (!response.ok) {
-          throw new Error(
-            "Network response was not ok: " + response.statusText
-          );
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok: " + response.statusText
+            );
+          }
+          const data = await response.json();
+          setCommunityPostsData(data);
+          setIsLoading(false); // Finalizar la carga
+        } catch (error) {
+          console.error("Error fetching community posts:", error);
         }
-        const data = await response.json();
-        setCommunityMembersData(data);
-        if (userInfo && userInfo.id) {
-          // Asegurarse de que userInfo y userInfo.id existen
-          const userIsMember = data.data.some(
-            (member) => member.id === userInfo.id
-          );
-          setIsMember(userIsMember);
-        }
-        setIsLoading(false); // Finalizar la carga
-      } catch (error) {
-        console.error("Error fetching community members:", error);
-      }
-    };
-    const fetchCommunityCategories = async () => {
-      try {
-        let data = await getCommunityCategories(community.id)
-        setCommunityCategoriesData(data);
-        setIsLoading(false); // Finalizar la carga
-      } catch (error) {
-        console.error("Error fetching community categories:", error);
-      }
-    };
-    const fetchCommunityPosts = async () => {
-      try {
-        const token = await AsyncStorage.getItem("userToken");
-        if (!token) {
-          console.error(t("not_logged_in_error"));
-          return { error: t("not_logged_in_error") };
-        }
-        const response = await fetch(`${Config.API_URL}/communities/posts`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      };
 
-          body: JSON.stringify({
-            community_id: community.id,
-          }),
-        });
-        if (response.status === 404) {
-          setCommunityPostsData([]);
-          setIsLoading(false);
-          return;
-        }
-        if (!response.ok) {
-          throw new Error(
-            "Network response was not ok: " + response.statusText
-          );
-        }
-        const data = await response.json();
-        setCommunityPostsData(data);
-        setIsLoading(false); // Finalizar la carga
-      } catch (error) {
-        console.error("Error fetching community posts:", error);
+      if (userInfo && userInfo.id) {
+        // Solo ejecutar si userInfo y userInfo.id existen
+        fetchCommunityMembers();
+        fetchCommunityPosts();
       }
-    };
-
-    if (userInfo && userInfo.id) {
-      // Solo ejecutar si userInfo y userInfo.id existen
-      fetchCommunityMembers();
-      fetchCommunityPosts();
-    }
-    fetchCommunityCategories();
-  }, [userInfo, refresh]);
+      fetchCommunityCategories();
+    }, [userInfo, refresh])
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -201,7 +207,7 @@ const CommunityScreen = () => {
           )}
         />
       ) : (
-        <View style={{...styles.container}}>
+        <View style={{ ...styles.container }}>
           <Card style={styles.communityPreview}>
             <Card.Content>
               <Title style={styles.title}>
