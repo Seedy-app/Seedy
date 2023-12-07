@@ -123,6 +123,40 @@ export const createCommunity = async (name, description, picture) => {
   }
 };
 
+export const getUserCommunityRole = async (
+  user_id,
+  community_id,
+) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/${community_id}/user/${user_id}/role`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      console.info(response);
+      return null;
+    } else {
+      const responseData = await response.json();
+      return responseData;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
 export const giveUserCommunityRole = async (
   user_id,
   community_id,
@@ -303,6 +337,77 @@ export const createCommunityCategory = async (
     return false;
   }
 };
+
+export const getCommunityCategories = async (
+  community_id,
+) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/${community_id}/categories`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(
+        "Network response was not ok: " + response.statusText
+      );
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+export const createPost = async (title, body, category_id)=> {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/categories/${category_id}/posts/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          body,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(
+        "Network response was not ok: " + response.statusText
+      );
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
 
 export const identifyPlant = async (photo_url) => {
   try {

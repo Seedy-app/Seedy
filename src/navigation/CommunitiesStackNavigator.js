@@ -3,8 +3,10 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CommunitiesScreen from "../screens/Communities/list";
 import CommunityScreen from "../screens/Communities/show";
-import CreateCommunityScreen from "../screens/Communities/create";
+import CreateCommunityScreen from "../screens/Communities/create-community";
+import CreatePostScreen from "../screens/Communities/create-post";
 import CommunitySettingsScreen from "../screens/Communities/settings";
+import ViewPostScreen from "../screens/Communities/post";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { IconButton, useTheme } from "react-native-paper";
@@ -63,6 +65,26 @@ function CommunitiesStackNavigator() {
       <CommunitiesStack.Screen
         name={t("community_settings")}
         component={CommunitySettingsScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("create_post")}
+        component={CreatePostScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("view_post")}
+        component={ViewPostScreen}
         options={{
           headerStyle: {
             borderBottomWidth: 1,

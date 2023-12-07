@@ -3,6 +3,10 @@ import commonStyles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
 import FontSize from "../../config/FontSizes";
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
+const screenScale = Dimensions.get("window").scale;
+
 const communitiesStyles = StyleSheet.create({
   ...commonStyles,
   communitiesContainer: {
@@ -11,7 +15,7 @@ const communitiesStyles = StyleSheet.create({
     padding: 10,
   },
   communityCreatePic: {
-    borderRadius: Dimensions.get("window").scale * 15,
+    borderRadius: screenScale * 15,
   },
   tab: {
     backgroundColor: Colors.white,
@@ -20,12 +24,11 @@ const communitiesStyles = StyleSheet.create({
     color: Colors.black,
   },
   header: {
-    paddingLeft: Dimensions.get("window").scale * 7,
+    paddingLeft: screenScale * 7,
     alignItems: "center",
-    backgroundColor: Colors.primary,
-    marginTop: Dimensions.get("window").scale * 2,
-    marginBottom: Dimensions.get("window").scale * 2,
-    borderRadius: Dimensions.get("window").scale * 10,
+    marginTop: screenScale * 2,
+    marginBottom: screenScale * 2,
+    borderRadius: screenScale * 10,
     shadowColor: Colors.shadow,
     shadowOffset: {
       width: 0,
@@ -34,19 +37,12 @@ const communitiesStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    ...commonStyles.viewBorders
+    ...commonStyles.viewBorders,
   },
   headerText: {
     color: Colors.white,
     fontSize: FontSize.regular,
     fontWeight: "bold",
-  },
-  modalContainer: {
-    backgroundColor: "white",
-    padding: Dimensions.get("window").scale * 10,
-    marginLeft: Dimensions.get("window").scale * 10,
-    marginRight: Dimensions.get("window").scale * 10,
-    borderRadius: Dimensions.get("window").scale * 15,
   },
   modalContent: {
     alignItems: "center",
@@ -56,8 +52,8 @@ const communitiesStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   modalText: {
-    marginTop: Dimensions.get("window").scale * 5,
-    marginBottom: Dimensions.get("window").scale * 5,
+    marginTop: screenScale * 5,
+    marginBottom: screenScale * 5,
   },
   modalButtons: {
     flexDirection: "row",
@@ -78,6 +74,19 @@ const communitiesStyles = StyleSheet.create({
     marginHorizontal: "1%",
     borderWidth: 1,
     borderColor: "black",
+  },
+  toolbar: {
+    ...commonStyles.viewBorders,
+    borderRadius: 10,
+    marginBottom: 5,
+  },
+  editorContainer: {
+    ...commonStyles.viewBorders,
+    borderRadius: 10,
+    maxHeight: screenHeight * 0.4,
+  },
+  selectCategoriesModalContainer: {
+    ...commonStyles.modalContainer,
   },
 });
 

@@ -1,6 +1,10 @@
 import { StyleSheet, Dimensions } from "react-native";
 import commonStyles from "../../config/CommonStyles";
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
+const screenScale = Dimensions.get("window").scale;
+
 const myPlantsStyles = StyleSheet.create({
   ...commonStyles,
 
@@ -27,7 +31,7 @@ const myPlantsStyles = StyleSheet.create({
   },
   cardBackground: {
     width: "100%",
-    height: Dimensions.get("window").height / 2.5,
+    height: screenHeight / 2.5,
     justifyContent: "flex-end",
     borderRadius: 50,
   },
@@ -47,7 +51,7 @@ const myPlantsStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    ...commonStyles.viewBorders
+    ...commonStyles.viewBorders,
   },
   modalInfoContainer: {
     marginHorizontal: "5%",
@@ -65,25 +69,25 @@ const myPlantsStyles = StyleSheet.create({
   },
   imagesScrollViewStyle: {},
   imageStyle: {
-    width: Dimensions.get("window").scale * 50,
-    height: Dimensions.get("window").scale * 50,
+    width: screenScale * 50,
+    height: screenScale * 50,
     marginRight: 10,
-    ...commonStyles.viewBorders
+    ...commonStyles.viewBorders,
   },
   infoLabel: {
     fontWeight: "bold",
   },
   dialog: {
     borderWidth: 2,
-    borderRadius: Dimensions.get("window").scale * 10,
+    borderRadius: screenScale * 10,
     overflow: "hidden",
   },
   dialogImage: {
     width: 300,
     height: 400,
-    borderRadius: Dimensions.get("window").scale * 10,
+    borderRadius: screenScale * 10,
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
   },
   listImage: {
     width: 50,
@@ -106,7 +110,7 @@ const myPlantsStyles = StyleSheet.create({
     color: "white",
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
   },
 });
 

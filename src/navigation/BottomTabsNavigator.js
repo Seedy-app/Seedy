@@ -6,17 +6,20 @@ import PlantIdentifierStackNavigator from "./PlantIdentifierStackNavigator";
 import MyPlantsStackNavigator from "./MyPlantsStackNavigator";
 import { useTranslation } from "react-i18next";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"; // Importa MaterialIcons
+import { useTheme } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ focused, size }) => {
           let iconName;
+          let color = focused ? theme.colors.primary : "grey";
 
           if (route.name === t("My Plants")) {
             iconName = "local-florist";
@@ -30,8 +33,6 @@ function MyTabs() {
 
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "limegreen",
-        tabBarInactiveTintColor: "gray",
         tabBarStyle: { 
           borderTopColor: 'black', 
           borderTopWidth: 1, 

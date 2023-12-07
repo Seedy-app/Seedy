@@ -2,35 +2,39 @@ import { StyleSheet, Dimensions } from "react-native";
 
 import commonStyles from "../../config/CommonStyles";
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
+const screenScale = Dimensions.get("window").scale;
+
 const plantIdentifierStyles = StyleSheet.create({
   ...commonStyles,
   captureButtonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    alignItems: "center", 
+    alignItems: "center",
     marginBottom: "5%",
   },
   contentText: {
-    color: 'gray', 
+    color: "gray",
   },
   section: {
-    marginBottom: Dimensions.get("window").scale * 5, 
+    marginBottom: screenScale * 5,
   },
   captureButton: {
-    borderRadius: (Dimensions.get("window").scale * 25) / 2,
-    height: Dimensions.get("window").scale * 25,
-    width: Dimensions.get("window").scale * 25,
+    borderRadius: (screenScale * 25) / 2,
+    height: screenScale * 25,
+    width: screenScale * 25,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderColor: "black",
   },
   plantPic: {
-    marginVertical: Dimensions.get("window").scale * 5,
-    marginRight: Dimensions.get("window").scale * 5,
-    width: Dimensions.get("window").scale * 100,
-    height: Dimensions.get("window").scale * 100,
-    borderRadius: (Dimensions.get("window").scale * 70) / 4,
+    marginVertical: screenScale * 5,
+    marginRight: screenScale * 5,
+    width: screenScale * 100,
+    height: screenScale * 100,
+    borderRadius: (screenScale * 70) / 4,
     borderWidth: 1,
     borderColor: "black",
   },
