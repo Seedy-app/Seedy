@@ -1,6 +1,13 @@
 import React from "react";
 import styles from "./CommunitiesStyles";
-import { View, Text, FlatList, Dimensions, Image } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  Image,
+  ScrollView,
+} from "react-native";
 import { Card, IconButton, useTheme, Paragraph } from "react-native-paper";
 import { capitalizeFirstLetter } from "../../utils/device";
 import FontSizes from "../../config/FontSizes";
@@ -9,11 +16,49 @@ import { useNavigation } from "@react-navigation/native";
 import Config from "../../config/Config";
 import Colors from "../../config/Colors";
 
-const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
+const PostsTab = ({
+  communityCategories,
+  communityPosts,
+  communityId,
+  currentPostsPage,
+  totalPostsPages,
+  onPostsPageChange,
+  fetchCommunityPosts, //No borrar! aunque no se marca se usa
+}) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const navigation = useNavigation();
   const marginRightPlusIcon = Dimensions.get("window").scale * 4;
+
+  const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    return (
+      <View style={styles.paginationContainer}>
+        <IconButton
+          icon="chevron-left"
+          disabled={currentPage === 1}
+          onPress={() => onPageChange(currentPage - 1)}
+        />
+
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => (
+            <Text
+              key={page}
+              style={currentPage === page ? styles.activePage : styles.page}
+              onPress={() => onPageChange(page)}
+            >
+              {page}
+            </Text>
+          )
+        )}
+
+        <IconButton
+          icon="chevron-right"
+          disabled={currentPage === totalPages}
+          onPress={() => onPageChange(currentPage + 1)}
+        />
+      </View>
+    );
+  };
 
   const CategoryCard = ({ category }) => (
     <Card style={{ ...styles.listCard, padding: 5 }}>
@@ -31,7 +76,10 @@ const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
   );
 
   const PostCard = ({ post }) => (
-    <Card style={{ ...styles.listCard }}>
+    <Card
+      style={{ ...styles.listCard }}
+      onPress={() => navigation.navigate(t("view_post"), { post_id: post.id })}
+    >
       <Card.Content>
         <View style={{ flexDirection: "row" }}>
           <View>
@@ -41,23 +89,24 @@ const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
             />
           </View>
           <View style={{ maxWidth: "80%" }}>
-            <Paragraph numberOfLines={1} ellipsizeMode="tail">
+            <Paragraph numberOfLines={1} ellipsizeMode="tail" style={{fontSize: FontSizes.regular}}>
               {capitalizeFirstLetter(post.title)}
             </Paragraph>
             <View style={{ flexDirection: "row" }}>
-              <Text>{capitalizeFirstLetter(post.category.name)}</Text>
-              <Text> | </Text>
-              <Text style={{ color: theme.colors.secondary }}>
+              <Text style={{fontSize: FontSizes.xsmall}}>{capitalizeFirstLetter(post.category.name)}</Text>
+              <Text style={{fontSize: FontSizes.xsmall}}> | </Text>
+              <Text style={{ color: theme.colors.secondary, fontSize: FontSizes.xsmall }}>
                 {new Date(post.createdAt).toLocaleDateString(t.language, {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
                 })}
               </Text>
-              <Text> | </Text>
+              <Text style={{fontSize: FontSizes.xsmall}}> | </Text>
               <Text
                 style={{
                   color: Colors[post.user.userCommunities[0].role.name],
+                  fontSize: FontSizes.xsmall
                 }}
               >
                 {post.user.username}
@@ -70,7 +119,7 @@ const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <FlatList
         ListHeaderComponent={
           <View
@@ -94,6 +143,7 @@ const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
             />
           </View>
         }
+        scrollEnabled={false}
         data={communityCategories}
         renderItem={({ item }) => <CategoryCard category={item} />}
         keyExtractor={(item) => item.id.toString()}
@@ -122,11 +172,19 @@ const PostsTab = ({ communityCategories, communityPosts, communityId }) => {
             />
           </View>
         }
+        scrollEnabled={false}
         data={communityPosts}
         renderItem={({ item }) => <PostCard post={item} />}
         keyExtractor={(item) => item.id.toString()}
+        ListFooterComponent={
+          <Pagination
+            currentPage={currentPostsPage}
+            totalPages={totalPostsPages}
+            onPageChange={onPostsPageChange}
+          />
+        }
       />
-    </View>
+    </ScrollView>
   );
 };
 

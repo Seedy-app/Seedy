@@ -17,8 +17,9 @@ function MyTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ focused, size }) => {
           let iconName;
+          let color = focused ? theme.colors.primary : "grey";
 
           if (route.name === t("My Plants")) {
             iconName = "local-florist";

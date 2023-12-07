@@ -16,12 +16,7 @@ function AuthStackNavigator() {
       <Stack.Screen
         name={t("login")}
         component={LoginScreen}
-        options={{
-          headerStyle: {
-            borderBottomWidth: 1,
-            borderBottomColor: "black",
-          },
-        }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={t("singup")}

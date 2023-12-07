@@ -178,6 +178,21 @@ const commonStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
   },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  page: {
+    margin: 5,
+    padding: 5,
+  },
+  activePage: {
+    margin: 5,
+    padding: 5,
+    fontWeight: 'bold',
+  },
 });
 
 export default commonStyles;
