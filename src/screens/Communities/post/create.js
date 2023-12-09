@@ -5,7 +5,7 @@ import {
   Dimensions,
   View,
   KeyboardAvoidingView,
-  Alert
+  Alert,
 } from "react-native";
 import { Button, Modal, Portal, useTheme, TextInput } from "react-native-paper";
 import styles from "../CommunitiesStyles";
@@ -51,8 +51,8 @@ const CreatePostScreen = ({ route, navigation }) => {
     const fetchCommunityCategories = async () => {
       try {
         let data = await getCommunityCategories(communityId);
-        setCategories(data);
-        setFilteredCategories(data);
+        setCategories(data.categories);
+        setFilteredCategories(data.categories);
       } catch (error) {
         console.error("Error fetching community categories:", error);
       }
@@ -83,7 +83,7 @@ const CreatePostScreen = ({ route, navigation }) => {
           capitalizeFirstLetter(t("success")),
           capitalizeFirstLetter(t("succesful_post_text"))
         );
-        navigation.goBack()
+        navigation.goBack();
       }
     } catch (error) {
       console.error(error);

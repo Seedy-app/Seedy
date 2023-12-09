@@ -8,6 +8,7 @@ import CreatePostScreen from "../screens/Communities/post/create";
 import CreateCategoryScreen from "../screens/Communities/category/create";
 import CommunitySettingsScreen from "../screens/Communities/settings";
 import ViewPostScreen from "../screens/Communities/post/show";
+import ListPostsScreen from "../screens/Communities/post/list";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { IconButton, useTheme } from "react-native-paper";
@@ -96,6 +97,16 @@ function CommunitiesStackNavigator() {
       <CommunitiesStack.Screen
         name={t("view_post")}
         component={ViewPostScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("list_posts")}
+        component={ListPostsScreen}
         options={{
           headerStyle: {
             borderBottomWidth: 1,

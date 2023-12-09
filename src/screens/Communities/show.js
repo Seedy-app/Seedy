@@ -24,7 +24,7 @@ import MembersTab from "./membersTab";
 import ChatTab from "./chatTab";
 import InfoTab from "./infoTab";
 import loadingImage from "../../assets/images/loading.gif";
-import { giveUserCommunityRole, getCommunityCategories, getUserCommunityRole } from "../../utils/api";
+import { giveUserCommunityRole, getCommunityCategories, getUserCommunityRole, getCommunityPosts } from "../../utils/api";
 import { capitalizeFirstLetter } from "../../utils/device";
 
 const CommunityScreen = () => {
@@ -64,7 +64,6 @@ const CommunityScreen = () => {
     fetchUserInfo();
   }, [community.id]);
 
-  // Para obtener los miembros de la comunidad
   useFocusEffect(
     React.useCallback(() => {
       if (userInfo && userInfo.id) {
@@ -105,7 +104,7 @@ const CommunityScreen = () => {
 
   const fetchCommunityCategories = async (page = 1) => {
     try {
-      let data = await getCommunityCategories(community.id, page);
+      let data = await getCommunityCategories(community.id, page, 5);
       if (data){
         setCommunityCategoriesData(data.categories);
         setTotalCategoriesPages(data.totalPages);
@@ -121,35 +120,15 @@ const CommunityScreen = () => {
 
   const fetchCommunityPosts = async (page = 1, limit = 5) => {
     try {
-      const token = await AsyncStorage.getItem("userToken");
-      if (!token) {
-        console.error(t("not_logged_in_error"));
-        return { error: t("not_logged_in_error") };
-      }
-      const response = await fetch(`${Config.API_URL}/communities/${community.id}/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-
-        body: JSON.stringify({
-          limit,
-          page,
-        }),
-      });
-      if (response.status === 404) {
+      let data = await getCommunityPosts(community.id, null, page, limit);
+      if (!data) {
         setCommunityPostsData([]);
         setIsLoading(false);
         return;
       }
-      if (!response.ok) {
-        throw new Error("Network response was not ok: " + response.statusText);
-      }
-      const data = await response.json();
       setCommunityPostsData(data.posts);
       setTotalPostsPages(data.totalPages);
-      setIsLoading(false); // Finalizar la carga
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching community posts:", error);
     }

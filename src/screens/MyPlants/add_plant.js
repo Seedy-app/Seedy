@@ -73,7 +73,6 @@ const AddPlantScreen = () => {
   };
 
   const handleConfirmAdd = async () => {
-    console.log(tempSelectedPlant.id);
     associated_code = await associatePlantToUser(tempSelectedPlant.id);
     setTempSelectedPlant(null);
     setIsDialogVisible(false);

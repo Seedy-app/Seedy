@@ -376,8 +376,8 @@ export const createCommunityCategory = async (
 
 export const getCommunityCategories = async (
   community_id,
-  page = 1,
-  limit = 5
+  page = 0,
+  limit = 0
 ) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
@@ -445,6 +445,56 @@ export const createPost = async (title, body, category_id) => {
     return null;
   }
 };
+
+export const getCommunityPosts = async (
+  community_id,
+  category_id = null,
+  page = 1,
+  limit = 5
+) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+    if (!token) {
+      console.error(t("not_logged_in_error"));
+      return { error: t("not_logged_in_error") };
+    }
+    let requestBody = {
+      limit,
+      page,
+    };
+
+    if (category_id) {
+      requestBody.category_id = category_id;
+    }
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/${community_id}/posts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    if (response.status === 404) {
+      return null;
+    }
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
 
 export const createCategory = async (name, description, community_id) => {
   try {
