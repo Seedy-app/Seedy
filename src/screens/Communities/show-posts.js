@@ -138,7 +138,7 @@ const PostsTab = ({
               iconColor={theme.colors.background}
               style={{ marginRight: marginRightPlusIcon }}
               onPress={() => {
-                /* acción al presionar */
+                navigation.navigate(t("create_category"), { communityId })
               }}
             />
           </View>

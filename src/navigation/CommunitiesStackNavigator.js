@@ -5,6 +5,7 @@ import CommunitiesScreen from "../screens/Communities/list";
 import CommunityScreen from "../screens/Communities/show";
 import CreateCommunityScreen from "../screens/Communities/create-community";
 import CreatePostScreen from "../screens/Communities/create-post";
+import CreateCategoryScreen from "../screens/Communities/create-category";
 import CommunitySettingsScreen from "../screens/Communities/settings";
 import ViewPostScreen from "../screens/Communities/post";
 import { useTranslation } from "react-i18next";
@@ -65,6 +66,16 @@ function CommunitiesStackNavigator() {
       <CommunitiesStack.Screen
         name={t("community_settings")}
         component={CommunitySettingsScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("create_category")}
+        component={CreateCategoryScreen}
         options={{
           headerStyle: {
             borderBottomWidth: 1,
