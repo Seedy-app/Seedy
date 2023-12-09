@@ -38,6 +38,8 @@ const CommunityScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const [currentPostsPage, setCurrentPostsPage] = useState(1);
   const [totalPostsPages, setTotalPostsPages] = useState(0);
+  const [currentCategoriesPage, setCurrentCategoriesPage] = useState(1);
+  const [totalCategoriesPages, setTotalCategoriesPages] = useState(0);
 
   const theme = useTheme();
   const route = useRoute();
@@ -96,11 +98,22 @@ const CommunityScreen = () => {
     fetchCommunityPosts(newPage);
   };
 
-  const fetchCommunityCategories = async () => {
+  const changeCategoriesPage = (newPage) => {
+    setCurrentCategoriesPage(newPage);
+    fetchCommunityCategories(newPage);
+  };
+
+  const fetchCommunityCategories = async (page = 1) => {
     try {
-      let data = await getCommunityCategories(community.id);
-      setCommunityCategoriesData(data);
-      setIsLoading(false); // Finalizar la carga
+      let data = await getCommunityCategories(community.id, page);
+      if (data){
+        setCommunityCategoriesData(data.categories);
+        setTotalCategoriesPages(data.totalPages);
+        setIsLoading(false); // Finalizar la carga
+      }else{
+        setCommunityCategoriesData([]);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error("Error fetching community categories:", error);
     }
@@ -113,7 +126,7 @@ const CommunityScreen = () => {
         console.error(t("not_logged_in_error"));
         return { error: t("not_logged_in_error") };
       }
-      const response = await fetch(`${Config.API_URL}/communities/posts`, {
+      const response = await fetch(`${Config.API_URL}/communities/${community.id}/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +134,6 @@ const CommunityScreen = () => {
         },
 
         body: JSON.stringify({
-          community_id: community.id,
           limit,
           page,
         }),
@@ -195,6 +207,10 @@ const CommunityScreen = () => {
         totalPostsPages={totalPostsPages}
         onPostsPageChange={changePostsPage}
         fetchCommunityPosts={fetchCommunityPosts}
+        currentCategoriesPage={currentCategoriesPage}
+        totalCategoriesPages={totalCategoriesPages}
+        onCategoriesPageChange={changeCategoriesPage}
+        fetchCommunityCategories={fetchCommunityCategories}
       />
     ),
     members: () => <MembersTab communityMembers={communityMembersData.data} />,

@@ -15,7 +15,6 @@ const CreateCategoryScreen = ({ route, navigation }) => {
   const { communityId } = route.params;
   const n_timeout = useRef(null);
 
-
   const handleSubmit = async () => {
     try {
       const post_response = await createCategory(
@@ -34,7 +33,7 @@ const CreateCategoryScreen = ({ route, navigation }) => {
       console.error(error);
     }
   };
-  
+
   const handleNameChange = (text) => {
     setName(text);
     clearTimeout(n_timeout.current);

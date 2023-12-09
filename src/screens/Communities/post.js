@@ -67,7 +67,6 @@ const ViewPostScreen = ({ route }) => {
     <ScrollView>
       <Card>
         <Card.Content>
-          {/* Renderizar contenido HTML */}
           <RenderHtml
             contentWidth={width}
             source={{ html: post.content }}

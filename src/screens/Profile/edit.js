@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"; // No olvides importar useContext
 import { Image, View } from "react-native";
-import { Text, Button } from 'react-native-paper';
+import { Text, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import {
@@ -140,7 +140,7 @@ function EditProfileScreen() {
   };
 
   return (
-    <View style={{...styles.container}}>
+    <View style={{ ...styles.container }}>
       {usernameError && <Text style={styles.error}>{usernameError}</Text>}
       <CustomInput
         label={t("username")}

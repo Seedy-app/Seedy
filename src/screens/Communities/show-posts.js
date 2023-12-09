@@ -24,6 +24,10 @@ const PostsTab = ({
   totalPostsPages,
   onPostsPageChange,
   fetchCommunityPosts, //No borrar! aunque no se marca se usa
+  currentCategoriesPage,
+  totalCategoriesPages,
+  onCategoriesPageChange,
+  fetchCommunityCategories, //No borrar! aunque no se marca se usa
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -147,6 +151,13 @@ const PostsTab = ({
         data={communityCategories}
         renderItem={({ item }) => <CategoryCard category={item} />}
         keyExtractor={(item) => item.id.toString()}
+        ListFooterComponent={
+          <Pagination
+            currentPage={currentCategoriesPage}
+            totalPages={totalCategoriesPages}
+            onPageChange={onCategoriesPageChange}
+          />
+        }
       />
 
       <FlatList

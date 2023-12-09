@@ -123,10 +123,7 @@ export const createCommunity = async (name, description, picture) => {
   }
 };
 
-export const getUserCommunityRole = async (
-  user_id,
-  community_id,
-) => {
+export const getUserCommunityRole = async (user_id, community_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
@@ -316,15 +313,18 @@ export const checkCategoryNameAvailability = async (
     if (ignore_category_id) {
       requestBody.ignore_category_id = ignore_category_id;
     }
-    const response = await fetch(Config.API_URL + `/communities/${community_id}/categories/check-name`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await fetch(
+      Config.API_URL + `/communities/${community_id}/categories/check-name`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
 
-      body: JSON.stringify(requestBody),
-    });
+        body: JSON.stringify(requestBody),
+      }
+    );
     if (response.status === 409) {
       return { error: i18n.t("category_name_already_exists_error") };
     } else {
@@ -376,6 +376,8 @@ export const createCommunityCategory = async (
 
 export const getCommunityCategories = async (
   community_id,
+  page = 1,
+  limit = 5
 ) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
@@ -387,17 +389,19 @@ export const getCommunityCategories = async (
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/categories`,
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          limit,
+          page,
+        }),
       }
     );
     if (!response.ok) {
-      throw new Error(
-        "Network response was not ok: " + response.statusText
-      );
+      throw new Error("Network response was not ok: " + response.statusText);
     } else {
       const data = await response.json();
       return data;
@@ -408,7 +412,7 @@ export const getCommunityCategories = async (
   }
 };
 
-export const createPost = async (title, body, category_id)=> {
+export const createPost = async (title, body, category_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
@@ -431,9 +435,7 @@ export const createPost = async (title, body, category_id)=> {
       }
     );
     if (!response.ok) {
-      throw new Error(
-        "Network response was not ok: " + response.statusText
-      );
+      throw new Error("Network response was not ok: " + response.statusText);
     } else {
       const data = await response.json();
       return data;
@@ -444,7 +446,7 @@ export const createPost = async (title, body, category_id)=> {
   }
 };
 
-export const createCategory = async (name, description, community_id)=> {
+export const createCategory = async (name, description, community_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
@@ -468,9 +470,7 @@ export const createCategory = async (name, description, community_id)=> {
     );
 
     if (!response.ok) {
-      throw new Error(
-        "Network response was not ok: " + response.statusText
-      );
+      throw new Error("Network response was not ok: " + response.statusText);
     } else {
       const data = await response.json();
       return data;
@@ -480,7 +480,6 @@ export const createCategory = async (name, description, community_id)=> {
     return null;
   }
 };
-
 
 export const identifyPlant = async (photo_url) => {
   try {
