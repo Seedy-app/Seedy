@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { View, Alert, Text } from "react-native";
 import { Button } from "react-native-paper";
-import styles from "./CommunitiesStyles";
-import CustomInput from "../CustomInput";
-import { capitalizeFirstLetter } from "../../utils/device";
+import styles from "../CommunitiesStyles";
+import CustomInput from "../../CustomInput";
+import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
-import { createCategory, checkCategoryNameAvailability } from "../../utils/api";
+import { createCategory, checkCategoryNameAvailability } from "../../../utils/api";
 
 const CreateCategoryScreen = ({ route, navigation }) => {
   const [name, setName] = useState("");

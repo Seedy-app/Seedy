@@ -17,6 +17,7 @@ import Config from "../../config/Config";
 import Colors from "../../config/Colors";
 
 const PostsTab = ({
+  userRole,
   communityCategories,
   communityPosts,
   communityId,
@@ -33,7 +34,6 @@ const PostsTab = ({
   const theme = useTheme();
   const navigation = useNavigation();
   const marginRightPlusIcon = Dimensions.get("window").scale * 4;
-
   const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     return (
       <View style={styles.paginationContainer}>
@@ -65,7 +65,15 @@ const PostsTab = ({
   };
 
   const CategoryCard = ({ category }) => (
-    <Card style={{ ...styles.listCard, padding: 5 }}>
+    <Card style={{ ...styles.listCard, padding: 5 }}
+    onPress={() => {
+      navigation.navigate(t("posts_list"), { category_id: category.id });
+    }}
+    onLongPress={() => {
+      {
+        showCategoryInfo(category.id);
+      }
+    }}>
       <Card.Content>
         <Text style={styles.title}>{capitalizeFirstLetter(category.name)}</Text>
         <Text
@@ -93,24 +101,35 @@ const PostsTab = ({
             />
           </View>
           <View style={{ maxWidth: "80%" }}>
-            <Paragraph numberOfLines={1} ellipsizeMode="tail" style={{fontSize: FontSizes.regular}}>
+            <Paragraph
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{ fontSize: FontSizes.regular }}
+            >
               {capitalizeFirstLetter(post.title)}
             </Paragraph>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{fontSize: FontSizes.xsmall}}>{capitalizeFirstLetter(post.category.name)}</Text>
-              <Text style={{fontSize: FontSizes.xsmall}}> | </Text>
-              <Text style={{ color: theme.colors.secondary, fontSize: FontSizes.xsmall }}>
+              <Text style={{ fontSize: FontSizes.xsmall }}>
+                {capitalizeFirstLetter(post.category.name)}
+              </Text>
+              <Text style={{ fontSize: FontSizes.xsmall }}> | </Text>
+              <Text
+                style={{
+                  color: theme.colors.secondary,
+                  fontSize: FontSizes.xsmall,
+                }}
+              >
                 {new Date(post.createdAt).toLocaleDateString(t.language, {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
                 })}
               </Text>
-              <Text style={{fontSize: FontSizes.xsmall}}> | </Text>
+              <Text style={{ fontSize: FontSizes.xsmall }}> | </Text>
               <Text
                 style={{
                   color: Colors[post.user.userCommunities[0].role.name],
-                  fontSize: FontSizes.xsmall
+                  fontSize: FontSizes.xsmall,
                 }}
               >
                 {post.user.username}
@@ -139,11 +158,17 @@ const PostsTab = ({
             <IconButton
               icon="plus"
               size={FontSizes.large}
-              iconColor={theme.colors.background}
+              iconColor={userRole && ['community_founder', 'community_moderator'].includes(userRole.name) ? theme.colors.background : theme.colors.primary} // Cambia 'otroColor' por el color que desees
               style={{ marginRight: marginRightPlusIcon }}
-              onPress={() => {
-                navigation.navigate(t("create_category"), { communityId })
-              }}
+              onPress={
+                userRole && ['community_founder', 'community_moderator'].includes(userRole.name)
+                  ? () => {
+                      navigation.navigate(t("create_category"), {
+                        communityId,
+                      });
+                    }
+                  : null
+              }
             />
           </View>
         }

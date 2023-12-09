@@ -5,9 +5,9 @@ import { useWindowDimensions } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import RenderHtml from 'react-native-render-html';
-import Config from "../../config/Config";
-import styles from "./CommunitiesStyles";
-import loadingImage from "../../assets/images/loading.gif";
+import Config from "../../../config/Config";
+import styles from "../CommunitiesStyles";
+import loadingImage from "../../../assets/images/loading.gif";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ViewPostScreen = ({ route }) => {

@@ -19,10 +19,10 @@ import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./CommunitiesStyles";
 import Config from "../../config/Config";
-import PostsTab from "./show-posts";
-import MembersTab from "./show-members";
-import ChatTab from "./show-chat";
-import InfoTab from "./show-info";
+import PostsTab from "./postsTab";
+import MembersTab from "./membersTab";
+import ChatTab from "./chatTab";
+import InfoTab from "./infoTab";
 import loadingImage from "../../assets/images/loading.gif";
 import { giveUserCommunityRole, getCommunityCategories, getUserCommunityRole } from "../../utils/api";
 import { capitalizeFirstLetter } from "../../utils/device";
@@ -200,6 +200,7 @@ const CommunityScreen = () => {
   const renderScene = SceneMap({
     posts: () => (
       <PostsTab
+        userRole={userRole}
         communityCategories={communityCategoriesData}
         communityPosts={communityPostsData}
         communityId={community.id}
