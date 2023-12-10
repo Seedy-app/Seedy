@@ -14,7 +14,7 @@ const PostsTab = ({
   userRole,
   communityCategories,
   communityPosts,
-  communityId,
+  community,
   currentPostsPage,
   totalPostsPages,
   onPostsPageChange,
@@ -28,7 +28,6 @@ const PostsTab = ({
   const theme = useTheme();
   const navigation = useNavigation();
   const marginRightPlusIcon = Dimensions.get("window").scale * 4;
-  
 
   return (
     <ScrollView style={styles.container}>
@@ -54,7 +53,7 @@ const PostsTab = ({
                 )
                   ? theme.colors.background
                   : theme.colors.primary
-              } 
+              }
               style={{ marginRight: marginRightPlusIcon }}
               onPress={
                 userRole &&
@@ -63,7 +62,7 @@ const PostsTab = ({
                 )
                   ? () => {
                       navigation.navigate(t("create_category"), {
-                        communityId,
+                        communityId: community.id,
                       });
                     }
                   : null
@@ -73,7 +72,14 @@ const PostsTab = ({
         }
         scrollEnabled={false}
         data={communityCategories}
-        renderItem={({ item }) => <CategoryCard category={item} community_id={communityId}/>}
+        renderItem={({ item }) => (
+          <CategoryCard
+            category={item}
+            community={community}
+            currentCategoriesPage={currentCategoriesPage}
+            currentPostsPage={currentPostsPage}
+          />
+        )}
         keyExtractor={(item) => item.id.toString()}
         ListFooterComponent={
           <Pagination
@@ -102,7 +108,9 @@ const PostsTab = ({
               iconColor={theme.colors.background}
               style={{ marginRight: marginRightPlusIcon }}
               onPress={() =>
-                navigation.navigate(t("create_post"), { communityId })
+                navigation.navigate(t("create_post"), {
+                  communityId: community.id,
+                })
               }
             />
           </View>

@@ -1,23 +1,19 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import styles from "../CommunitiesStyles";
-import {
-  View,
-  Text,
-  FlatList,
-  Dimensions,
-  Image,
-  ScrollView,
-} from "react-native";
+import { View, FlatList, BackHandler } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import PostCard from "../components/PostCard";
 import Pagination from "../components/Pagination";
 import { getUserCommunityRole, getCommunityPosts } from "../../../utils/api";
+import { HeaderBackButton } from "@react-navigation/elements";
 
 const ListPostsScreen = ({ route, navigation }) => {
-  const { community_id, category } = route.params;
+  const { community, category, currentCategoriesPage, currentPostsPage } =
+    route.params;
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const [userInfo, setUserInfo] = useState({});
@@ -32,7 +28,7 @@ const ListPostsScreen = ({ route, navigation }) => {
       if (storedUserInfo) {
         const userInfo = JSON.parse(storedUserInfo);
         setUserInfo(userInfo);
-        const roleData = await getUserCommunityRole(userInfo.id, community_id);
+        const roleData = await getUserCommunityRole(userInfo.id, community.id);
         if (roleData) {
           setUserRole(roleData);
         }
@@ -45,6 +41,17 @@ const ListPostsScreen = ({ route, navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: capitalizeFirstLetter(category.name),
+      headerLeft: () => (
+        <HeaderBackButton
+          onPress={() =>
+            navigation.navigate(t("community"), {
+              community,
+              currentCategoriesPage,
+              currentPostsPage,
+            })
+          }
+        />
+      ),
     });
   }, [navigation]);
 
@@ -56,10 +63,30 @@ const ListPostsScreen = ({ route, navigation }) => {
     }, [userInfo, refresh])
   );
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate(t("community"), {
+          community,
+          currentCategoriesPage,
+          currentPostsPage,
+        });
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+
+      return () => backHandler.remove();
+    }, [navigation, t, currentCategoriesPage, currentPostsPage])
+  );
+
   const fetchPosts = async (page = 1, limit = 10) => {
     try {
       let data = await getCommunityPosts(
-        community_id,
+        community.id,
         category.id,
         page,
         limit

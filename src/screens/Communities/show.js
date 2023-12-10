@@ -24,7 +24,12 @@ import MembersTab from "./membersTab";
 import ChatTab from "./chatTab";
 import InfoTab from "./infoTab";
 import loadingImage from "../../assets/images/loading.gif";
-import { giveUserCommunityRole, getCommunityCategories, getUserCommunityRole, getCommunityPosts } from "../../utils/api";
+import {
+  giveUserCommunityRole,
+  getCommunityCategories,
+  getUserCommunityRole,
+  getCommunityPosts,
+} from "../../utils/api";
 import { capitalizeFirstLetter } from "../../utils/device";
 
 const CommunityScreen = () => {
@@ -40,14 +45,10 @@ const CommunityScreen = () => {
   const [totalPostsPages, setTotalPostsPages] = useState(0);
   const [currentCategoriesPage, setCurrentCategoriesPage] = useState(1);
   const [totalCategoriesPages, setTotalCategoriesPages] = useState(0);
-
   const theme = useTheme();
   const route = useRoute();
   const community = route.params.community;
   const navigation = useNavigation();
-
-
-
   useEffect(() => {
     const fetchUserInfo = async () => {
       const storedUserInfo = await AsyncStorage.getItem("userInfo");
@@ -64,33 +65,57 @@ const CommunityScreen = () => {
     fetchUserInfo();
   }, [community.id]);
 
+  useEffect(() => {
+    if (route.params?.currentCategoriesPage) {
+      setCurrentCategoriesPage(route.params.currentCategoriesPage);
+    }
+  }, [route.params?.currentCategoriesPage]);
+
+  useEffect(() => {
+    if (route.params?.currentPostsPage) {
+      setCurrentPostsPage(route.params.currentPostsPage);
+    }
+  }, [route.params?.currentPostsPage]);
+
   useFocusEffect(
     React.useCallback(() => {
       if (userInfo && userInfo.id) {
-        // Solo ejecutar si userInfo y userInfo.id existen
         fetchCommunityMembers();
-        fetchCommunityPosts();
       }
-      fetchCommunityCategories();
     }, [userInfo, refresh])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCommunityCategories(currentCategoriesPage);
+    }, [currentCategoriesPage, refresh])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCommunityPosts(currentPostsPage);
+    }, [, refresh])
   );
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: capitalizeFirstLetter(community.name),
-      headerRight: () => (userRole && ['community_founder', 'community_moderator'].includes(userRole.name)?
-        <IconButton
-          icon="cog"
-          iconColor={theme.colors.primary}
-          size={24}
-          onPress={() =>
-            navigation.navigate(t("community_settings"), { community })
-          }
-        />:<></>
-      ),
+      headerRight: () =>
+        userRole &&
+        ["community_founder", "community_moderator"].includes(userRole.name) ? (
+          <IconButton
+            icon="cog"
+            iconColor={theme.colors.primary}
+            size={24}
+            onPress={() =>
+              navigation.navigate(t("community_settings"), { community })
+            }
+          />
+        ) : (
+          <></>
+        ),
     });
   }, [navigation, userRole]);
-  
 
   const changePostsPage = (newPage) => {
     setCurrentPostsPage(newPage);
@@ -105,11 +130,11 @@ const CommunityScreen = () => {
   const fetchCommunityCategories = async (page = 1) => {
     try {
       let data = await getCommunityCategories(community.id, page, 5);
-      if (data){
+      if (data) {
         setCommunityCategoriesData(data.categories);
         setTotalCategoriesPages(data.totalPages);
         setIsLoading(false); // Finalizar la carga
-      }else{
+      } else {
         setCommunityCategoriesData([]);
         setIsLoading(false);
       }
@@ -182,7 +207,7 @@ const CommunityScreen = () => {
         userRole={userRole}
         communityCategories={communityCategoriesData}
         communityPosts={communityPostsData}
-        communityId={community.id}
+        community={community}
         currentPostsPage={currentPostsPage}
         totalPostsPages={totalPostsPages}
         onPostsPageChange={changePostsPage}

@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const CategoryCard = ({ category, community_id, currentPostsPage }) => {
+const CategoryCard = ({ category, community, currentCategoriesPage, currentPostsPage }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
@@ -15,8 +15,9 @@ const CategoryCard = ({ category, community_id, currentPostsPage }) => {
       style={{ ...styles.listCard, padding: 5 }}
       onPress={() => {
         navigation.navigate(t("list_posts"), {
-          community_id,
+          community,
           category,
+          currentCategoriesPage,
           currentPostsPage
         });
       }}
