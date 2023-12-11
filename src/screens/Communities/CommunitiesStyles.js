@@ -44,13 +44,6 @@ const communitiesStyles = StyleSheet.create({
     fontSize: FontSize.regular,
     fontWeight: "bold",
   },
-  modalContent: {
-    alignItems: "center",
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
   modalText: {
     marginTop: screenScale * 5,
     marginBottom: screenScale * 5,
@@ -58,6 +51,20 @@ const communitiesStyles = StyleSheet.create({
   modalButtons: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  postCount: {
+    alignItems:"center",
+    borderTopWidth: 1,
+    borderTopColor: "black",
+    marginTop: 10,
+    paddingTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+    marginBottom: 10,
+    paddingBottom: 10,
+  },
+  postCountText: {
+    fontWeight: "bold",
   },
   communityCardTitle: {
     fontSize: FontSize.large,

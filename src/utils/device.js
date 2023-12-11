@@ -30,3 +30,11 @@ export const hexToRGBA = (hex, alpha = 1) => {
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
+
+export const isModerator = (userRole) => {
+  return ["community_founder", "community_moderator"].includes(userRole.name);
+};
+
+export const isFounder = (userRole) => {
+  return ["community_founder"].includes(userRole.name);
+};

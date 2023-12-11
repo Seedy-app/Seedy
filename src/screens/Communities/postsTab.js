@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./CommunitiesStyles";
 import { View, Text, FlatList, Dimensions, ScrollView } from "react-native";
-import { Card, IconButton, useTheme, Paragraph } from "react-native-paper";
-import { capitalizeFirstLetter } from "../../utils/device";
+import {
+  IconButton,
+  useTheme,
+  Portal,
+  Modal,
+  Title,
+  Paragraph,
+  Button,
+} from "react-native-paper";
+import { capitalizeFirstLetter, isModerator } from "../../utils/device";
 import FontSizes from "../../config/FontSizes";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -28,6 +36,13 @@ const PostsTab = ({
   const theme = useTheme();
   const navigation = useNavigation();
   const marginRightPlusIcon = Dimensions.get("window").scale * 4;
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [focusedCategory, setFocusedCategory] = useState(null);
+
+  const handleOnLongPressCategoryCard = (category) => {
+    setFocusedCategory(category);
+    setCategoryModalVisible(true);
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -47,19 +62,13 @@ const PostsTab = ({
               icon="plus"
               size={FontSizes.large}
               iconColor={
-                userRole &&
-                ["community_founder", "community_moderator"].includes(
-                  userRole.name
-                )
+                userRole && isModerator(userRole)
                   ? theme.colors.background
                   : theme.colors.primary
               }
               style={{ marginRight: marginRightPlusIcon }}
               onPress={
-                userRole &&
-                ["community_founder", "community_moderator"].includes(
-                  userRole.name
-                )
+                userRole && isModerator(userRole)
                   ? () => {
                       navigation.navigate(t("create_category"), {
                         communityId: community.id,
@@ -78,6 +87,7 @@ const PostsTab = ({
             community={community}
             currentCategoriesPage={currentCategoriesPage}
             currentPostsPage={currentPostsPage}
+            onLongPressAction={handleOnLongPressCategoryCard}
           />
         )}
         keyExtractor={(item) => item.id.toString()}
@@ -127,6 +137,72 @@ const PostsTab = ({
           />
         }
       />
+      <Portal>
+        <Modal
+          visible={categoryModalVisible}
+          onDismiss={() => setCategoryModalVisible(false)}
+          contentContainerStyle={styles.modalContainer}
+        >
+          <IconButton
+            icon="close"
+            size={20}
+            onPress={() => setCategoryModalVisible(false)}
+            style={styles.modalCloseButton}
+          />
+          <View style={styles.modalContent}>
+            <View style={{ marginBottom: "5%" }}>
+              <View>
+                <Title style={styles.title}>
+                  {focusedCategory &&
+                    capitalizeFirstLetter(focusedCategory.name)}
+                </Title>
+                <Paragraph>
+                  {focusedCategory && focusedCategory.description}
+                </Paragraph>
+              </View>
+              <View style={styles.postCount}>
+                <Text style={styles.postCountText}>{`${capitalizeFirstLetter(
+                  t("posts")
+                )}: ${focusedCategory && focusedCategory.postCount}`}</Text>
+              </View>
+            </View>
+            <View>
+              <Button
+                mode="contained"
+                style={styles.button}
+                onPress={() => {
+                  setCategoryModalVisible(false);
+                  navigation.navigate(t("list_posts"), {
+                    community,
+                    category: focusedCategory,
+                    currentCategoriesPage,
+                    currentPostsPage,
+                  });
+                }}
+              >
+                <Text style={styles.buttonText}>
+                  {capitalizeFirstLetter(t("enter_category"))}
+                </Text>
+              </Button>
+              <Button mode="contained" style={styles.button}>
+                <Text style={styles.buttonText}>
+                  {capitalizeFirstLetter(t("edit_category"))}
+                </Text>
+              </Button>
+
+              <Button
+                mode="contained"
+                style={styles.button}
+                buttonColor={theme.colors.danger}
+              >
+                <Text style={styles.buttonText}>
+                  {capitalizeFirstLetter(t("delete_category"))}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </Modal>
+      </Portal>
     </ScrollView>
   );
 };

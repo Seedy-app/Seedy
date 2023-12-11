@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const CategoryCard = ({ category, community, currentCategoriesPage, currentPostsPage }) => {
+const CategoryCard = ({ category, community, currentCategoriesPage, currentPostsPage, onLongPressAction }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
@@ -22,8 +22,8 @@ const CategoryCard = ({ category, community, currentCategoriesPage, currentPosts
         });
       }}
       onLongPress={() => {
-        {
-          showCategoryInfo(category.id);
+        if (onLongPressAction) {
+          onLongPressAction(category);
         }
       }}
     >

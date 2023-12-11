@@ -30,7 +30,7 @@ import {
   getUserCommunityRole,
   getCommunityPosts,
 } from "../../utils/api";
-import { capitalizeFirstLetter } from "../../utils/device";
+import { capitalizeFirstLetter, isModerator } from "../../utils/device";
 
 const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -102,13 +102,13 @@ const CommunityScreen = () => {
       headerTitle: capitalizeFirstLetter(community.name),
       headerRight: () =>
         userRole &&
-        ["community_founder", "community_moderator"].includes(userRole.name) ? (
+        isModerator(userRole) ? (
           <IconButton
             icon="cog"
             iconColor={theme.colors.primary}
             size={24}
             onPress={() =>
-              navigation.navigate(t("community_settings"), { community })
+              navigation.navigate(t("community_settings"), { community, userRole })
             }
           />
         ) : (
