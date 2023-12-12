@@ -101,14 +101,16 @@ const CommunityScreen = () => {
     navigation.setOptions({
       headerTitle: capitalizeFirstLetter(community.name),
       headerRight: () =>
-        userRole &&
-        isModerator(userRole) ? (
+        userRole && isModerator(userRole) ? (
           <IconButton
             icon="cog"
             iconColor={theme.colors.primary}
             size={24}
             onPress={() =>
-              navigation.navigate(t("community_settings"), { community, userRole })
+              navigation.navigate(t("community_settings"), {
+                community,
+                userRole,
+              })
             }
           />
         ) : (
@@ -127,16 +129,23 @@ const CommunityScreen = () => {
     fetchCommunityCategories(newPage);
   };
 
-  const fetchCommunityCategories = async (page = 1) => {
+  const fetchCommunityCategories = async (
+    page = 1,
+    limit = 5,
+    changeStates = true
+  ) => {
     try {
-      let data = await getCommunityCategories(community.id, page, 5);
-      if (data) {
-        setCommunityCategoriesData(data.categories);
-        setTotalCategoriesPages(data.totalPages);
-      } else {
-        setCommunityCategoriesData([]);
+      let data = await getCommunityCategories(community.id, page, limit);
+      if (changeStates) {
+        if (data) {
+          setCommunityCategoriesData(data.categories);
+          setTotalCategoriesPages(data.totalPages);
+        } else {
+          setCommunityCategoriesData([]);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
+      return data;
     } catch (error) {
       console.error("Error fetching community categories:", error);
     }
@@ -228,7 +237,7 @@ const CommunityScreen = () => {
 
   return (
     <>
-      {isLoading || isMember===null ? (
+      {isLoading || isMember === null ? (
         <View style={styles.fullLoading}>
           <Image source={loadingImage} />
         </View>

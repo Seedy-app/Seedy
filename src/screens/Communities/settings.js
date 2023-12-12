@@ -86,12 +86,14 @@ const CommunitySettingsScreen = () => {
         >
           <View style={styles.modalContent}>
             <Text style={styles.title}>{t("delete_community")}</Text>
-            <Text style={styles.modalText}>
-              {t("delete_community_instructions") +
-                ' ("' +
-                community.name +
-                '"):'}
-            </Text>
+            <View style={styles.modalTextContainer}>
+              <Text>
+                {t("delete_community_instructions") +
+                  ' ("' +
+                  community.name +
+                  '"):'}
+              </Text>
+            </View>
             <TextInput
               label={t("community_name")}
               value={communityNameInput}

@@ -114,7 +114,7 @@ const ListPostsScreen = ({ route, navigation }) => {
         scrollEnabled={false}
         data={posts}
         renderItem={({ item }) => <PostCard post={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => String(item.id)}
         ListFooterComponent={
           <Pagination
             currentPage={currentPage}

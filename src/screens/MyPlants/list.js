@@ -225,7 +225,7 @@ function ListMyPlantsScreen() {
           <FlatList
             data={plants}
             renderItem={renderPlantCard}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => String(item.id)}
             contentContainerStyle={{
               paddingHorizontal: 10,
               paddingVertical: 10,

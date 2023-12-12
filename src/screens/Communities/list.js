@@ -95,7 +95,7 @@ function CommunitiesScreen() {
       <FlatList
         data={communitiesData}
         renderItem={({ item }) => <CommunityCard community={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => String(item.id)}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }

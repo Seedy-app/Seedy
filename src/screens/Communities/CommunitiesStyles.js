@@ -44,7 +44,7 @@ const communitiesStyles = StyleSheet.create({
     fontSize: FontSize.regular,
     fontWeight: "bold",
   },
-  modalText: {
+  modalTextContainer: {
     marginTop: screenScale * 5,
     marginBottom: screenScale * 5,
   },
