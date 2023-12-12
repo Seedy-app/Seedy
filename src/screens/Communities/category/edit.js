@@ -5,24 +5,24 @@ import CategoryForm from "./form";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import {
-  createCategory,
+  editCategory,
 } from "../../../utils/api";
 
-const CreateCategoryScreen = ({ route, navigation }) => {
+const EditCategoryScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const { communityId } = route.params;
+  const { communityId, category } = route.params;
 
   const handleSubmit = async (name, description) => {
     try {
-      const post_response = await createCategory(
+      const put_response = await editCategory(
         name,
         description,
-        communityId
+        category.id
       );
-      if (post_response) {
+      if (put_response) {
         Alert.alert(
           capitalizeFirstLetter(t("success")),
-          capitalizeFirstLetter(t("succesful_category_creation_text"))
+          capitalizeFirstLetter(t("succesful_category_edition_text"))
         );
         navigation.goBack();
       }
@@ -36,9 +36,10 @@ const CreateCategoryScreen = ({ route, navigation }) => {
       <CategoryForm
         onSubmit={handleSubmit}
         communityId={communityId}
+        category={category}
       />
     </View>
   );
 };
 
-export default CreateCategoryScreen;
+export default EditCategoryScreen;

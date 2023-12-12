@@ -32,9 +32,9 @@ export const hexToRGBA = (hex, alpha = 1) => {
 };
 
 export const isModerator = (userRole) => {
-  return ["community_founder", "community_moderator"].includes(userRole.name);
+  return userRole && ["community_founder", "community_moderator"].includes(userRole.name);
 };
 
 export const isFounder = (userRole) => {
-  return ["community_founder"].includes(userRole.name);
+  return userRole && ["community_founder"].includes(userRole.name);
 };

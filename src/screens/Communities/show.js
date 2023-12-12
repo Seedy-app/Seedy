@@ -37,7 +37,7 @@ const CommunityScreen = () => {
   const [communityMembersData, setCommunityMembersData] = useState([]);
   const [communityCategoriesData, setCommunityCategoriesData] = useState([]);
   const [communityPostsData, setCommunityPostsData] = useState([]);
-  const [isMember, setIsMember] = useState(false);
+  const [isMember, setIsMember] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
@@ -133,11 +133,10 @@ const CommunityScreen = () => {
       if (data) {
         setCommunityCategoriesData(data.categories);
         setTotalCategoriesPages(data.totalPages);
-        setIsLoading(false); // Finalizar la carga
       } else {
         setCommunityCategoriesData([]);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching community categories:", error);
     }
@@ -182,13 +181,12 @@ const CommunityScreen = () => {
       const data = await response.json();
       setCommunityMembersData(data);
       if (userInfo && userInfo.id) {
-        // Asegurarse de que userInfo y userInfo.id existen
         const userIsMember = data.data.some(
           (member) => member.id === userInfo.id
         );
         setIsMember(userIsMember);
+        setIsLoading(false);
       }
-      setIsLoading(false); // Finalizar la carga
     } catch (error) {
       console.error("Error fetching community members:", error);
     }
@@ -230,7 +228,7 @@ const CommunityScreen = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isMember===null ? (
         <View style={styles.fullLoading}>
           <Image source={loadingImage} />
         </View>

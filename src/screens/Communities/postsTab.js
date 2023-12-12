@@ -184,21 +184,34 @@ const PostsTab = ({
                   {capitalizeFirstLetter(t("enter_category"))}
                 </Text>
               </Button>
-              <Button mode="contained" style={styles.button}>
-                <Text style={styles.buttonText}>
-                  {capitalizeFirstLetter(t("edit_category"))}
-                </Text>
-              </Button>
-
-              <Button
-                mode="contained"
-                style={styles.button}
-                buttonColor={theme.colors.danger}
-              >
-                <Text style={styles.buttonText}>
-                  {capitalizeFirstLetter(t("delete_category"))}
-                </Text>
-              </Button>
+              {isModerator(userRole) && (
+                <View>
+                  <Button
+                    mode="contained"
+                    style={styles.button}
+                    onPress={() => {
+                      setCategoryModalVisible(false);
+                      navigation.navigate(t("edit_category"), {
+                        communityId: community.id,
+                        category: focusedCategory,
+                      });
+                    }}
+                  >
+                    <Text style={styles.buttonText}>
+                      {capitalizeFirstLetter(t("edit_category"))}
+                    </Text>
+                  </Button>
+                  <Button
+                    mode="contained"
+                    style={styles.button}
+                    buttonColor={theme.colors.danger}
+                  >
+                    <Text style={styles.buttonText}>
+                      {capitalizeFirstLetter(t("delete_category"))}
+                    </Text>
+                  </Button>
+                </View>
+              )}
             </View>
           </View>
         </Modal>
