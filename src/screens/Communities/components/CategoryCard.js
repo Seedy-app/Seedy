@@ -15,8 +15,8 @@ const CategoryCard = ({ category, community, currentCategoriesPage, currentPosts
       style={{ ...styles.listCard, padding: 5 }}
       onPress={() => {
         navigation.navigate(t("list_posts"), {
-          community,
           category,
+          community,
           currentCategoriesPage,
           currentPostsPage
         });

@@ -181,7 +181,7 @@ const CreatePostScreen = ({ route, navigation }) => {
             label={capitalizeFirstLetter(t("search_category"))}
             onChangeText={handleSearch}
           />
-          <ScrollView style={styles.modalScrollView}>
+          <ScrollView>
             {filteredCategories.map((cat, index) => (
               <Button
                 key={index}

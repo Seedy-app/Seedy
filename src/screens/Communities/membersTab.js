@@ -46,7 +46,7 @@ const MembersTab = ({ communityMembers }) => {
       <FlatList
         data={communityMembers}
         renderItem={({ item }) => <MemberCard member={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => String(item.id)}
       />
     </View>
   );

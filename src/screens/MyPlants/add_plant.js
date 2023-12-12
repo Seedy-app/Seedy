@@ -129,7 +129,7 @@ const AddPlantScreen = () => {
         {
           <FlatList
             data={filteredOptions}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => selectOption(item)}>
                 <Card>
