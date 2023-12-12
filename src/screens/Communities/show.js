@@ -19,33 +19,36 @@ import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./CommunitiesStyles";
 import Config from "../../config/Config";
-import PostsTab from "./show-posts";
-import MembersTab from "./show-members";
-import ChatTab from "./show-chat";
-import InfoTab from "./show-info";
+import PostsTab from "./postsTab";
+import MembersTab from "./membersTab";
+import ChatTab from "./chatTab";
+import InfoTab from "./infoTab";
 import loadingImage from "../../assets/images/loading.gif";
-import { giveUserCommunityRole, getCommunityCategories, getUserCommunityRole } from "../../utils/api";
-import { capitalizeFirstLetter } from "../../utils/device";
+import {
+  giveUserCommunityRole,
+  getCommunityCategories,
+  getUserCommunityRole,
+  getCommunityPosts,
+} from "../../utils/api";
+import { capitalizeFirstLetter, isModerator } from "../../utils/device";
 
 const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});
   const [communityMembersData, setCommunityMembersData] = useState([]);
   const [communityCategoriesData, setCommunityCategoriesData] = useState([]);
   const [communityPostsData, setCommunityPostsData] = useState([]);
-  const [isMember, setIsMember] = useState(false);
+  const [isMember, setIsMember] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [currentPostsPage, setCurrentPostsPage] = useState(1);
   const [totalPostsPages, setTotalPostsPages] = useState(0);
-
+  const [currentCategoriesPage, setCurrentCategoriesPage] = useState(1);
+  const [totalCategoriesPages, setTotalCategoriesPages] = useState(0);
   const theme = useTheme();
   const route = useRoute();
   const community = route.params.community;
   const navigation = useNavigation();
-
-
-
   useEffect(() => {
     const fetchUserInfo = async () => {
       const storedUserInfo = await AsyncStorage.getItem("userInfo");
@@ -62,45 +65,78 @@ const CommunityScreen = () => {
     fetchUserInfo();
   }, [community.id]);
 
-  // Para obtener los miembros de la comunidad
+  useEffect(() => {
+    if (route.params?.currentCategoriesPage) {
+      setCurrentCategoriesPage(route.params.currentCategoriesPage);
+    }
+  }, [route.params?.currentCategoriesPage]);
+
+  useEffect(() => {
+    if (route.params?.currentPostsPage) {
+      setCurrentPostsPage(route.params.currentPostsPage);
+    }
+  }, [route.params?.currentPostsPage]);
+
   useFocusEffect(
     React.useCallback(() => {
       if (userInfo && userInfo.id) {
-        // Solo ejecutar si userInfo y userInfo.id existen
         fetchCommunityMembers();
-        fetchCommunityPosts();
       }
-      fetchCommunityCategories();
     }, [userInfo, refresh])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCommunityCategories(currentCategoriesPage);
+    }, [currentCategoriesPage, refresh])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCommunityPosts(currentPostsPage);
+    }, [, refresh])
   );
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: capitalizeFirstLetter(community.name),
-      headerRight: () => (userRole && ['community_founder', 'community_moderator'].includes(userRole.name)?
-        <IconButton
-          icon="cog"
-          iconColor={theme.colors.primary}
-          size={24}
-          onPress={() =>
-            navigation.navigate(t("community_settings"), { community })
-          }
-        />:<></>
-      ),
+      headerRight: () =>
+        userRole &&
+        isModerator(userRole) ? (
+          <IconButton
+            icon="cog"
+            iconColor={theme.colors.primary}
+            size={24}
+            onPress={() =>
+              navigation.navigate(t("community_settings"), { community, userRole })
+            }
+          />
+        ) : (
+          <></>
+        ),
     });
   }, [navigation, userRole]);
-  
 
   const changePostsPage = (newPage) => {
     setCurrentPostsPage(newPage);
     fetchCommunityPosts(newPage);
   };
 
-  const fetchCommunityCategories = async () => {
+  const changeCategoriesPage = (newPage) => {
+    setCurrentCategoriesPage(newPage);
+    fetchCommunityCategories(newPage);
+  };
+
+  const fetchCommunityCategories = async (page = 1) => {
     try {
-      let data = await getCommunityCategories(community.id);
-      setCommunityCategoriesData(data);
-      setIsLoading(false); // Finalizar la carga
+      let data = await getCommunityCategories(community.id, page, 5);
+      if (data) {
+        setCommunityCategoriesData(data.categories);
+        setTotalCategoriesPages(data.totalPages);
+      } else {
+        setCommunityCategoriesData([]);
+      }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching community categories:", error);
     }
@@ -108,36 +144,15 @@ const CommunityScreen = () => {
 
   const fetchCommunityPosts = async (page = 1, limit = 5) => {
     try {
-      const token = await AsyncStorage.getItem("userToken");
-      if (!token) {
-        console.error(t("not_logged_in_error"));
-        return { error: t("not_logged_in_error") };
-      }
-      const response = await fetch(`${Config.API_URL}/communities/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-
-        body: JSON.stringify({
-          community_id: community.id,
-          limit,
-          page,
-        }),
-      });
-      if (response.status === 404) {
+      let data = await getCommunityPosts(community.id, null, page, limit);
+      if (!data) {
         setCommunityPostsData([]);
         setIsLoading(false);
         return;
       }
-      if (!response.ok) {
-        throw new Error("Network response was not ok: " + response.statusText);
-      }
-      const data = await response.json();
       setCommunityPostsData(data.posts);
       setTotalPostsPages(data.totalPages);
-      setIsLoading(false); // Finalizar la carga
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching community posts:", error);
     }
@@ -166,13 +181,12 @@ const CommunityScreen = () => {
       const data = await response.json();
       setCommunityMembersData(data);
       if (userInfo && userInfo.id) {
-        // Asegurarse de que userInfo y userInfo.id existen
         const userIsMember = data.data.some(
           (member) => member.id === userInfo.id
         );
         setIsMember(userIsMember);
+        setIsLoading(false);
       }
-      setIsLoading(false); // Finalizar la carga
     } catch (error) {
       console.error("Error fetching community members:", error);
     }
@@ -188,13 +202,18 @@ const CommunityScreen = () => {
   const renderScene = SceneMap({
     posts: () => (
       <PostsTab
+        userRole={userRole}
         communityCategories={communityCategoriesData}
         communityPosts={communityPostsData}
-        communityId={community.id}
+        community={community}
         currentPostsPage={currentPostsPage}
         totalPostsPages={totalPostsPages}
         onPostsPageChange={changePostsPage}
         fetchCommunityPosts={fetchCommunityPosts}
+        currentCategoriesPage={currentCategoriesPage}
+        totalCategoriesPages={totalCategoriesPages}
+        onCategoriesPageChange={changeCategoriesPage}
+        fetchCommunityCategories={fetchCommunityCategories}
       />
     ),
     members: () => <MembersTab communityMembers={communityMembersData.data} />,
@@ -209,7 +228,7 @@ const CommunityScreen = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isMember===null ? (
         <View style={styles.fullLoading}>
           <Image source={loadingImage} />
         </View>

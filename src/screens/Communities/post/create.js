@@ -5,15 +5,15 @@ import {
   Dimensions,
   View,
   KeyboardAvoidingView,
-  Alert
+  Alert,
 } from "react-native";
 import { Button, Modal, Portal, useTheme, TextInput } from "react-native-paper";
-import styles from "./CommunitiesStyles";
-import CustomInput from "../CustomInput";
+import styles from "../CommunitiesStyles";
+import CustomInput from "../../CustomInput";
 import {
   capitalizeFirstLetter,
   selectImageFromGallery,
-} from "../../utils/device";
+} from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import {
   RichEditor,
@@ -24,9 +24,9 @@ import {
   uploadPictureToServer,
   getCommunityCategories,
   createPost,
-} from "../../utils/api";
+} from "../../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Config from "../../config/Config";
+import Config from "../../../config/Config";
 
 const CreatePostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
@@ -51,8 +51,8 @@ const CreatePostScreen = ({ route, navigation }) => {
     const fetchCommunityCategories = async () => {
       try {
         let data = await getCommunityCategories(communityId);
-        setCategories(data);
-        setFilteredCategories(data);
+        setCategories(data.categories);
+        setFilteredCategories(data.categories);
       } catch (error) {
         console.error("Error fetching community categories:", error);
       }
@@ -83,7 +83,7 @@ const CreatePostScreen = ({ route, navigation }) => {
           capitalizeFirstLetter(t("success")),
           capitalizeFirstLetter(t("succesful_post_text"))
         );
-        navigation.goBack()
+        navigation.goBack();
       }
     } catch (error) {
       console.error(error);
@@ -136,13 +136,13 @@ const CreatePostScreen = ({ route, navigation }) => {
                 // "insertPlant",
               ]}
               iconMap={{
-                heading1: require("../../assets/images/icons/title.png"),
-                bold: require("../../assets/images/icons/bold.png"),
-                italic: require("../../assets/images/icons/italic.png"),
-                underline: require("../../assets/images/icons/underline.png"),
-                insertImage: require("../../assets/images/icons/image.png"),
-                insertLink: require("../../assets/images/icons/link.png"),
-                // insertPlant: require("../../assets/images/icons/flower.png"),
+                heading1: require("../../../assets/images/icons/title.png"),
+                bold: require("../../../assets/images/icons/bold.png"),
+                italic: require("../../../assets/images/icons/italic.png"),
+                underline: require("../../../assets/images/icons/underline.png"),
+                insertImage: require("../../../assets/images/icons/image.png"),
+                insertLink: require("../../../assets/images/icons/link.png"),
+                // insertPlant: require("../../../assets/images/icons/flower.png"),
               }}
               onPressAddImage={handleInsertImage}
               onInsertLink={handleInsertLink}

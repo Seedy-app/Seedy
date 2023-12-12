@@ -3,10 +3,13 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CommunitiesScreen from "../screens/Communities/list";
 import CommunityScreen from "../screens/Communities/show";
-import CreateCommunityScreen from "../screens/Communities/create-community";
-import CreatePostScreen from "../screens/Communities/create-post";
+import CreateCommunityScreen from "../screens/Communities/create";
+import CreatePostScreen from "../screens/Communities/post/create";
+import CreateCategoryScreen from "../screens/Communities/category/create";
+import EditCategoryScreen from "../screens/Communities/category/edit";
 import CommunitySettingsScreen from "../screens/Communities/settings";
-import ViewPostScreen from "../screens/Communities/post";
+import ViewPostScreen from "../screens/Communities/post/show";
+import ListPostsScreen from "../screens/Communities/post/list";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { IconButton, useTheme } from "react-native-paper";
@@ -73,6 +76,26 @@ function CommunitiesStackNavigator() {
         }}
       />
       <CommunitiesStack.Screen
+        name={t("create_category")}
+        component={CreateCategoryScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("edit_category")}
+        component={EditCategoryScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
         name={t("create_post")}
         component={CreatePostScreen}
         options={{
@@ -85,6 +108,16 @@ function CommunitiesStackNavigator() {
       <CommunitiesStack.Screen
         name={t("view_post")}
         component={ViewPostScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("list_posts")}
+        component={ListPostsScreen}
         options={{
           headerStyle: {
             borderBottomWidth: 1,

@@ -170,18 +170,25 @@ const commonStyles = StyleSheet.create({
   modalContainer: {
     backgroundColor: "white",
     padding: screenScale * 10,
-    flex: 1,
-    alignSelf: 'center',
-    maxHeight: screenHeight * .5,
-    width: screenWidth * .9,
+    alignSelf: "center",
+    maxHeight: screenHeight * 0.5,
+    width: screenWidth * 0.9,
     borderRadius: screenScale * 15,
     borderWidth: 1,
     borderColor: "black",
   },
+  modalContent: {
+    justifyContent: "space-between",
+  },
+  modalCloseButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
   paginationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 10,
   },
   page: {
@@ -191,7 +198,7 @@ const commonStyles = StyleSheet.create({
   activePage: {
     margin: 5,
     padding: 5,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

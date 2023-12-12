@@ -11,13 +11,13 @@ import {
 } from "react-native-paper";
 import styles from "./CommunitiesStyles";
 import { useTranslation } from "react-i18next";
-import { capitalizeFirstLetter } from "../../utils/device";
+import { capitalizeFirstLetter, isFounder } from "../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Config from "../../config/Config";
 
 const CommunitySettingsScreen = () => {
   const route = useRoute();
-  const community = route.params.community;
+  const { community, userRole } = route.params;
   const navigation = useNavigation();
   const { t } = useTranslation();
   const theme = useTheme();
@@ -66,15 +66,17 @@ const CommunitySettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Button
-        mode="contained"
-        icon="trash-can"
-        onPress={showDeleteModal}
-        buttonColor={theme.colors.danger}
-        style={styles.button}
-      >
-        {t("delete_community")}
-      </Button>
+      {isFounder(userRole) && (
+        <Button
+          mode="contained"
+          icon="trash-can"
+          onPress={showDeleteModal}
+          buttonColor={theme.colors.danger}
+          style={styles.button}
+        >
+          {t("delete_community")}
+        </Button>
+      )}
 
       <Portal>
         <Modal
@@ -83,7 +85,7 @@ const CommunitySettingsScreen = () => {
           contentContainerStyle={styles.modalContainer}
         >
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{t("delete_community")}</Text>
+            <Text style={styles.title}>{t("delete_community")}</Text>
             <Text style={styles.modalText}>
               {t("delete_community_instructions") +
                 ' ("' +
