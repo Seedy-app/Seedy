@@ -104,6 +104,7 @@
   "send_email_error": "Ocurrió un error al enviar el correo.",
   "show_profile": "Mostrar profile",
   "singup": "Registrarse",
+  "start_writing_message": "Comienza a escribir un aquí",
   "succesful_category_creation_text": "¡Genial! 🌱 Tu categoria ha sido creada exitosamente. 🎉",
   "succesful_category_edition_text": "¡Genial! 🌟 Tu categoría ha sido actualizada con éxito. 🎉",
   "succesful_post_text": "¡Perfecto! 🌱 Tu publicación ha sido creada exitosamente. 🎉",
@@ -118,6 +119,7 @@
   "username": "Nombre de usuario",
   "username_already_exists_error": "Ese usuario ya existe.",
   "view_post": "Ver publicación",
+  "send_comment": "Enviar comentario",
   "weak_password_error": "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
   "where_to_migrate_posts": "Esta categoría tiene publicaciones asociadas. Elige otra categoría para migrar estas publicaciones antes de proceder con la eliminación.",
   "wrong_identification": "Esta no es la planta"

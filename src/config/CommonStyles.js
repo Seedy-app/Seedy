@@ -200,6 +200,17 @@ const commonStyles = StyleSheet.create({
     padding: 5,
     fontWeight: "bold",
   },
+  toolbar: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+    marginBottom: 5,
+  },
+  editorContainer: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+  },
 });
 
 export default commonStyles;
