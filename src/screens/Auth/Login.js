@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import CustomInput from "../CustomInput";
+import CustomInput from "../CustomComponents/CustomInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Image, KeyboardAvoidingView, Platform } from "react-native";
 import { Text, Button, TouchableRipple } from "react-native-paper";

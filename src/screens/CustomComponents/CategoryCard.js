@@ -1,8 +1,8 @@
 import React from "react";
 import { Text } from "react-native";
 import { Card } from "react-native-paper";
-import styles from "../CommunitiesStyles";
-import { capitalizeFirstLetter } from "../../../utils/device";
+import styles from "../../config/CommonStyles";
+import { capitalizeFirstLetter } from "../../utils/device";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
@@ -30,7 +30,6 @@ const CategoryCard = ({ category, community, currentCategoriesPage, currentPosts
       <Card.Content>
         <Text style={styles.title}>{capitalizeFirstLetter(category.name)}</Text>
         <Text
-          style={{ ...styles.communityDescription }}
           numberOfLines={1}
           ellipsizeMode="tail"
         >

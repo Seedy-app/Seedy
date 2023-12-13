@@ -1,68 +1,55 @@
-// Importamos las dependencias necesarias
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { Image, View } from "react-native";
 import { Text, Button } from "react-native-paper";
-import CustomInput from "../CustomInput";
+import CustomInput from "../../CustomComponents/CustomInput";
 import { useTranslation } from "react-i18next";
-import styles from "./CommunitiesStyles";
-import Config from "../../config/Config";
-import { selectImageFromGallery } from "../../utils/device";
+import styles from "../CommunitiesStyles";
+import Config from "../../../config/Config";
+import { selectImageFromGallery } from "../../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import loadingImage from "../../assets/images/loading.gif";
+import loadingImage from "../../../assets/images/loading.gif";
 import { useTheme } from "react-native-paper";
 
 import {
   checkCommunityNameAvailability,
-  changeCommunityPicture,
-  createCommunity,
   getRandomPicture,
-  uploadPictureToServer,
-  giveUserCommunityRole,
-  createCommunityCategory,
-} from "../../utils/api";
+} from "../../../utils/api";
 
-function CreateCommunitiesScreen() {
+function CommunityForm({ onSubmit, community = {} }) {
   const [selectedImageUri, setSelectedImageUri] = useState(null);
   const [description, setDescription] = useState(null);
   const [nameError, setNameError] = useState(null);
   const [name, setName] = useState(null);
+  const [displayedImageUrl, setDisplayedImageUrl] = useState(community.picture || null);
   const [userId, setUserId] = useState(null);
-  const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
 
   const n_timeout = useRef(null);
 
   const theme = useTheme();
 
-  const navigation = useNavigation();
-
   const { t } = useTranslation();
 
-  // Función para recuperar la información del usuario de AsyncStorage
-  const fetchUserInfo = async () => {
-    const storedUserInfo = await AsyncStorage.getItem("userInfo");
-    if (storedUserInfo) {
-      const parsedInfo = JSON.parse(storedUserInfo);
-      setUserId(parsedInfo.id);
-    }
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchUserInfo();
-    };
-
-    const fetchPicture = async () => {
-      const picUrl = await getRandomPicture("community_picture");
-      if (picUrl) {
-        // Asegurarse de que 'picUrl' está disponible
-        setDisplayedImageUrl(Config.API_URL + picUrl);
+    const fetchUserInfo = async () => {
+      const storedUserInfo = await AsyncStorage.getItem("userInfo");
+      if (storedUserInfo) {
+        const parsedInfo = JSON.parse(storedUserInfo);
+        setUserId(parsedInfo.id);
       }
     };
-
-    fetchData();
+  
+    const fetchPicture = async () => {
+      if (!displayedImageUrl) {
+        const picUrl = await getRandomPicture("community_picture");
+        if (picUrl) {
+          setDisplayedImageUrl(Config.API_URL + picUrl);
+        }
+      }
+    };
+  
+    fetchUserInfo();
     fetchPicture();
-  }, []);
+  }, [displayedImageUrl]); 
 
   const handleCommunityNameChange = (text) => {
     setName(text);
@@ -87,30 +74,21 @@ function CreateCommunitiesScreen() {
     }
   };
 
-  const handleSubmit = async () => {
-    try {
-      const community_id = await createCommunity(
-        name,
-        description,
-        displayedImageUrl.replace(Config.API_URL, "")
-      );
-      await giveUserCommunityRole(userId, community_id, "community_founder");
-      await createCommunityCategory(
-        community_id,
-        t("general"),
-        t("general_category_description")
-      );
-      if (selectedImageUri) {
-        const imageUrl = await uploadPictureToServer(
-          `cp_${Date.now()}`,
-          `communities/${community_id}`,
-          selectedImageUri
-        );
-        await changeCommunityPicture(community_id, imageUrl);
-      }
-      navigation.navigate(t("communities_list"));
-    } catch (error) {
-      console.error("Error:", error.message);
+  const handleSubmit = () => {
+    const formData = {
+      user_id: userId,
+      name,
+      description,
+      displayedImageUrl,
+      selectedImageUri,
+    };
+
+    if (community) {
+      formData.community_id = community.id;
+    }
+
+    if (onSubmit) {
+      onSubmit(formData);
     }
   };
 
@@ -158,4 +136,4 @@ function CreateCommunitiesScreen() {
   );
 }
 
-export default CreateCommunitiesScreen;
+export default CommunityForm;

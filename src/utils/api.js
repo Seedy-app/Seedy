@@ -349,7 +349,7 @@ export const createCommunityCategory = async (
       return { error: i18n.t("not_logged_in_error") };
     }
     const response = await fetch(
-      `${Config.API_URL}/communities/${community_id}/create-category`,
+      `${Config.API_URL}/communities/${community_id}/category/create`,
       {
         method: "POST",
         headers: {

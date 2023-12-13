@@ -5,8 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { useFocusEffect } from "@react-navigation/native";
-import PostCard from "../components/PostCard";
-import Pagination from "../components/Pagination";
+import PostCard from "../../CustomComponents/PostCard";
+import Pagination from "../../CustomComponents/Pagination";
 import { getUserCommunityRole, getCommunityPosts } from "../../../utils/api";
 import { HeaderBackButton } from "@react-navigation/elements";
 

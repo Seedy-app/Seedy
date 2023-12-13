@@ -4,10 +4,10 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { View, FlatList, RefreshControl, Image, Text } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { useTranslation } from "react-i18next";
-import styles from "./CommunitiesStyles";
-import Config from "../../config/Config";
+import styles from "../CommunitiesStyles";
+import Config from "../../../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { capitalizeFirstLetter } from "../../utils/device";
+import { capitalizeFirstLetter } from "../../../utils/device";
 
 function CommunitiesScreen() {
   // Usamos el hook de navegación

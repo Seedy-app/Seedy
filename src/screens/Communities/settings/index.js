@@ -9,11 +9,11 @@ import {
   TextInput,
   useTheme,
 } from "react-native-paper";
-import styles from "./CommunitiesStyles";
+import styles from "../CommunitiesStyles";
 import { useTranslation } from "react-i18next";
-import { capitalizeFirstLetter, isFounder } from "../../utils/device";
+import { capitalizeFirstLetter, isFounder } from "../../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Config from "../../config/Config";
+import Config from "../../../config/Config";
 
 const CommunitySettingsScreen = () => {
   const route = useRoute();
