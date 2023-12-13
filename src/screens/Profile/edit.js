@@ -9,7 +9,7 @@ import {
 } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./ProfileStyles";
-import CustomInput from "../CustomInput";
+import CustomInput from "../CustomComponents/CustomInput";
 import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
 import { uploadPictureToServer } from "../../utils/api";

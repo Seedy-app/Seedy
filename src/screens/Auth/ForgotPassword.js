@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Text, Button } from "react-native-paper";
 import { useTranslation } from "react-i18next";
-import CustomInput from "../CustomInput";
+import CustomInput from "../CustomComponents/CustomInput";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
 

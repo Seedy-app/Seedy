@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./CommunitiesStyles";
+import styles from "../CommunitiesStyles";
 import {
   View,
   Text,
@@ -17,15 +17,15 @@ import {
   Paragraph,
   Button,
 } from "react-native-paper";
-import { capitalizeFirstLetter, isModerator } from "../../utils/device";
-import { migratePostsToCategory, deleteCategory } from "../../utils/api";
-import FontSizes from "../../config/FontSizes";
+import { capitalizeFirstLetter, isModerator } from "../../../utils/device";
+import { migratePostsToCategory, deleteCategory } from "../../../utils/api";
+import FontSizes from "../../../config/FontSizes";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import PostCard from "./components/PostCard";
-import CategoryCard from "./components/CategoryCard";
-import Pagination from "./components/Pagination";
-import CustomInput from "../CustomInput";
+import PostCard from "../../CustomComponents/PostCard";
+import CategoryCard from "../../CustomComponents/CategoryCard";
+import Pagination from "../../CustomComponents/Pagination";
+import CustomInput from "../../CustomComponents/CustomInput";
 
 const PostsTab = ({
   userRole,

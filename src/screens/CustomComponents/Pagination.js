@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../CommunitiesStyles";
+import styles from "../../config/CommonStyles";
 import { View, Text } from "react-native";
 import { IconButton } from "react-native-paper";
 

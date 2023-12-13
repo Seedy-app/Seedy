@@ -3,13 +3,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, View } from "react-native";
 import { Text, Button } from "react-native-paper";
-import CustomInput from "../CustomInput";
+import CustomInput from "../../CustomComponents/CustomInput";
 import { useTranslation } from "react-i18next";
-import styles from "./CommunitiesStyles";
-import Config from "../../config/Config";
-import { selectImageFromGallery } from "../../utils/device";
+import styles from "../CommunitiesStyles";
+import Config from "../../../config/Config";
+import { selectImageFromGallery } from "../../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import loadingImage from "../../assets/images/loading.gif";
+import loadingImage from "../../../assets/images/loading.gif";
 import { useTheme } from "react-native-paper";
 
 import {
@@ -20,7 +20,7 @@ import {
   uploadPictureToServer,
   giveUserCommunityRole,
   createCommunityCategory,
-} from "../../utils/api";
+} from "../../../utils/api";
 
 function CreateCommunitiesScreen() {
   const [selectedImageUri, setSelectedImageUri] = useState(null);

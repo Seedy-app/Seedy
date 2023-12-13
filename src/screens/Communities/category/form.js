@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
-import CustomInput from "../../CustomInput";
+import CustomInput from "../../CustomComponents/CustomInput";
 import styles from "../CommunitiesStyles";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";

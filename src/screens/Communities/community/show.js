@@ -17,20 +17,20 @@ import {
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import styles from "./CommunitiesStyles";
-import Config from "../../config/Config";
+import styles from "../CommunitiesStyles";
+import Config from "../../../config/Config";
 import PostsTab from "./postsTab";
 import MembersTab from "./membersTab";
 import ChatTab from "./chatTab";
 import InfoTab from "./infoTab";
-import loadingImage from "../../assets/images/loading.gif";
+import loadingImage from "../../../assets/images/loading.gif";
 import {
   giveUserCommunityRole,
   getCommunityCategories,
   getUserCommunityRole,
   getCommunityPosts,
-} from "../../utils/api";
-import { capitalizeFirstLetter, isModerator } from "../../utils/device";
+} from "../../../utils/api";
+import { capitalizeFirstLetter, isModerator } from "../../../utils/device";
 
 const CommunityScreen = () => {
   const [userInfo, setUserInfo] = useState({});

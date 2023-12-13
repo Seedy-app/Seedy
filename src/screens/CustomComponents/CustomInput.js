@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { TextInput } from "react-native-paper";
-import styles from "../config/CommonStyles";
+import styles from "../../config/CommonStyles";
 
 const CustomInput = ({
   label,

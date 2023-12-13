@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Image, Text } from "react-native";
 import { Card, Paragraph, useTheme } from "react-native-paper";
-import styles from "../CommunitiesStyles";
-import Config from "../../../config/Config";
-import Colors from "../../../config/Colors";
-import FontSizes from "../../../config/FontSizes";
-import { capitalizeFirstLetter } from "../../../utils/device";
+import styles from "../../config/CommonStyles";
+import Config from "../../config/Config";
+import Colors from "../../config/Colors";
+import FontSizes from "../../config/FontSizes";
+import { capitalizeFirstLetter } from "../../utils/device";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 

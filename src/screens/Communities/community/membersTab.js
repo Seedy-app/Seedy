@@ -1,9 +1,9 @@
 import React from "react";
 import { View, FlatList, Text, Image, Dimensions } from "react-native";
 import { Card, Avatar } from "react-native-paper";
-import Config from "../../config/Config";
-import styles from "./CommunitiesStyles";
-import Colors from "../../config/Colors";
+import Config from "../../../config/Config";
+import styles from "../CommunitiesStyles";
+import Colors from "../../../config/Colors";
 
 // Componente para representar cada miembro en la lista
 const MemberCard = ({ member }) => (

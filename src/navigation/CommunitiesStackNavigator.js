@@ -1,15 +1,15 @@
 // CommunitiesStackNavigator.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import CommunitiesScreen from "../screens/Communities/list";
-import CommunityScreen from "../screens/Communities/show";
-import CreateCommunityScreen from "../screens/Communities/create";
+import CommunitiesScreen from "../screens/Communities/community/index";
+import CommunityScreen from "../screens/Communities/community/show";
+import CreateCommunityScreen from "../screens/Communities/community/create";
 import CreatePostScreen from "../screens/Communities/post/create";
 import CreateCategoryScreen from "../screens/Communities/category/create";
 import EditCategoryScreen from "../screens/Communities/category/edit";
-import CommunitySettingsScreen from "../screens/Communities/settings";
+import CommunitySettingsScreen from "../screens/Communities/settings/index";
 import ViewPostScreen from "../screens/Communities/post/show";
-import ListPostsScreen from "../screens/Communities/post/list";
+import ListPostsScreen from "../screens/Communities/post/index";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { IconButton, useTheme } from "react-native-paper";
