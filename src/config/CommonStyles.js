@@ -123,7 +123,7 @@ const commonStyles = StyleSheet.create({
     borderColor: "black",
   },
   smallProfilePic: {
-    borderRadius: screenScale * 5,
+    borderRadius: screenScale * 6,
     marginRight: "3%",
     width: screenScale * 11,
     height: screenScale * 11,
@@ -215,6 +215,7 @@ const commonStyles = StyleSheet.create({
     padding: "1%",
     borderBottomWidth: 1,
     borderColor: "grey",
+    flexDirection:"row",
   },
 });
 

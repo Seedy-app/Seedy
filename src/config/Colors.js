@@ -6,10 +6,10 @@ const Colors = {
     black: "black",
     error: "red",
     shadow: "black",
-    sysAdmin: "green",
+    system_admin: "goldenrod",
     community_founder: "darkviolet",
     community_moderator: "midnightblue",
-    community_member: "goldenrod",
+    community_member: "#4CAF50",
 };
 
 export default Colors;

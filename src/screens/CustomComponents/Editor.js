@@ -1,4 +1,4 @@
-import React, { useState, forwardRef  } from "react";
+import React, { useState, forwardRef } from "react";
 import {
   RichEditor,
   RichToolbar,
@@ -56,11 +56,21 @@ const Editor = forwardRef(({ toolbarActions, user_id, type }, ref) => {
         onInsertLink={handleInsertLink}
       />
       <RichEditor
-        containerStyle={{...styles.editorContainer, maxHeight: type === "post" ? Dimensions.get("window").height * 0.4 : Dimensions.get("window").height * 0.15}}
+        androidLayerType="software"
+        containerStyle={{
+          ...styles.editorContainer,
+          maxHeight:
+            type === "post"
+              ? Dimensions.get("window").height * 0.4
+              : Dimensions.get("window").height * 0.15,
+        }}
         ref={ref}
         placeholder={t("start_writing_message")}
-        initialHeight={type === "post" ? Dimensions.get("window").height * 0.4 : Dimensions.get("window").height * 0.15}
-        
+        initialHeight={
+          type === "post"
+            ? Dimensions.get("window").height * 0.4
+            : Dimensions.get("window").height * 0.15
+        }
       />
       <Portal>
         <Modal

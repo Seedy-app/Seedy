@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
-import { View, ScrollView, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  Dimensions,
+} from "react-native";
 import { Card, Button } from "react-native-paper";
-import { useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import RenderHtml from "react-native-render-html";
@@ -11,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { actions } from "react-native-pell-rich-editor";
 import Editor from "../../CustomComponents/Editor";
 import { createComment } from "../../../utils/api";
+import Comment from "../../CustomComponents/Comment";
 
 const ViewPostScreen = ({ route }) => {
   const { post_id, community_id } = route.params;
@@ -20,8 +26,8 @@ const ViewPostScreen = ({ route }) => {
   const [commentsCount, setCommentsCount] = useState([]);
   const richText = useRef();
   const navigation = useNavigation();
-  const { t } = useTranslation();
   const { width } = useWindowDimensions();
+  const { t } = useTranslation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -69,7 +75,7 @@ const ViewPostScreen = ({ route }) => {
     };
     fetchUserInfo();
   }, []);
-  
+
   const fetchComments = async () => {
     const token = await AsyncStorage.getItem("userToken");
 
@@ -88,6 +94,7 @@ const ViewPostScreen = ({ route }) => {
     );
 
     const data = await response.json();
+
     setComments(data.rows);
     setCommentsCount(data.count);
   };
@@ -107,7 +114,7 @@ const ViewPostScreen = ({ route }) => {
   };
 
   return (
-    <ScrollView style={[styles.container]}>
+    <ScrollView>
       {/* Publicación */}
       <Card>
         <Card.Content>
@@ -126,13 +133,7 @@ const ViewPostScreen = ({ route }) => {
         }}
       >
         {comments.map((comment, index) => (
-          <View key={index} style={styles.commentView}>
-            <RenderHtml
-              contentWidth={width}
-              source={{ html: comment.content }}
-            />
-          </View>
-        ))}
+          <Comment comment={comment} index={index}/>        ))}
         <View style={{ paddingTop: "1%" }}>
           <Editor
             toolbarActions={[
@@ -151,7 +152,10 @@ const ViewPostScreen = ({ route }) => {
           />
           <Button
             mode="contained"
-            style={styles.button}
+            style={{
+              ...styles.button,
+              marginBottom: Dimensions.get("window").scale * 3,
+            }}
             onPress={handleCommentSubmit}
           >
             <Text style={styles.buttonText}>{t("send_comment")}</Text>
