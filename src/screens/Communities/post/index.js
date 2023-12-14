@@ -113,7 +113,7 @@ const ListPostsScreen = ({ route, navigation }) => {
       <FlatList
         scrollEnabled={false}
         data={posts}
-        renderItem={({ item }) => <PostCard post={item} />}
+        renderItem={({ item }) => <PostCard post={item} community_id={community.id} />}
         keyExtractor={(item) => String(item.id)}
         ListFooterComponent={
           <Pagination

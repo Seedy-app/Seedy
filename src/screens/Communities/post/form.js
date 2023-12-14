@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   ScrollView,
@@ -16,8 +16,8 @@ import styles from "../CommunitiesStyles";
 
 const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
   const { t } = useTranslation();
+  const richText = useRef();
   const [title, setTitle] = useState(post.title || "");
-  const [body, setBody] = useState(post.body || "");
   const [category, setCategory] = useState(post.category || null);
   const [modalVisible, setModalVisible] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -48,7 +48,9 @@ const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
     setFilteredCategories(updatedList);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    let body = await richText.current?.getContentHtml();
+
     const formData = {
       title,
       body,
@@ -89,9 +91,9 @@ const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
               actions.insertLink,
               // "insertPlant",
             ]}
-            onTextChange={setBody}
             user_id={user_id}
             type="post"
+            ref={richText}
           />
           <View>
             <Button

@@ -211,6 +211,11 @@ const commonStyles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 10,
   },
+  commentView: {
+    padding: "1%",
+    borderBottomWidth: 1,
+    borderColor: "grey",
+  },
 });
 
 export default commonStyles;

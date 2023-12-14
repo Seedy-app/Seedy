@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, forwardRef  } from "react";
 import {
   RichEditor,
   RichToolbar,
@@ -16,9 +16,8 @@ import { Dimensions } from "react-native";
 import CustomInput from "./CustomInput";
 import Config from "../../config/Config";
 
-const Editor = ({ toolbarActions, onTextChange, user_id, type }) => {
+const Editor = forwardRef(({ toolbarActions, user_id, type }, ref) => {
   const { t } = useTranslation();
-  const RichText = useRef();
   const [linkModalVisible, setLinkModalVisible] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
 
@@ -30,7 +29,7 @@ const Editor = ({ toolbarActions, onTextChange, user_id, type }) => {
       image
     );
     if (imageUrl) {
-      RichText.current?.insertImage(Config.API_URL + imageUrl);
+      ref.current?.insertImage(Config.API_URL + imageUrl);
     }
   };
 
@@ -38,17 +37,11 @@ const Editor = ({ toolbarActions, onTextChange, user_id, type }) => {
     setLinkModalVisible(true);
   };
 
-  const handleChangeText = (text) => {
-    if (onTextChange) {
-      onTextChange(text);
-    }
-  };
-
   return (
     <>
       <RichToolbar
         style={styles.toolbar}
-        editor={RichText}
+        editor={ref}
         actions={toolbarActions}
         iconMap={{
           heading1: require("../../assets/images/icons/title.png"),
@@ -64,9 +57,8 @@ const Editor = ({ toolbarActions, onTextChange, user_id, type }) => {
       />
       <RichEditor
         containerStyle={{...styles.editorContainer, maxHeight: type === "post" ? Dimensions.get("window").height * 0.4 : Dimensions.get("window").height * 0.15}}
-        ref={RichText}
+        ref={ref}
         placeholder={t("start_writing_message")}
-        onChange={(text) => handleChangeText(text)}
         initialHeight={type === "post" ? Dimensions.get("window").height * 0.4 : Dimensions.get("window").height * 0.15}
         
       />
@@ -84,7 +76,7 @@ const Editor = ({ toolbarActions, onTextChange, user_id, type }) => {
           <Button
             mode="contained"
             onPress={() => {
-              RichText.current?.insertLink(linkUrl, linkUrl);
+              ref.current?.insertLink(linkUrl, linkUrl);
               setLinkUrl("");
               setLinkModalVisible(false);
             }}
@@ -95,6 +87,6 @@ const Editor = ({ toolbarActions, onTextChange, user_id, type }) => {
       </Portal>
     </>
   );
-};
+});
 
 export default Editor;

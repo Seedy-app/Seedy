@@ -11,17 +11,6 @@ import PostForm from "./form";
 const CreatePostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const { communityId } = route.params;
-  const [userInfo, setUserInfo] = useState({});
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const storedUserInfo = await AsyncStorage.getItem("userInfo");
-      if (storedUserInfo) {
-        setUserInfo(JSON.parse(storedUserInfo));
-      }
-    };
-    fetchUserInfo();
-  }, []);
 
   const handleSubmit = async (formData) => {
     try {
