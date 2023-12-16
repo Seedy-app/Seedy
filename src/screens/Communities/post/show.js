@@ -5,8 +5,9 @@ import {
   Text,
   useWindowDimensions,
   Dimensions,
+  Image,
 } from "react-native";
-import { Card, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import RenderHtml from "react-native-render-html";
@@ -17,6 +18,7 @@ import { actions } from "react-native-pell-rich-editor";
 import Editor from "../../CustomComponents/Editor";
 import { createComment } from "../../../utils/api";
 import Comment from "../../CustomComponents/Comment";
+import { capitalizeFirstLetter } from "../../../utils/device";
 
 const ViewPostScreen = ({ route }) => {
   const { post_id, community_id } = route.params;
@@ -94,7 +96,6 @@ const ViewPostScreen = ({ route }) => {
     );
 
     const data = await response.json();
-
     setComments(data.rows);
     setCommentsCount(data.count);
   };
@@ -116,24 +117,56 @@ const ViewPostScreen = ({ route }) => {
   return (
     <ScrollView>
       {/* Publicación */}
-      <Card>
-        <Card.Content>
+      <View
+        style={{
+          padding: "3%",
+          borderBottomColor: "grey",
+          borderBottomWidth: 1,
+          flexDirection: "row",
+        }}
+      >
+        <View style={{flexDirection: "row", alignItems:"center"}}>
           {post && (
-            <RenderHtml contentWidth={width} source={{ html: post.content }} />
+            <Image
+              style={styles.smallProfilePic}
+              source={{ uri: `${Config.API_URL}${post.user.picture}` }}
+            />
           )}
-        </Card.Content>
-      </Card>
+          <View><Text>{post.user.username}</Text></View>
+        </View>
+        <View></View>
+      </View>
+      <View style={{ padding: "3%" }}>
+        {post && (
+          <RenderHtml contentWidth={width} source={{ html: post.content }} />
+        )}
+      </View>
+      {/* Contaador de comentarios */}
+      <View
+        style={{
+          borderColor: "black",
+          borderTopWidth: 1,
+          borderBottomWidth: 1,
+        }}
+      >
+        <Text style={{ fontWeight: "bold", margin: 5 }}>
+          {`${commentsCount} ${capitalizeFirstLetter(t("comments"))}`}
+        </Text>
+      </View>
       {/* Comentarios */}
       <View
         style={{
           paddingTop: "1%",
-          borderTopWidth: 1,
-          borderColor: "black",
-          borderBottomWidth: 1,
         }}
       >
         {comments.map((comment, index) => (
-          <Comment comment={comment} index={index}/>        ))}
+          <Comment
+            key={comment.id}
+            comment={comment}
+            index={index}
+            user_id={userId}
+          />
+        ))}
         <View style={{ paddingTop: "1%" }}>
           <Editor
             toolbarActions={[

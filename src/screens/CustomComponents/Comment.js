@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,11 +13,41 @@ import RenderHtml from "react-native-render-html";
 import Config from "../../config/Config";
 import styles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
+import { reactComment } from "../../utils/api";
 
-const Comment = ({ comment, index }) => {
+const Comment = ({ comment, index, user_id }) => {
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const theme = useTheme();
+  const [commentReactions, setCommentReactions] = useState(
+    comment.commentReactions
+  );
+
+  useEffect(() => {
+    setCommentReactions(comment.commentReactions);
+  }, [comment.commentReactions]);
+
+  const handleReactToComment = async (comment_id, type) => {
+    try {
+      react_response = await reactComment(comment_id, type);
+      if (react_response) {
+        let newReactions = [...commentReactions];
+        const reactionIndex = newReactions.findIndex(
+          (reaction) => reaction.user_id === user_id
+        );
+        if (reactionIndex !== -1) {
+          if (newReactions[reactionIndex].reaction_type === type) {
+            newReactions.splice(reactionIndex, 1);
+          } else {
+            newReactions[reactionIndex].reaction_type = type;
+          }
+        } else {
+          newReactions.push({ user_id, reaction_type: type });
+        }
+        setCommentReactions(newReactions);
+      }
+    } catch (error) {}
+  };
 
   return (
     <View key={index} style={styles.commentView}>
@@ -56,21 +86,55 @@ const Comment = ({ comment, index }) => {
             <IconButton
               icon="thumb-up"
               size={theme.fonts.default.fontSize}
-              onPress={() => console.log("Pressed like")}
+              iconColor={
+                commentReactions.some(
+                  (reaction) =>
+                    reaction.reaction_type === "like" &&
+                    reaction.user_id === user_id
+                )
+                  ? theme.colors.primary
+                  : theme.colors.secondary
+              }
+              onPress={async () =>
+                await handleReactToComment(comment.id, "like")
+              }
             />
-            <Text>{0}</Text>
+            <Text>
+              {
+                commentReactions.filter(
+                  (reaction) => reaction.reaction_type === "like"
+                ).length
+              }
+            </Text>
           </View>
           <View style={{ alignItems: "center" }}>
             <IconButton
               icon="thumb-down"
               size={theme.fonts.default.fontSize}
-              onPress={() => console.log("Pressed dislike")}
+              iconColor={
+                commentReactions.some(
+                  (reaction) =>
+                    reaction.reaction_type === "dislike" &&
+                    reaction.user_id === user_id
+                )
+                  ? theme.colors.danger
+                  : theme.colors.secondary
+              }
+              onPress={async () =>
+                await handleReactToComment(comment.id, "dislike")
+              }
             />
-            <Text>{0}</Text>
+            <Text>
+              {
+                commentReactions.filter(
+                  (reaction) => reaction.reaction_type === "dislike"
+                ).length
+              }
+            </Text>
           </View>
         </View>
       </View>
-      <View style={{ flex: 1 , padding: "1%"}}>
+      <View style={{ flex: 1, padding: "1%" }}>
         <View style={{ flex: 0.95 }}>
           <RenderHtml
             contentWidth={width}

@@ -11,6 +11,7 @@
   "category_deleted_error": "Ups, parece que hubo un problema al intentar eliminar la categoría. ¡Intenta podarla de nuevo más tarde! 🌿",
   "category_deleted_success": "¡Listo! La categoría ha sido eliminada, como una hoja que cae en otoño. 🍁",
   "category_name_already_exists_error": "El nombre de la categoría ya existe.",
+  "comments": "comentarios",
   "common_names": "nombres comunes",
   "communities": "Comunidades",
   "communities_list": "Listado de comunidades",
