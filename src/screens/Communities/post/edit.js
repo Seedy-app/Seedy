@@ -13,7 +13,6 @@ const EditPostScreen = ({ route, navigation }) => {
   const { user_id, community_id, post } = route.params;
   const handleSubmit = async (formData) => {
     try {
-      console.log(formData)
       const put_response = await editPost(
         formData.title,
         formData.body,
