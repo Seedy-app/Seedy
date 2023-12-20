@@ -123,7 +123,7 @@ const commonStyles = StyleSheet.create({
     borderColor: "black",
   },
   smallProfilePic: {
-    borderRadius: screenScale * 5,
+    borderRadius: screenScale * 6,
     marginRight: "3%",
     width: screenScale * 11,
     height: screenScale * 11,
@@ -199,6 +199,41 @@ const commonStyles = StyleSheet.create({
     margin: 5,
     padding: 5,
     fontWeight: "bold",
+  },
+  toolbar: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+    marginBottom: 5,
+  },
+  editorContainer: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+  },
+  commentView: {
+    padding: "1%",
+    borderBottomWidth: 1,
+    borderColor: "grey",
+    flexDirection: "row",
+    position: "relative",
+  },
+  commentInfoBox: {
+    alignItems: "center",
+    width: Dimensions.get("window").width * 0.2,
+    marginRight: "2%",
+    borderRightColor: "grey",
+    borderRightWidth: 1,
+  },
+  reactionBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  commentOptionsButton: {
+    position: "absolute",
+    right: 0,
+    zIndex: 1,
   },
 });
 

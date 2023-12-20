@@ -17,7 +17,6 @@ const ListPostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-  const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -60,7 +59,7 @@ const ListPostsScreen = ({ route, navigation }) => {
       if (userInfo && userInfo.id) {
         fetchPosts();
       }
-    }, [userInfo, refresh])
+    }, [userInfo])
   );
 
   useFocusEffect(
@@ -111,9 +110,10 @@ const ListPostsScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <FlatList
-        scrollEnabled={false}
         data={posts}
-        renderItem={({ item }) => <PostCard post={item} />}
+        renderItem={({ item }) => (
+          <PostCard post={item} community_id={community.id} user_role={userRole} />
+        )}
         keyExtractor={(item) => String(item.id)}
         ListFooterComponent={
           <Pagination

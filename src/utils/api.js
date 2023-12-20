@@ -794,3 +794,100 @@ export const getPlants = async () => {
     return { error: i18n.t("network_error"), associated: false };
   }
 };
+
+export const createComment = async (content, post_id) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/${post_id}/comments/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          content,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+export const reactComment = async (comment_id, button_pressed) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/comments/react`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          comment_id,
+          type: button_pressed,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+export const deleteComment = async (comment_id) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    if (!token) {
+      console.error(i18n.t("not_logged_in_error"));
+      return { error: i18n.t("not_logged_in_error") };
+    }
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/comments/${comment_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      console.error("Network response was not ok: " + response.statusText);
+      return false;
+    } else {
+      return true;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return false;
+  }
+};

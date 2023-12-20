@@ -73,24 +73,14 @@ const communitiesStyles = StyleSheet.create({
     fontSize: FontSize.regular,
   },
   communityPreview: {
-    borderWidth: 1,
-    borderColor: "black",
+    ...commonStyles.viewBorders,
+
   },
   communityPreviewCover: {
     marginVertical: "4%",
     marginHorizontal: "1%",
-    borderWidth: 1,
-    borderColor: "black",
-  },
-  toolbar: {
     ...commonStyles.viewBorders,
-    borderRadius: 10,
-    marginBottom: 5,
-  },
-  editorContainer: {
-    ...commonStyles.viewBorders,
-    borderRadius: 10,
-    maxHeight: screenHeight * 0.4,
+
   },
   selectCategoriesModalContainer: {
     ...commonStyles.modalContainer,

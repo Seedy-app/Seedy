@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from "../../utils/device";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, community_id, user_role }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -17,7 +17,7 @@ const PostCard = ({ post }) => {
   return (
     <Card
       style={{ ...styles.listCard }}
-      onPress={() => navigation.navigate(t("view_post"), { post_id: post.id })}
+      onPress={() => navigation.navigate(t("view_post"), { post_id: post.id, community_id: community_id, user_role: user_role })}
     >
       <Card.Content>
         <View style={{ flexDirection: "row" }}>
