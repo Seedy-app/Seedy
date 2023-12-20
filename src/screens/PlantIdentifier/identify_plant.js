@@ -15,13 +15,13 @@ function IdentifyPlantScreen({ route, navigation }) {
   const { t } = useTranslation();
   const theme = useTheme();
   const [resultNumber, setResultNumber] = useState(0);
-  const [plantId, setPlantId] = useState(null);
+  const [plant_id, serPlant_id] = useState(null);
   const [userHasPlant, setUserHasPlant] = useState(false);
 
   useEffect(() => {
     const updatePlantId = async () => {
       const newPlantId = await firstOrCreatePlant(results[resultNumber]);
-      setPlantId(newPlantId);
+      serPlant_id(newPlantId);
     };
 
     updatePlantId();
@@ -29,17 +29,17 @@ function IdentifyPlantScreen({ route, navigation }) {
 
   useEffect(() => {
     const checkIfUserHasPlant = async () => {
-      if (plantId) {
-        const hasPlant = await isPlantAssociatedWithMe(plantId);
+      if (plant_id) {
+        const hasPlant = await isPlantAssociatedWithMe(plant_id);
         setUserHasPlant(hasPlant);
       }
     };
 
     checkIfUserHasPlant();
-  }, [plantId]);
+  }, [plant_id]);
 
   const HandleAddToMyPlants = async () => {
-    associated_code = await associatePlantToUser(plantId);
+    associated_code = await associatePlantToUser(plant_id);
     switch (associated_code) {
       case 1:
         setUserHasPlant(true);

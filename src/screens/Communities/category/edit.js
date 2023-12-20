@@ -10,7 +10,7 @@ import {
 
 const EditCategoryScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const { communityId, category } = route.params;
+  const { community_id, category } = route.params;
 
   const handleSubmit = async (name, description) => {
     try {
@@ -35,7 +35,7 @@ const EditCategoryScreen = ({ route, navigation }) => {
     <View style={{ ...styles.container, justifyContent: "center" }}>
       <CategoryForm
         onSubmit={handleSubmit}
-        communityId={communityId}
+        community_id={community_id}
         category={category}
       />
     </View>

@@ -11,10 +11,10 @@ import Editor from "../../CustomComponents/Editor";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { actions } from "react-native-pell-rich-editor";
-import { getCommunityCategories } from "../../../utils/api";
+import { getCommunityCategories, getPostContentById } from "../../../utils/api";
 import styles from "../CommunitiesStyles";
 
-const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
+const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
   const { t } = useTranslation();
   const richText = useRef();
   const [title, setTitle] = useState(post.title || "");
@@ -33,7 +33,19 @@ const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
         console.error("Error fetching community categories:", error);
       }
     };
+    const fetchPostContent = async () => {
+      try {
+        if (post) {
+          let response = await getPostContentById(post.id);
+          richText.current?.setContentHTML(response.content);
+        }
+      } catch (error) {
+        console.error("Error fetching post content:", error);
+      }
+    };
+    fetchPostContent();
     fetchCommunityCategories();
+    
   }, []);
 
   const selectCategory = (category) => {
@@ -50,7 +62,6 @@ const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
 
   const handleSubmit = async () => {
     let body = await richText.current?.getContentHtml();
-
     const formData = {
       title,
       body,
@@ -76,6 +87,7 @@ const PostForm = ({ user_id, community_id, onSubmit, post = {} }) => {
           <View>
             <CustomInput
               label={capitalizeFirstLetter(t("title"))}
+              value={title}
               onChangeText={setTitle}
             />
           </View>

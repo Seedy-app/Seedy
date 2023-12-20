@@ -10,7 +10,7 @@ import PostForm from "./form";
 
 const CreatePostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const { communityId } = route.params;
+  const { community_id } = route.params;
 
   const handleSubmit = async (formData) => {
     try {
@@ -31,7 +31,7 @@ const CreatePostScreen = ({ route, navigation }) => {
     }
   };
 
-  return <PostForm community_id={communityId} onSubmit={handleSubmit} />;
+  return <PostForm community_id={community_id} onSubmit={handleSubmit} />;
 };
 
 export default CreatePostScreen;

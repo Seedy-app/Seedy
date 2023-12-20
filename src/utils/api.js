@@ -56,17 +56,12 @@ export const checkEmailAvailability = async (email, ignore_user_id = null) => {
 
 // Community
 
-export const changeCommunityPicture = async (communityId, picture) => {
+export const changeCommunityPicture = async (community_id, picture) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
-
     const response = await fetch(
-      `${Config.API_URL}/communities/${communityId}/change-image`,
+      `${Config.API_URL}/communities/${community_id}/change-image`,
       {
         method: "PUT",
         headers: {
@@ -94,10 +89,6 @@ export const createCommunity = async (name, description, picture) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(`${Config.API_URL}/communities/create`, {
       method: "POST",
       headers: {
@@ -127,10 +118,6 @@ export const getUserCommunityRole = async (user_id, community_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/user/${user_id}/role`,
       {
@@ -162,10 +149,6 @@ export const giveUserCommunityRole = async (
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/give-role-to-user`,
       {
@@ -200,10 +183,6 @@ export const checkCommunityNameAvailability = async (
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const requestBody = { name };
     if (ignore_community_id) {
       requestBody.ignore_community_id = ignore_community_id;
@@ -232,11 +211,6 @@ export const checkCommunityNameAvailability = async (
 
 export const uploadPictureToServer = async (filename, filepath, imageUri) => {
   const token = await AsyncStorage.getItem("userToken");
-
-  if (!token) {
-    console.error(i18n.t("not_logged_in_error"));
-    return { error: i18n.t("not_logged_in_error") };
-  }
 
   const folderName = filepath;
 
@@ -305,10 +279,6 @@ export const checkCategoryNameAvailability = async (
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const requestBody = { name };
     if (ignore_category_id) {
       requestBody.ignore_category_id = ignore_category_id;
@@ -344,10 +314,6 @@ export const createCommunityCategory = async (
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/category/create`,
       {
@@ -382,10 +348,6 @@ export const getCommunityCategories = async (
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/categories`,
       {
@@ -416,10 +378,6 @@ export const createPost = async (title, body, category_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/categories/${category_id}/posts/create`,
       {
@@ -446,6 +404,64 @@ export const createPost = async (title, body, category_id) => {
   }
 };
 
+export const editPost = async (title, content, category_id, post_id) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/${post_id}/edit`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          category_id,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+export const deletePost = async (post_id) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/${post_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      console.error("Network response was not ok: " + response.statusText);
+      return false;
+    } else {
+      return true;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return false;
+  }
+};
+
 export const getCommunityPosts = async (
   community_id,
   category_id = null,
@@ -454,10 +470,7 @@ export const getCommunityPosts = async (
 ) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
-    if (!token) {
-      console.error(t("not_logged_in_error"));
-      return { error: t("not_logged_in_error") };
-    }
+
     let requestBody = {
       limit,
       page,
@@ -499,10 +512,6 @@ export const createCategory = async (name, description, community_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/category/create`,
       {
@@ -537,10 +546,6 @@ export const migratePostsToCategory = async (
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/category/posts/migrate`,
       {
@@ -571,10 +576,6 @@ export const deleteCategory = async (category_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/category/${category_id}`,
       {
@@ -601,10 +602,6 @@ export const editCategory = async (name, description, category_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/category/${category_id}/edit`,
       {
@@ -636,10 +633,6 @@ export const identifyPlant = async (photo_url) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(`${Config.API_URL}/plant/identify`, {
       method: "POST",
       headers: {
@@ -667,10 +660,6 @@ export const firstOrCreatePlant = async (plant) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(`${Config.API_URL}/plant/firstOrCreate`, {
       method: "POST",
       headers: {
@@ -703,11 +692,6 @@ export const associatePlantToUser = async (plant_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
-
     const response = await fetch(`${Config.API_URL}/plant/associate`, {
       method: "POST",
       headers: {
@@ -733,11 +717,6 @@ export const associatePlantToUser = async (plant_id) => {
 export const isPlantAssociatedWithMe = async (plant_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
-
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
 
     const response = await fetch(
       `${Config.API_URL}/plant/${plant_id}/isAssociated`,
@@ -770,11 +749,6 @@ export const getPlants = async () => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
-
     const response = await fetch(`${Config.API_URL}/plant`, {
       method: "GET",
       headers: {
@@ -799,10 +773,6 @@ export const createComment = async (content, post_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/posts/${post_id}/comments/create`,
       {
@@ -832,10 +802,6 @@ export const reactComment = async (comment_id, button_pressed) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/posts/comments/react`,
       {
@@ -866,10 +832,6 @@ export const deleteComment = async (comment_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
 
-    if (!token) {
-      console.error(i18n.t("not_logged_in_error"));
-      return { error: i18n.t("not_logged_in_error") };
-    }
     const response = await fetch(
       `${Config.API_URL}/communities/posts/comments/${comment_id}`,
       {
@@ -889,5 +851,32 @@ export const deleteComment = async (comment_id) => {
   } catch (error) {
     console.error("Error:", error.message);
     return false;
+  }
+};
+
+export const getPostContentById = async (post_id) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/${post_id}/content`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      console.info(response);
+      return null;
+    } else {
+      const responseData = await response.json();
+      return responseData;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
   }
 };

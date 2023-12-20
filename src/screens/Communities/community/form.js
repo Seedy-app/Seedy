@@ -21,7 +21,7 @@ function CommunityForm({ onSubmit, community = {} }) {
   const [nameError, setNameError] = useState(null);
   const [name, setName] = useState(null);
   const [displayedImageUrl, setDisplayedImageUrl] = useState(community.picture || null);
-  const [userId, setUserId] = useState(null);
+  const [user_id, setUser_id] = useState(null);
 
   const n_timeout = useRef(null);
 
@@ -34,7 +34,7 @@ function CommunityForm({ onSubmit, community = {} }) {
       const storedUserInfo = await AsyncStorage.getItem("userInfo");
       if (storedUserInfo) {
         const parsedInfo = JSON.parse(storedUserInfo);
-        setUserId(parsedInfo.id);
+        setUser_id(parsedInfo.id);
       }
     };
   
@@ -76,7 +76,7 @@ function CommunityForm({ onSubmit, community = {} }) {
 
   const handleSubmit = () => {
     const formData = {
-      user_id: userId,
+      user_id: user_id,
       name,
       description,
       displayedImageUrl,

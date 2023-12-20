@@ -23,7 +23,7 @@ function EditProfileScreen() {
   const [picture, setPicture] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [userId, setUserId] = useState("");
+  const [user_id, setUser_id] = useState("");
   const [selectedImageUri, setSelectedImageUri] = useState(null);
   const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
 
@@ -37,7 +37,7 @@ function EditProfileScreen() {
       const parsedInfo = JSON.parse(storedUserInfo);
       setUsername(parsedInfo.username);
       setEmail(parsedInfo.email);
-      setUserId(parsedInfo.id);
+      setUser_id(parsedInfo.id);
       setPicture(parsedInfo.picture);
     }
   };
@@ -48,7 +48,7 @@ function EditProfileScreen() {
       username: username,
       email: email,
       picture: imageUrl,
-      id: userId,
+      id: user_id,
     };
     await AsyncStorage.setItem("userInfo", JSON.stringify(updatedInfo));
   };
@@ -81,7 +81,7 @@ function EditProfileScreen() {
     setUsername(text);
     clearTimeout(u_timeout.current);
     u_timeout.current = setTimeout(async () => {
-      const result = await checkUsernameAvailability(text, userId);
+      const result = await checkUsernameAvailability(text, user_id);
       if (result.error || result.error == "") {
         setUsernameError(result.error);
       }
@@ -111,11 +111,11 @@ function EditProfileScreen() {
       const imageUrl = selectedImageUri
         ? await uploadPictureToServer(
             `pp_${Date.now()}`,
-            `users/${userId}`,
+            `users/${user_id}`,
             selectedImageUri
           )
         : picture;
-      const response = await fetch(`${Config.API_URL}/user/${userId}/edit`, {
+      const response = await fetch(`${Config.API_URL}/user/${user_id}/edit`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
