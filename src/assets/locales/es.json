@@ -33,6 +33,7 @@
   "create_post": "Crear publicación",
   "decline": "declinar",
   "delete_category": "eliminar categoría",
+  "delete_comment": "eliminar comentario",
   "delete_community": "Eliminar comunidad",
   "delete_community_instructions": "Para confirmar la eliminación de la comunidad, escriba su nombre",
   "description": "Descripción",

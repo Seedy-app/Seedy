@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Portal, Modal } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import RenderHtml from "react-native-render-html";
@@ -16,20 +16,26 @@ import styles from "../CommunitiesStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { actions } from "react-native-pell-rich-editor";
 import Editor from "../../CustomComponents/Editor";
-import { createComment } from "../../../utils/api";
+import { createComment, deleteComment } from "../../../utils/api";
 import Comment from "../../CustomComponents/Comment";
 import { capitalizeFirstLetter } from "../../../utils/device";
+import { useTheme } from "react-native-paper";
+import Colors from "../../../config/Colors";
+import { isModerator } from "../../../utils/device";
 
 const ViewPostScreen = ({ route }) => {
-  const { post_id, community_id } = route.params;
+  const { post_id, community_id, user_role } = route.params;
   const [post, setPost] = useState(null);
   const [userId, setUserId] = useState(null);
   const [comments, setComments] = useState([]);
+  const [selectedComment, setSelectedComment] = useState([]);
   const [commentsCount, setCommentsCount] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const richText = useRef();
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,7 +52,7 @@ const ViewPostScreen = ({ route }) => {
           console.error(t("not_logged_in_error"));
         }
         const response = await fetch(
-          `${Config.API_URL}/communities/posts/${post_id}`,
+          `${Config.API_URL}/communities/${community_id}/posts/${post_id}`,
           {
             method: "GET",
             headers: {
@@ -100,6 +106,23 @@ const ViewPostScreen = ({ route }) => {
     setCommentsCount(data.count);
   };
 
+  const handleOptionsClick = async (comment) => {
+    setSelectedComment(comment);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleDeleteComment = async () => {
+    let could_delete = await deleteComment(selectedComment.id);
+    if (could_delete) {
+      fetchComments();
+      closeModal();
+    }
+  };
+
   const handleCommentSubmit = async () => {
     let content = await richText.current?.getContentHtml();
     const comment_response = await createComment(content, post_id);
@@ -116,32 +139,63 @@ const ViewPostScreen = ({ route }) => {
 
   return (
     <ScrollView>
-      {/* Publicación */}
-      <View
-        style={{
-          padding: "3%",
-          borderBottomColor: "grey",
-          borderBottomWidth: 1,
-          flexDirection: "row",
-        }}
-      >
-        <View style={{flexDirection: "row", alignItems:"center"}}>
-          {post && (
+      {/* Información de publicación */}
+
+      {post && (
+        <View
+          style={{
+            flex: 1,
+            padding: "3%",
+            borderBottomColor: "grey",
+            borderBottomWidth: 1,
+            flexDirection: "row",
+          }}
+        >
+          <View
+            style={{ flex: 0.5, flexDirection: "row", alignItems: "center" }}
+          >
             <Image
               style={styles.smallProfilePic}
               source={{ uri: `${Config.API_URL}${post.user.picture}` }}
             />
-          )}
-          <View><Text>{post.user.username}</Text></View>
+            <View>
+              <Text
+                style={{
+                  color: Colors[post.user.userCommunities[0].role.name],
+                  fontWeight: "bold",
+                }}
+              >
+                {post.user.username}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 0.5,
+              alignItems: "flex-end",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ color: theme.colors.secondary }}>
+              {new Date(post.createdAt).toLocaleString(t.language, {
+                year: "2-digit",
+                month: "2-digit",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </Text>
+          </View>
         </View>
-        <View></View>
-      </View>
+      )}
+      {/* Publicación */}
+
       <View style={{ padding: "3%" }}>
         {post && (
           <RenderHtml contentWidth={width} source={{ html: post.content }} />
         )}
       </View>
-      {/* Contaador de comentarios */}
+      {/* Contador de comentarios */}
       <View
         style={{
           borderColor: "black",
@@ -165,6 +219,7 @@ const ViewPostScreen = ({ route }) => {
             comment={comment}
             index={index}
             user_id={userId}
+            onClickOptions={handleOptionsClick}
           />
         ))}
         <View style={{ paddingTop: "1%" }}>
@@ -195,6 +250,35 @@ const ViewPostScreen = ({ route }) => {
           </Button>
         </View>
       </View>
+      <Portal>
+        <Modal
+          visible={modalVisible}
+          onDismiss={closeModal}
+          contentContainerStyle={styles.modalContainer}
+        >
+          <View style={styles.viewBorders}>
+            <Comment
+              key={selectedComment.id}
+              comment={selectedComment}
+              user_id={userId}
+            />
+          </View>
+          <View style={{ margin: "5%" }}>
+            {selectedComment &&
+              selectedComment.user &&
+              (userId == selectedComment.user.id || isModerator(user_role)) && (
+                <Button
+                  mode="contained"
+                  buttonColor={theme.colors.danger}
+                  style={styles.button}
+                  onPress={handleDeleteComment}
+                >
+                  {capitalizeFirstLetter(t("delete_comment"))}
+                </Button>
+              )}
+          </View>
+        </Modal>
+      </Portal>
     </ScrollView>
   );
 };

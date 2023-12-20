@@ -215,7 +215,25 @@ const commonStyles = StyleSheet.create({
     padding: "1%",
     borderBottomWidth: 1,
     borderColor: "grey",
-    flexDirection:"row",
+    flexDirection: "row",
+    position: "relative",
+  },
+  commentInfoBox: {
+    alignItems: "center",
+    width: Dimensions.get("window").width * 0.2,
+    marginRight: "2%",
+    borderRightColor: "grey",
+    borderRightWidth: 1,
+  },
+  reactionBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  commentOptionsButton: {
+    position: "absolute",
+    right: 0,
+    zIndex: 1,
   },
 });
 

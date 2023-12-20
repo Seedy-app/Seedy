@@ -33,6 +33,7 @@
   "create_post": "Create post",
   "decline": "decline",
   "delete_category": "delete category",
+  "delete_comment": "delete comment",
   "delete_community": "Delete community",
   "delete_community_instructions": "To confirm deletion from the community, write its name",
   "description": "Description",

@@ -7,15 +7,14 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { IconButton } from "react-native-paper";
-import { useTheme } from "react-native-paper";
+import { IconButton, useTheme } from "react-native-paper";
 import RenderHtml from "react-native-render-html";
 import Config from "../../config/Config";
 import styles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
 import { reactComment } from "../../utils/api";
 
-const Comment = ({ comment, index, user_id }) => {
+const Comment = ({ comment, index, user_id, onClickOptions }) => {
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const theme = useTheme();
@@ -51,15 +50,7 @@ const Comment = ({ comment, index, user_id }) => {
 
   return (
     <View key={index} style={styles.commentView}>
-      <View
-        style={{
-          alignItems: "center",
-          width: Dimensions.get("window").width * 0.2,
-          marginRight: "2%",
-          borderRightColor: "grey",
-          borderRightWidth: 1,
-        }}
-      >
+      <View style={styles.commentInfoBox}>
         <Image
           source={{ uri: Config.API_URL + comment.user.picture }}
           style={[styles.smallProfilePic]}
@@ -75,13 +66,7 @@ const Comment = ({ comment, index, user_id }) => {
           {comment.user.username}
         </Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-        >
+        <View style={styles.reactionBox}>
           <View style={{ alignItems: "center" }}>
             <IconButton
               icon="thumb-up"
@@ -135,7 +120,16 @@ const Comment = ({ comment, index, user_id }) => {
         </View>
       </View>
       <View style={{ flex: 1, padding: "1%" }}>
-        <View style={{ flex: 0.95 }}>
+        {onClickOptions && (
+        <View style={{ flex: 0.05 }}>
+          <IconButton
+            icon="dots-vertical"
+            size={20}
+            onPress={() => onClickOptions(comment)}
+            style={styles.commentOptionsButton}
+          />
+        </View>)}
+        <View style={{ flex: 0.9, width: Dimensions.get("window").width * 0.65 }}>
           <RenderHtml
             contentWidth={width}
             source={{ html: comment.content }}

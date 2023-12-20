@@ -154,7 +154,7 @@ const PostsTab = ({
         }
         scrollEnabled={false}
         data={communityPosts}
-        renderItem={({ item }) => <PostCard post={item} community_id={community.id} />}
+        renderItem={({ item }) => <PostCard post={item} community_id={community.id} user_role={userRole} />}
         keyExtractor={(item) => String(item.id)}
         ListFooterComponent={
           <Pagination
