@@ -211,6 +211,7 @@ const CommunityScreen = () => {
   const renderScene = SceneMap({
     posts: () => (
       <PostsTab
+        user_id={userInfo.id}
         userRole={userRole}
         communityCategories={communityCategoriesData}
         communityPosts={communityPostsData}

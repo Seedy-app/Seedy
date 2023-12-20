@@ -18,7 +18,7 @@ import {
   Button,
 } from "react-native-paper";
 import { capitalizeFirstLetter, isModerator } from "../../../utils/device";
-import { migratePostsToCategory, deleteCategory } from "../../../utils/api";
+import { migratePostsToCategory, deleteCategory, deletePost } from "../../../utils/api";
 import FontSizes from "../../../config/FontSizes";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -28,6 +28,7 @@ import Pagination from "../../CustomComponents/Pagination";
 import CustomInput from "../../CustomComponents/CustomInput";
 
 const PostsTab = ({
+  user_id,
   userRole,
   communityCategories,
   communityPosts,
@@ -46,15 +47,19 @@ const PostsTab = ({
   const navigation = useNavigation();
   const marginRightPlusIcon = Dimensions.get("window").scale * 4;
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [postModalVisible, setPostModalVisible] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState(allCategories);
   const [focusedCategory, setFocusedCategory] = useState(null);
+  const [focusedPost, setFocusedPost] = useState(null);
   const [categoryToMigrate, setCategoryToMigrate] = useState(null);
   const [
     categoryDeleteConfirmationVisible,
     setCategoryDeleteConfirmationVisible,
   ] = useState(false);
   const [postsMigrationModalVisible, setPostsMigrationModalVisible] =
+    useState(false);
+  const [postsDeleteConfirmationVisible, setPostDeleteConfirmationVisible] =
     useState(false);
 
   const handleSearch = (query) => {
@@ -69,6 +74,11 @@ const PostsTab = ({
   const handleOnLongPressCategoryCard = (category) => {
     setFocusedCategory(category);
     setCategoryModalVisible(true);
+  };
+
+  const handleOnLongPressPostCard = (post) => {
+    setFocusedPost(post);
+    setPostModalVisible(true);
   };
 
   return (
@@ -98,7 +108,7 @@ const PostsTab = ({
                 userRole && isModerator(userRole)
                   ? () => {
                       navigation.navigate(t("create_category"), {
-                        communityId: community.id,
+                        community_id: community.id,
                       });
                     }
                   : null
@@ -146,7 +156,7 @@ const PostsTab = ({
               style={{ marginRight: marginRightPlusIcon }}
               onPress={() =>
                 navigation.navigate(t("create_post"), {
-                  communityId: community.id,
+                  community_id: community.id,
                 })
               }
             />
@@ -154,7 +164,14 @@ const PostsTab = ({
         }
         scrollEnabled={false}
         data={communityPosts}
-        renderItem={({ item }) => <PostCard post={item} community_id={community.id} user_role={userRole} />}
+        renderItem={({ item }) => (
+          <PostCard
+            post={item}
+            community_id={community.id}
+            userRole
+            onLongPressAction={handleOnLongPressPostCard}
+          />
+        )}
         keyExtractor={(item) => String(item.id)}
         ListFooterComponent={
           <Pagination
@@ -198,6 +215,7 @@ const PostsTab = ({
               <Button
                 mode="contained"
                 style={styles.button}
+                icon="eye"
                 onPress={() => {
                   setCategoryModalVisible(false);
                   navigation.navigate(t("list_posts"), {
@@ -217,10 +235,11 @@ const PostsTab = ({
                   <Button
                     mode="contained"
                     style={styles.button}
+                    icon="pencil"
                     onPress={() => {
                       setCategoryModalVisible(false);
                       navigation.navigate(t("edit_category"), {
-                        communityId: community.id,
+                        community_id: community.id,
                         category: focusedCategory,
                       });
                     }}
@@ -233,6 +252,7 @@ const PostsTab = ({
                     mode="contained"
                     style={styles.button}
                     buttonColor={theme.colors.danger}
+                    icon="trash-can"
                     onPress={async () => {
                       if (!focusedCategory) {
                         return;
@@ -298,9 +318,7 @@ const PostsTab = ({
                   )}
                 </Text>
               )}
-              <Text>
-                {capitalizeFirstLetter(t("are_you_sure_delete_category"))}
-              </Text>
+              <Text>{capitalizeFirstLetter(t("are_you_sure_delete"))}</Text>
             </View>
             <View style={styles.modalButtons}>
               <Button
@@ -404,6 +422,134 @@ const PostsTab = ({
                     </Button>
                   ))}
             </ScrollView>
+          </View>
+        </Modal>
+        {/* Modal de opciones del post */}
+        <Modal
+          visible={postModalVisible}
+          onDismiss={() => setPostModalVisible(false)}
+          contentContainerStyle={styles.modalContainer}
+        >
+          <IconButton
+            icon="close"
+            size={20}
+            onPress={() => setPostModalVisible(false)}
+            style={styles.modalCloseButton}
+          />
+          <View style={styles.modalContent}>
+            <View style={{ marginBottom: "5%" }}>
+              <View>
+                <Title style={styles.title}>
+                  {focusedPost && capitalizeFirstLetter(focusedPost.title)}
+                </Title>
+              </View>
+            </View>
+            <View>
+              <Button
+                mode="contained"
+                style={styles.button}
+                icon="eye"
+                onPress={() => {
+                  setPostModalVisible(false);
+                  navigation.navigate(t("view_post"), {
+                    post_id: focusedPost.id,
+                    community_id: community.id,
+                    userRole,
+                  });
+                }}
+              >
+                <Text style={styles.buttonText}>
+                  {capitalizeFirstLetter(t("view_post"))}
+                </Text>
+              </Button>
+              {focusedPost &&
+                (user_id == focusedPost.user.id || isModerator(userRole)) && (
+                  <View>
+                    <Button
+                      mode="contained"
+                      style={styles.button}
+                      icon="pencil"
+                      onPress={() => {
+                        setPostModalVisible(false);
+                        navigation.navigate(t("edit_post"), {
+                          user_id: user_id,
+                          community_id: community.id,
+                          post: focusedPost,
+                        });
+                      }}
+                    >
+                      <Text style={styles.buttonText}>
+                        {capitalizeFirstLetter(t("edit_post"))}
+                      </Text>
+                    </Button>
+                    <Button
+                      mode="contained"
+                      style={styles.button}
+                      icon="trash-can"
+                      buttonColor={theme.colors.danger}
+                      onPress={async () => {
+                        setPostDeleteConfirmationVisible(true);
+                      }}
+                    >
+                      <Text style={styles.buttonText}>
+                        {capitalizeFirstLetter(t("delete_category"))}
+                      </Text>
+                    </Button>
+                  </View>
+                )}
+            </View>
+          </View>
+        </Modal>
+        {/* Modal de alerta de eliminacion del post */}
+        <Modal
+          visible={postsDeleteConfirmationVisible}
+          onDismiss={() => setPostDeleteConfirmationVisible(false)}
+          contentContainerStyle={styles.modalContainer}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>
+              {capitalizeFirstLetter(t("confirm_delete"))}
+            </Text>
+            <View style={styles.modalTextContainer}>
+              <Text>{capitalizeFirstLetter(t("are_you_sure_delete"))}</Text>
+            </View>
+            <View style={styles.modalButtons}>
+              <Button
+                mode="contained"
+                onPress={async () => {
+                  let could_delete = await deletePost(focusedPost.id);
+                  if (could_delete) {
+                    setPostModalVisible(false);
+                    fetchCommunityCategories(currentCategoriesPage);
+                    fetchCommunityPosts(currentPostsPage);
+                    Alert.alert(
+                      capitalizeFirstLetter(t("success")),
+                      t("post_deleted_success")
+                    );
+                  } else {
+                    Alert.alert(
+                      capitalizeFirstLetter(t("error")),
+                      t("post_deleted_error")
+                    );
+                  }
+                  setPostDeleteConfirmationVisible(false);
+                }}
+                style={styles.button}
+                buttonColor={theme.colors.danger}
+              >
+                {capitalizeFirstLetter(t("yes"))}
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => {
+                  setPostDeleteConfirmationVisible(false);
+                  setPostModalVisible(true);
+                }}
+                style={styles.button}
+              >
+                {capitalizeFirstLetter(t("no"))}
+              </Button>
+            </View>
           </View>
         </Modal>
       </Portal>

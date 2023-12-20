@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   Dimensions,
   Image,
+  Alert
 } from "react-native";
 import { Button, Portal, Modal } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -26,7 +27,7 @@ import { isModerator } from "../../../utils/device";
 const ViewPostScreen = ({ route }) => {
   const { post_id, community_id, user_role } = route.params;
   const [post, setPost] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [user_id, setUser_id] = useState(null);
   const [comments, setComments] = useState([]);
   const [selectedComment, setSelectedComment] = useState([]);
   const [commentsCount, setCommentsCount] = useState([]);
@@ -78,7 +79,7 @@ const ViewPostScreen = ({ route }) => {
       const storedUserInfo = await AsyncStorage.getItem("userInfo");
       if (storedUserInfo) {
         const parsedInfo = JSON.parse(storedUserInfo);
-        setUserId(parsedInfo.id);
+        setUser_id(parsedInfo.id);
       }
     };
     fetchUserInfo();
@@ -121,6 +122,14 @@ const ViewPostScreen = ({ route }) => {
       fetchComments();
       closeModal();
     }
+  };
+
+  const handleReportComment = async () => {
+    Alert.alert(
+      capitalizeFirstLetter(t("report_alert_title")),
+      capitalizeFirstLetter(t("report_alert_message"))
+    );
+    closeModal();
   };
 
   const handleCommentSubmit = async () => {
@@ -218,7 +227,7 @@ const ViewPostScreen = ({ route }) => {
             key={comment.id}
             comment={comment}
             index={index}
-            user_id={userId}
+            user_id={user_id}
             onClickOptions={handleOptionsClick}
           />
         ))}
@@ -234,7 +243,7 @@ const ViewPostScreen = ({ route }) => {
               actions.insertLink,
               // "insertPlant",
             ]}
-            user_id={userId}
+            user_id={user_id}
             type="comment"
             ref={richText}
           />
@@ -260,15 +269,16 @@ const ViewPostScreen = ({ route }) => {
             <Comment
               key={selectedComment.id}
               comment={selectedComment}
-              user_id={userId}
+              user_id={user_id}
             />
           </View>
           <View style={{ margin: "5%" }}>
             {selectedComment &&
               selectedComment.user &&
-              (userId == selectedComment.user.id || isModerator(user_role)) && (
+              (user_id == selectedComment.user.id || isModerator(user_role)) && (
                 <Button
                   mode="contained"
+                  icon="trash-can"
                   buttonColor={theme.colors.danger}
                   style={styles.button}
                   onPress={handleDeleteComment}
@@ -276,6 +286,15 @@ const ViewPostScreen = ({ route }) => {
                   {capitalizeFirstLetter(t("delete_comment"))}
                 </Button>
               )}
+            <Button
+              mode="contained"
+              icon="flag"
+              buttonColor={theme.colors.danger}
+              style={styles.button}
+              onPress={handleReportComment}
+            >
+              {capitalizeFirstLetter(t("report_comment"))}
+            </Button>
           </View>
         </Modal>
       </Portal>

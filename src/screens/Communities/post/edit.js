@@ -1,28 +1,28 @@
 import React from "react";
 import { View, Alert } from "react-native";
 import styles from "../CommunitiesStyles";
-import CategoryForm from "./form";
+import PostForm from "./form";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import {
-  createCategory,
+  editPost,
 } from "../../../utils/api";
 
-const CreateCategoryScreen = ({ route, navigation }) => {
+const EditPostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const { community_id } = route.params;
-
-  const handleSubmit = async (name, description) => {
+  const { user_id, community_id, post } = route.params;
+  const handleSubmit = async (formData) => {
     try {
-      const post_response = await createCategory(
-        name,
-        description,
-        community_id
+      const put_response = await editPost(
+        formData.title,
+        formData.body,
+        formData.category.id,
+        formData.post_id
       );
-      if (post_response) {
+      if (put_response) {
         Alert.alert(
           capitalizeFirstLetter(t("success")),
-          capitalizeFirstLetter(t("succesful_category_creation_text"))
+          capitalizeFirstLetter(t("succesful_post_edition_text"))
         );
         navigation.goBack();
       }
@@ -33,12 +33,14 @@ const CreateCategoryScreen = ({ route, navigation }) => {
 
   return (
     <View style={{ ...styles.container, justifyContent: "center" }}>
-      <CategoryForm
+      <PostForm
+        user_id={user_id}
         onSubmit={handleSubmit}
         community_id={community_id}
+        post={post}
       />
     </View>
   );
 };
 
-export default CreateCategoryScreen;
+export default EditPostScreen;

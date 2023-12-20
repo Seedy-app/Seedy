@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { checkCategoryNameAvailability } from "../../../utils/api";
 
-const CategoryForm = ({ category = null, communityId, onSubmit }) => {
+const CategoryForm = ({ category = null, community_id, onSubmit }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [nameError, setNameError] = useState("");
@@ -25,7 +25,7 @@ const CategoryForm = ({ category = null, communityId, onSubmit }) => {
     setName(text);
     clearTimeout(n_timeout.current);
     n_timeout.current = setTimeout(async () => {
-      const result = await checkCategoryNameAvailability(text, communityId, category ? category.id : null);
+      const result = await checkCategoryNameAvailability(text, community_id, category ? category.id : null);
       if (result.error || result.error == "") {
         setNameError(result.error);
       }

@@ -95,11 +95,11 @@ function ListMyPlantsScreen() {
     setLoadingMore(false);
   };
 
-  const removePlantFromUser = async (plantId) => {
+  const removePlantFromUser = async (plant_id) => {
     try {
       const token = await AsyncStorage.getItem("userToken");
       const response = await fetch(
-        `${Config.API_URL}/plant/disassociate/${plantId}`,
+        `${Config.API_URL}/plant/disassociate/${plant_id}`,
         {
           method: "DELETE",
           headers: {
@@ -114,7 +114,7 @@ function ListMyPlantsScreen() {
       }
 
       const responseData = await response.json();
-      setPlants(plants.filter((plant) => plant.id !== plantId));
+      setPlants(plants.filter((plant) => plant.id !== plant_id));
       closeModal();
     } catch (error) {
       console.error("Error removing plant:", error);
@@ -122,11 +122,11 @@ function ListMyPlantsScreen() {
     }
   };
 
-  async function fetchUserPlants(userId) {
+  async function fetchUserPlants(user_id) {
     try {
       const token = await AsyncStorage.getItem("userToken");
       const response = await fetch(
-        `${Config.API_URL}/plant/getUserPlants/${userId}`,
+        `${Config.API_URL}/plant/getUserPlants/${user_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
