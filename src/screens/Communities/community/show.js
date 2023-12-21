@@ -226,9 +226,9 @@ const CommunityScreen = () => {
         fetchCommunityCategories={fetchCommunityCategories}
       />
     ),
-    members: () => <MembersTab communityMembers={communityMembersData.data} />,
+    members: () => <MembersTab communityMembers={communityMembersData.data} community_id={community.id} userRole={userRole} userInfo={userInfo} />,
     chat: () => <ChatTab someProp={null} />,
-    info: () => <InfoTab someProp={null} />,
+    info: () => <InfoTab community={community} />,
   });
 
   const join_community = async () => {
