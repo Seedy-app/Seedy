@@ -803,7 +803,7 @@ export const reactComment = async (comment_id, button_pressed) => {
     const token = await AsyncStorage.getItem("userToken");
 
     const response = await fetch(
-      `${Config.API_URL}/communities/posts/comments/react`,
+      `${Config.API_URL}/communities/posts/comments/${comment_id}/react`,
       {
         method: "POST",
         headers: {
@@ -811,7 +811,6 @@ export const reactComment = async (comment_id, button_pressed) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          comment_id,
           type: button_pressed,
         }),
       }
@@ -874,6 +873,36 @@ export const getPostContentById = async (post_id) => {
     } else {
       const responseData = await response.json();
       return responseData;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+
+export const reactPost = async (post_id, button_pressed) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/${post_id}/react`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          type: button_pressed,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
     }
   } catch (error) {
     console.error("Error:", error.message);

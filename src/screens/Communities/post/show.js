@@ -8,7 +8,7 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { Button, Portal, Modal } from "react-native-paper";
+import { Button, Portal, Modal, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import RenderHtml from "react-native-render-html";
@@ -17,7 +17,7 @@ import styles from "../CommunitiesStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { actions } from "react-native-pell-rich-editor";
 import Editor from "../../CustomComponents/Editor";
-import { createComment, deleteComment } from "../../../utils/api";
+import { createComment, deleteComment, reactPost } from "../../../utils/api";
 import Comment from "../../CustomComponents/Comment";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTheme } from "react-native-paper";
@@ -27,6 +27,7 @@ import { isModerator } from "../../../utils/device";
 const ViewPostScreen = ({ route }) => {
   const { post_id, community_id, user_role } = route.params;
   const [post, setPost] = useState(null);
+  const [postReactions, setPostReactions] = useState(null);
   const [user_id, setUser_id] = useState(null);
   const [comments, setComments] = useState([]);
   const [selectedComment, setSelectedComment] = useState([]);
@@ -37,6 +38,7 @@ const ViewPostScreen = ({ route }) => {
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const theme = useTheme();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: post ? post.title : t("view_post"),
@@ -64,6 +66,7 @@ const ViewPostScreen = ({ route }) => {
 
         const data = await response.json();
         setPost(data);
+        setPostReactions(data.postReactions);
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -111,10 +114,6 @@ const ViewPostScreen = ({ route }) => {
     setModalVisible(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
   const handleDeleteComment = async () => {
     let could_delete = await deleteComment(selectedComment.id);
     if (could_delete) {
@@ -131,6 +130,28 @@ const ViewPostScreen = ({ route }) => {
     closeModal();
   };
 
+  const handleReactToPost = async (post_id, type) => {
+    try {
+      react_response = await reactPost(post_id, type);
+      if (react_response) {
+        let newReactions = [...postReactions];
+        const reactionIndex = newReactions.findIndex(
+          (reaction) => reaction.user_id === user_id
+        );
+        if (reactionIndex !== -1) {
+          if (newReactions[reactionIndex].reaction_type === type) {
+            newReactions.splice(reactionIndex, 1);
+          } else {
+            newReactions[reactionIndex].reaction_type = type;
+          }
+        } else {
+          newReactions.push({ user_id, reaction_type: type });
+        }
+        setPostReactions(newReactions);
+      }
+    } catch (error) {}
+  };
+
   const handleCommentSubmit = async () => {
     let content = await richText.current?.getContentHtml();
     const comment_response = await createComment(content, post_id);
@@ -143,6 +164,10 @@ const ViewPostScreen = ({ route }) => {
       richText.current?.setContentHTML("");
       fetchComments();
     }
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -197,11 +222,70 @@ const ViewPostScreen = ({ route }) => {
         </View>
       )}
       {/* Publicación */}
-
       <View style={{ padding: "3%" }}>
         {post && (
           <RenderHtml contentWidth={width} source={{ html: post.content }} />
         )}
+      </View>
+      {/* Reacciones a la publicación */}
+      <View
+        style={{
+          borderColor: "black",
+          borderTopWidth: 1,
+        }}
+      >
+        <View style={styles.reactionBox}>
+          <View style={{ alignItems: "center", flexDirection: "row" }}>
+            <Text>
+              {postReactions
+                ? postReactions.filter(
+                    (reaction) => reaction.reaction_type === "like"
+                  ).length
+                : 0}
+            </Text>
+            <IconButton
+              icon="thumb-up"
+              size={theme.fonts.default.fontSize}
+              iconColor={
+                postReactions
+                  ? postReactions.some(
+                      (reaction) =>
+                        reaction.reaction_type === "like" &&
+                        reaction.user_id === user_id
+                    )
+                    ? theme.colors.primary
+                    : theme.colors.secondary
+                  : theme.colors.secondary
+              }
+              onPress={async () => await handleReactToPost(post.id, "like")}
+            />
+          </View>
+          <View style={{ alignItems: "center", flexDirection: "row" }}>
+            <Text>
+              {postReactions
+                ? postReactions.filter(
+                    (reaction) => reaction.reaction_type === "dislike"
+                  ).length
+                : 0}
+            </Text>
+            <IconButton
+              icon="thumb-down"
+              size={theme.fonts.default.fontSize}
+              iconColor={
+                postReactions
+                  ? postReactions.some(
+                      (reaction) =>
+                        reaction.reaction_type === "dislike" &&
+                        reaction.user_id === user_id
+                    )
+                    ? theme.colors.danger
+                    : theme.colors.secondary
+                  : theme.colors.secondary
+              }
+              onPress={async () => await handleReactToPost(post.id, "dislike")}
+            />
+          </View>
+        </View>
       </View>
       {/* Contador de comentarios */}
       <View
