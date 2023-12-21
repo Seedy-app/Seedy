@@ -8,8 +8,8 @@ import { AuthContext } from "./src/contexts/AuthContext";
 import { Provider as PaperProvider } from "react-native-paper";
 import SeedyTheme from "./src/config/SeedyTheme";
 import * as Font from 'expo-font';
+import i18n from "i18next";
 
-// Crea el stack de navegación de nivel superior
 const RootStack = createStackNavigator();
 
 function App() {
@@ -20,7 +20,6 @@ function App() {
   async function loadFonts() {
     await Font.loadAsync({
       'Roboto': require('./src/assets/fonts/Roboto-Regular.ttf'),
-      // Carga otras fuentes según sea necesario
     });
     setFontsLoaded(true); 
   }
@@ -30,11 +29,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Cargar el token al inicio de la aplicación
     const bootstrapAsync = async () => {
       let token;
       try {
         token = await AsyncStorage.getItem("userToken");
+        const selectedLanguage = await AsyncStorage.getItem("selectedLanguage");
+        if (selectedLanguage) {
+          i18n.changeLanguage(selectedLanguage);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -59,8 +61,7 @@ function App() {
   };
 
   if (isLoading || !fontsLoaded) {
-    // Puedes mostrar una pantalla de carga mientras se recupera el token
-    return null; // Reemplaza esto con tu pantalla de carga
+    return null; 
   }
 
   return (

@@ -50,7 +50,6 @@ const Editor = forwardRef(({ toolbarActions, user_id, type }, ref) => {
           underline: require("../../assets/images/icons/underline.png"),
           insertImage: require("../../assets/images/icons/image.png"),
           insertLink: require("../../assets/images/icons/link.png"),
-          // insertPlant: require("../../assets/images/icons/flower.png"),
         }}
         onPressAddImage={handleInsertImage}
         onInsertLink={handleInsertLink}

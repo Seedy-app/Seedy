@@ -80,7 +80,6 @@ const PostsTab = ({
     setFocusedPost(post);
     setPostModalVisible(true);
   };
-
   return (
     <ScrollView style={styles.container}>
       <FlatList
@@ -168,7 +167,7 @@ const PostsTab = ({
           <PostCard
             post={item}
             community_id={community.id}
-            userRole
+            userRole={userRole}
             onLongPressAction={handleOnLongPressPostCard}
           />
         )}

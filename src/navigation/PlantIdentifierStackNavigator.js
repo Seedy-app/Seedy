@@ -1,4 +1,3 @@
-// PlantIdentifierStackNavigator.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import TakePictureScreen from "../screens/PlantIdentifier/take_picture";

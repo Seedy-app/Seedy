@@ -1,4 +1,3 @@
-// CommunitiesStackNavigator.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CommunitiesScreen from "../screens/Communities/community/index";

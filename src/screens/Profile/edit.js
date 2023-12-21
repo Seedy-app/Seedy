@@ -30,7 +30,6 @@ function EditProfileScreen() {
   const u_timeout = useRef(null);
   const e_timeout = useRef(null);
 
-  // Función para recuperar la información del usuario de AsyncStorage
   const fetchUserInfo = async () => {
     const storedUserInfo = await AsyncStorage.getItem("userInfo");
     if (storedUserInfo) {
@@ -42,7 +41,6 @@ function EditProfileScreen() {
     }
   };
 
-  // Función para actualizar la información del usuario en AsyncStorage
   const updateUserInfo = async (imageUrl) => {
     const updatedInfo = {
       username: username,
@@ -53,12 +51,10 @@ function EditProfileScreen() {
     await AsyncStorage.setItem("userInfo", JSON.stringify(updatedInfo));
   };
 
-  // useEffect para recuperar la información del usuario cuando se monta el componente
   useEffect(() => {
     const fetchData = async () => {
       await fetchUserInfo();
       if (picture) {
-        // Asegurarse de que 'picture' está disponible
         const imageUrl = Config.API_URL + picture;
         setDisplayedImageUrl(imageUrl);
       }

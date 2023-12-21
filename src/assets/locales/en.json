@@ -129,9 +129,11 @@
   "unexpected_error_title": "Unexpected error",
   "unmatched_passwords_error": "Passwords do not match.",
   "username": "Username",
+  "my_garden": "My garden",
   "username_already_exists_error": "Username already exists.",
   "view_post": "View post",
   "weak_password_error": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.",
   "where_to_migrate_posts": "This category has associated posts. Please choose another category to migrate these posts before proceeding with the deletion.",
-  "wrong_identification": "This is not the plant"
+  "wrong_identification": "This is not the plant",
+  "change_language": "Change language"
 }

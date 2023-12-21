@@ -21,13 +21,13 @@ function MyTabs() {
           let iconName;
           let color = focused ? theme.colors.primary : "grey";
 
-          if (route.name === t("My Plants")) {
+          if (route.name === t("my_garden")) {
             iconName = "local-florist";
-          } else if (route.name === t("Communities")) {
+          } else if (route.name === t("communities")) {
             iconName = "group";
-          } else if (route.name === t("Plant Identifier")) {
+          } else if (route.name === t("plant_identifier")) {
             iconName = "search";
-          } else if (route.name === t("Profile")) {
+          } else if (route.name === t("profile")) {
             iconName = "person";
           }
 
@@ -42,22 +42,22 @@ function MyTabs() {
       })}
     >
       <Tab.Screen
-        name={t("My Plants")}
+        name={t("my_garden")}
         component={MyPlantsStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("Plant Identifier")}
+        name={t("plant_identifier")}
         component={PlantIdentifierStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("Communities")}
+        name={t("communities")}
         component={CommunitiesStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={t("Profile")}
+        name={t("profile")}
         component={ProfileStackNavigator}
         options={{ headerShown: false }}
       />

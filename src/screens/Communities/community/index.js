@@ -1,4 +1,3 @@
-// Importamos las dependencias necesarias
 import React, { useState } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { View, FlatList, RefreshControl, Image, Text } from "react-native";
@@ -10,19 +9,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { capitalizeFirstLetter } from "../../../utils/device";
 
 function CommunitiesScreen() {
-  // Usamos el hook de navegación
   const navigation = useNavigation();
 
-  // Usamos el hook de traducción
   const { t } = useTranslation();
 
-  // Estado para almacenar los datos de las comunidades
   const [communitiesData, setCommunitiesData] = useState([]);
 
-  // Estado para controlar el refresco de la lista
   const [refreshing, setRefreshing] = useState(false);
 
-  // Función para obtener los datos de las comunidades desde la API
   const fetchData = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -55,13 +49,11 @@ function CommunitiesScreen() {
     }, [])
   );
 
-  // Función que se ejecuta cuando el usuario intenta refrescar la lista
   const onRefresh = () => {
     setRefreshing(true);
     fetchData();
   };
 
-  // Componente para representar cada comunidad en la lista
   const CommunityCard = ({ community }) => (
     <Card
       onPress={() => navigation.navigate(t("community"), { community })}
@@ -89,7 +81,6 @@ function CommunitiesScreen() {
     </Card>
   );
 
-  // Renderizamos el componente principal
   return (
     <View style={styles.communitiesContainer}>
       <FlatList

@@ -53,12 +53,10 @@ export default function SignUpScreen({ navigation }) {
       setPasswordError(t("unmatched_passwords_error"));
       return;
     }
-    // Validación de correo electrónico
     if (!Config.EMAIL_REGEX.test(email)) {
       setEmailError(t("invalid_email_error"));
       return;
     }
-    // Validación de contraseña
     if (!Config.PASSWORD_REGEX.test(password)) {
       setPasswordError(t("weak_password_error"));
       return;

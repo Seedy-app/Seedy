@@ -17,7 +17,7 @@ const PostCard = ({ post, community_id, userRole, onLongPressAction }) => {
   return (
     <Card
       style={{ ...styles.listCard }}
-      onPress={() => navigation.navigate(t("view_post"), { post_id: post.id, community_id: community_id, userRole })}
+      onPress={() => navigation.navigate(t("view_post"), { post_id: post.id, community_id: community_id, user_role: userRole })}
       onLongPress={() => {
         if (onLongPressAction) {
           onLongPressAction(post);
