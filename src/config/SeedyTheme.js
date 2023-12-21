@@ -4,11 +4,11 @@ const SeedyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#4CAF50", // Verde, para botones y elementos destacados
-    accent: "#8BC34A", // Verde claro, para acentos y elementos secundarios
-    background: "#FFFFFF", // Fondo blanco
-    text: "#333333", // Texto en color oscuro para contraste
-    danger: "#FF5722", // Rojo-anaranjado, para botones de peligro o alerta
+    primary: "#4CAF50",
+    accent: "#8BC34A", 
+    background: "#FFFFFF", 
+    text: "#333333",
+    danger: "#FF5722",
   },
   fonts: {
     default: {

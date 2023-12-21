@@ -131,7 +131,6 @@ const commonStyles = StyleSheet.create({
     borderColor: "black",
   },
 
-  // Role
   roleContainer: {
     borderRadius: 5,
     padding: 5,

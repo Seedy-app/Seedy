@@ -52,7 +52,6 @@ const CommunitySettingsScreen = () => {
         navigation.navigate(t("communities_list"));
       }
       setIsDeleteModalVisible(false);
-      // Aquí iría tu lógica para realizar la solicitud DELETE
     } else {
       Alert.alert(
         capitalizeFirstLetter(t("error")),

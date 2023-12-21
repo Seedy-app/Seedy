@@ -15,6 +15,7 @@ const profileStyles = StyleSheet.create({
   },
   userInfo: {
     flexDirection: "column",
+    flexShrink:1
   },
   email: {
     color: Colors.gray,

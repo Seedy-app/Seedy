@@ -22,7 +22,6 @@ export default function TakePictureScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
-    // Esto sirve para cambiar el key de la camara asi se vuelve a inicializar cuando vuelvo atras en el Stack navigator
     const unsubscribe = navigation.addListener("focus", () => {
       setCameraKey((prevKey) => prevKey + 1);
     });

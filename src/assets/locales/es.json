@@ -88,6 +88,7 @@
   "password_reset_successful": "Contraseña modificada con exito.",
   "picture": "Imagen",
   "plant_identifier": "Identificador de plantas",
+  "my_garden": "Mi jardín",
   "post_button_text": "publicar",
   "post_migration_error": "Algo salió mal al migrar las publicaciones. ¡Es como trasplantar una planta y olvidar el abono! 💩",
   "post_migration_text": "Todas las publicaciones de la categoría a eliminar serán migradas a la categoría",
@@ -132,5 +133,6 @@
   "view_post": "Ver publicación",
   "weak_password_error": "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
   "where_to_migrate_posts": "Esta categoría tiene publicaciones asociadas. Elige otra categoría para migrar estas publicaciones antes de proceder con la eliminación.",
-  "wrong_identification": "Esta no es la planta"
+  "wrong_identification": "Esta no es la planta",
+  "change_language": "Cambiar lenguaje"
 }

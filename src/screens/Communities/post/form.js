@@ -101,7 +101,6 @@ const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
               actions.insertOrderedList,
               actions.insertImage,
               actions.insertLink,
-              // "insertPlant",
             ]}
             user_id={user_id}
             type="post"

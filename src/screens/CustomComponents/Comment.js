@@ -14,17 +14,22 @@ import styles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
 import { reactComment } from "../../utils/api";
 
-const Comment = ({ comment, index, user_id, onClickOptions }) => {
+const Comment = ({ comment, index, user_id, onClickOptions, hide_pictures = false }) => {
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const theme = useTheme();
   const [commentReactions, setCommentReactions] = useState(
     comment.commentReactions
   );
+  const [content, setContent] = useState(comment.content);
 
   useEffect(() => {
     setCommentReactions(comment.commentReactions);
-  }, [comment.commentReactions]);
+    if (hide_pictures) {
+      const modifiedContent = comment.content.replace(/<img[^>]*>/g, "🖼️");
+      setContent(modifiedContent);
+    }
+  }, [comment.commentReactions, comment.content, hide_pictures]);
 
   const handleReactToComment = async (comment_id, type) => {
     try {
@@ -49,7 +54,7 @@ const Comment = ({ comment, index, user_id, onClickOptions }) => {
   };
 
   return (
-    <View key={index} style={styles.commentView}>
+    <View key={index} style={{...styles.commentView, maxWidth: Dimensions.get('window').width}}>
       <View style={styles.commentInfoBox}>
         <Image
           source={{ uri: Config.API_URL + comment.user.picture }}
@@ -129,10 +134,10 @@ const Comment = ({ comment, index, user_id, onClickOptions }) => {
             style={styles.commentOptionsButton}
           />
         </View>)}
-        <View style={{ flex: 0.9, width: Dimensions.get("window").width * 0.65 }}>
+        <View style={{ flex: 0.9, maxWidth: Dimensions.get("window").width * 0.65 }}>
           <RenderHtml
-            contentWidth={width}
-            source={{ html: comment.content }}
+            contentWidth={width * 0.65}
+            source={{ html: content }}
             tagsStyles={{
               img: {
                 maxWidth: Dimensions.get("window").width * 0.65,

@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   Dimensions,
   Image,
-  Alert
+  Alert,
 } from "react-native";
 import { Button, Portal, Modal } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -37,7 +37,6 @@ const ViewPostScreen = ({ route }) => {
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const theme = useTheme();
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: post ? post.title : t("view_post"),
@@ -241,7 +240,6 @@ const ViewPostScreen = ({ route }) => {
               actions.insertOrderedList,
               actions.insertImage,
               actions.insertLink,
-              // "insertPlant",
             ]}
             user_id={user_id}
             type="comment"
@@ -270,12 +268,14 @@ const ViewPostScreen = ({ route }) => {
               key={selectedComment.id}
               comment={selectedComment}
               user_id={user_id}
+              hide_pictures={true}
             />
           </View>
           <View style={{ margin: "5%" }}>
             {selectedComment &&
               selectedComment.user &&
-              (user_id == selectedComment.user.id || isModerator(user_role)) && (
+              (user_id == selectedComment.user.id ||
+                isModerator(user_role)) && (
                 <Button
                   mode="contained"
                   icon="trash-can"
