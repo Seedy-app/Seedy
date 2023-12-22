@@ -137,6 +137,7 @@
   "unmatched_passwords_error": "Passwords do not match.",
   "user_expel_error": "Oops! 🌿 It seems we couldn't expel the user right now. Please try again later. Thank you for helping to keep our plant lovers' community thriving! 🌼",
   "user_expel_success": "Done! 🌱 The user has been successfully expelled from the community. Thank you for helping to keep our virtual garden harmonious and growing. 🌼",
+  "user_not_found_error": "User with this email does not exist.",
   "username": "Username",
   "username_already_exists_error": "Username already exists.",
   "view_post": "View post",

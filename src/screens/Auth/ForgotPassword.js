@@ -21,6 +21,8 @@ export default function ForgotPasswordScreen({ navigation }) {
       });
       if (response.status === 200) {
         navigation.navigate(t("reset_password"));
+      } else if (response.status === 404) {
+        alert(t("user_not_found_error"));
       } else {
         alert(t("send_email_error"));
       }

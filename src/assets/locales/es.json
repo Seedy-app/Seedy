@@ -136,6 +136,7 @@
   "unmatched_passwords_error": "Las contraseñas no coinciden.",
   "user_expel_error": "¡Ups! 🌿 Parece que no pudimos expulsar al usuario en este momento. Por favor, intenta de nuevo más tarde. ¡Gracias por contribuir a mantener nuestra comunidad de amantes de las plantas floreciente! 🌼",
   "user_expel_success": "¡Hecho! 🌱 El usuario ha sido expulsado exitosamente de la comunidad. Gracias por ayudar a mantener nuestro jardín virtual lleno de armonía y crecimiento. 🌼",
+  "user_not_found_error": "No existe un usuario con este correo electrónico.",
   "username": "Nombre de usuario",
   "username_already_exists_error": "Ese usuario ya existe.",
   "view_post": "Ver publicación",
