@@ -136,6 +136,7 @@ const commonStyles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderColor: "black",
+    alignItems: "center"
   },
   roleText: {
     color: Colors.white,

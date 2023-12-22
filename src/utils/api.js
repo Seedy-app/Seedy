@@ -128,6 +128,9 @@ export const getUserCommunityRole = async (user_id, community_id) => {
         },
       }
     );
+    if (response.status === 404) {
+      return null;
+    }
     if (!response.ok) {
       console.info(response);
       return null;
@@ -167,7 +170,6 @@ export const giveUserCommunityRole = async (
       console.info(response);
       return false;
     } else {
-      const responseData = await response.json();
       return true;
     }
   } catch (error) {
@@ -449,6 +451,38 @@ export const deletePost = async (post_id) => {
           Authorization: `Bearer ${token}`,
         },
       }
+    );
+    if (!response.ok) {
+      console.error("Network response was not ok: " + response.statusText);
+      return false;
+    } else {
+      return true;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return false;
+  }
+};
+
+export const deleteUserFromCommunity = async (community_id, user_id = null) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const fetchConfig = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    if (user_id !== null) {
+      fetchConfig.body = JSON.stringify({ user_id });
+    }
+console.log(response);
+    const response = await fetch(
+      `${Config.API_URL}/communities/${community_id}/user`,
+      fetchConfig
     );
     if (!response.ok) {
       console.error("Network response was not ok: " + response.statusText);
@@ -803,7 +837,7 @@ export const reactComment = async (comment_id, button_pressed) => {
     const token = await AsyncStorage.getItem("userToken");
 
     const response = await fetch(
-      `${Config.API_URL}/communities/posts/comments/react`,
+      `${Config.API_URL}/communities/posts/comments/${comment_id}/react`,
       {
         method: "POST",
         headers: {
@@ -811,7 +845,6 @@ export const reactComment = async (comment_id, button_pressed) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          comment_id,
           type: button_pressed,
         }),
       }
@@ -874,6 +907,35 @@ export const getPostContentById = async (post_id) => {
     } else {
       const responseData = await response.json();
       return responseData;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
+export const reactPost = async (post_id, button_pressed) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/posts/${post_id}/react`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          type: button_pressed,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
     }
   } catch (error) {
     console.error("Error:", error.message);
