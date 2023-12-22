@@ -13,13 +13,12 @@ export default function ForgotPasswordScreen({ navigation }) {
   const handleForgotPassword = async () => {
     try {
       const response = await fetch(Config.API_URL + "/forgot-password", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: email }),
       });
-
       if (response.status === 200) {
         navigation.navigate(t("reset_password"));
       } else {
