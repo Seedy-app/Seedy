@@ -204,8 +204,8 @@ const CommunityScreen = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "posts", title: t("posts") },
-    { key: "members", title: t("members") },
     { key: "chat", title: t("chat") },
+    { key: "members", title: t("members") },
     { key: "info", title: t("info") },
   ]);
   const renderScene = SceneMap({
@@ -226,9 +226,9 @@ const CommunityScreen = () => {
         fetchCommunityCategories={fetchCommunityCategories}
       />
     ),
+    chat: () => <ChatTab community={community} userInfo={userInfo} userRole={userRole}/>,
     members: () => <MembersTab communityMembers={communityMembersData.data} community_id={community.id} userRole={userRole} userInfo={userInfo} />,
-    chat: () => <ChatTab someProp={null} />,
-    info: () => <InfoTab community={community} />,
+    info: () => <InfoTab community={community}/>,
   });
 
   const join_community = async () => {

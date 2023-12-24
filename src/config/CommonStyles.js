@@ -130,6 +130,14 @@ const commonStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
   },
+  microProfilePic: {
+    borderRadius: screenScale * 3,
+    marginRight: "1%",
+    width: screenScale * 5,
+    height: screenScale * 5,
+    borderWidth: 1,
+    borderColor: "black",
+  },
 
   roleContainer: {
     borderRadius: 5,
