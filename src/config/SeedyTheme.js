@@ -9,6 +9,12 @@ const SeedyTheme = {
     background: "#FFFFFF", 
     text: "#333333",
     danger: "#FF5722",
+    chatBubbleBackground: "#DAF7A6",
+    chatBubbleText: "#333333",
+    chatBubbleTime: "#707070",
+    userChatBubbleBackground: "#485e1e",
+    userChatBubbleText: "#FFFFFF",
+    userChatBubbleTime: "#E5E5E5",
   },
   fonts: {
     default: {

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import CustomInput from "../CustomComponents/CustomInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Image, KeyboardAvoidingView, Platform } from "react-native";
+import { View, Image, KeyboardAvoidingView, Platform, Alert } from "react-native";
 import { Text, Button, TouchableRipple } from "react-native-paper";
 import { AuthContext } from "../../../src/contexts/AuthContext";
 import { useTranslation } from "react-i18next";
@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
       signIn(token);
     } else {
-      console.error("Invalid credentials");
+      alert(t("invalid_credentials"));
     }
   };
 

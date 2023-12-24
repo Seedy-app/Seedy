@@ -479,7 +479,6 @@ export const deleteUserFromCommunity = async (community_id, user_id = null) => {
     if (user_id !== null) {
       fetchConfig.body = JSON.stringify({ user_id });
     }
-console.log(response);
     const response = await fetch(
       `${Config.API_URL}/communities/${community_id}/user`,
       fetchConfig

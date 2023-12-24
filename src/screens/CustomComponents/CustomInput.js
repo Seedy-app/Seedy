@@ -19,7 +19,7 @@ const CustomInput = ({
     setConfirmPasswordVisible(!isConfirmPasswordVisible);
 
   return (
-    <View style={styles.inputContainer}>
+    <View>
       <TextInput
         style={[styles.input, { paddingRight: 40 }]}
         label={label}

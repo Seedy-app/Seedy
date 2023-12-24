@@ -122,6 +122,8 @@
   "send_email_error": "An error occurred while sending the mail.",
   "show_profile": "Show profile",
   "singup": "Sign up",
+  "write_a_message": "Write a message...",
+  "invalid_credentials": "Invalid credentials",
   "start_writing_message": "Start writting here",
   "succesful_category_creation_text": "Perfect! 🌱 Your category has been successfully created. 🎉",
   "succesful_category_edition_text": "Great! 🌟 Your category has been successfully updated. 🎉",
