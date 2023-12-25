@@ -8,36 +8,6 @@ const screenScale = Dimensions.get("window").scale;
 const myPlantsStyles = StyleSheet.create({
   ...commonStyles,
 
-  plantCard: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 50,
-    overflow: "hidden",
-    marginBottom: "1%",
-  },
-  plantCardContent: {
-    fontSize: 14,
-    color: "white",
-  },
-  plantCardTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
-  },
-
-  plantCardSubtitle: {
-    fontSize: 14,
-    color: "white",
-  },
-  cardBackground: {
-    width: "100%",
-    height: screenHeight / 2.5,
-    justifyContent: "flex-end",
-    borderRadius: 50,
-  },
-  overlayContainer: {
-    padding: 10,
-  },
   modalContainerStyle: {
     backgroundColor: "white",
     paddingTop: 50,

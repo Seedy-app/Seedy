@@ -122,8 +122,11 @@
   "send_email_error": "An error occurred while sending the mail.",
   "show_profile": "Show profile",
   "singup": "Sign up",
+  "reminder_title": "{{scientific_name}} reminder",
+  "reminder_description": "Reminder description",
   "write_a_message": "Write a message...",
   "invalid_credentials": "Invalid credentials",
+  "select_datetime": "Select datetime",
   "start_writing_message": "Start writting here",
   "succesful_category_creation_text": "Perfect! 🌱 Your category has been successfully created. 🎉",
   "succesful_category_edition_text": "Great! 🌟 Your category has been successfully updated. 🎉",
@@ -145,5 +148,8 @@
   "view_post": "View post",
   "weak_password_error": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.",
   "where_to_migrate_posts": "This category has associated posts. Please choose another category to migrate these posts before proceeding with the deletion.",
-  "wrong_identification": "This is not the plant"
+  "wrong_identification": "This is not the plant",
+  "reminder_description_label": "What do you want to remember? (e.g., watering, transplanting)",
+  "choose_common_name_label": "Choose a Common Name",
+  "select_datetime_label": "Select Date and Time for the Reminder"
 }
