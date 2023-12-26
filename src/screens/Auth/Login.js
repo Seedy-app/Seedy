@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
 import Logo from "../../assets/images/splash.png";
+import { capitalizeFirstLetter } from "../../utils/device";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -34,7 +35,7 @@ export default function LoginScreen({ navigation }) {
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
       signIn(token);
     } else {
-      alert(t("invalid_credentials"));
+      Alert.alert(capitalizeFirstLetter(t("error")), t("invalid_credentials"));
     }
   };
 

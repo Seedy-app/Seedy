@@ -12,7 +12,7 @@ import i18n from "i18next";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
-import { Platform } from "react-native";
+import { Platform, Alert } from "react-native";
 
 const RootStack = createStackNavigator();
 
@@ -45,10 +45,8 @@ async function sendPushNotification(expoPushToken) {
 }
 
 async function registerForPushNotificationsAsync() {
-  let token;
-
   if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
+    await Notifications.setNotificationChannelAsync("default", {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
@@ -65,20 +63,17 @@ async function registerForPushNotificationsAsync() {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
+      Alert.alert("Failed to get push token for push notification!");
+      return undefined;
     }
-    // token = await Notifications.getExpoPushTokenAsync({
-    //   projectId: Constants.expoConfig.extra.eas.projectId,
-    // });
-    token = await Notifications.getExpoPushTokenAsync();
-    console.log(token);
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+    return token;
   } else {
-    alert("Must use physical device for Push Notifications");
+    Alert.alert("Must use physical device for Push Notifications");
+    return undefined;
   }
-
-  return token.data;
 }
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);

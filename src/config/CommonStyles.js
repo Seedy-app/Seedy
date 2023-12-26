@@ -213,7 +213,7 @@ const commonStyles = StyleSheet.create({
     backgroundColor: "white",
     padding: screenScale * 10,
     alignSelf: "center",
-    maxHeight: screenHeight * 0.5,
+    maxHeight: screenHeight * 0.75,
     width: screenWidth * 0.9,
     borderRadius: screenScale * 15,
     borderWidth: 1,

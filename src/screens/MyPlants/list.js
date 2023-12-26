@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -29,7 +30,7 @@ import PlantCard from "../CustomComponents/PlantCard";
 import CustomInput from "../CustomComponents/CustomInput";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker } from "@react-native-picker/picker";
-import * as Notifications from 'expo-notifications';
+import * as Notifications from "expo-notifications";
 
 function ListMyPlantsScreen() {
   const theme = useTheme();
@@ -48,6 +49,8 @@ function ListMyPlantsScreen() {
   const [allPlants, setAllPlants] = useState([]);
   const [reminderDescription, setReminderDescription] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [reminderRepeat, setReminderRepeat] = useState("none"); // 'daily', 'weekly', 'monthly', 'custom'
+  const [customRepeatDays, setCustomRepeatDays] = useState(1); // Para la opción personalizada
 
   useEffect(() => {
     loadPlants();
@@ -132,7 +135,7 @@ function ListMyPlantsScreen() {
       closeModal();
     } catch (error) {
       console.error("Error removing plant:", error);
-      alert(t("remove_plant_error"));
+      Alert.alert(capitalizeFirstLetter(t("error")), t("remove_plant_error"));
     }
   };
 
@@ -179,27 +182,77 @@ function ListMyPlantsScreen() {
 
   const scheduleReminder = async () => {
     if (!(selectedDate instanceof Date) || selectedDate <= new Date()) {
-      console.error("La fecha seleccionada no es válida o ya pasó.");
+      Alert.alert(capitalizeFirstLetter(t("error")), t("invalid_or_past_date"));
       return;
     }
 
-    const schedulingOptions = { time: selectedDate.getTime() };
+    let schedulingOptions;
+    switch (reminderRepeat) {
+      case "daily":
+        schedulingOptions = {
+          hour: selectedDate.getHours(),
+          minute: selectedDate.getMinutes(),
+          repeats: true,
+        };
+        break;
+      case "weekly":
+        schedulingOptions = {
+          seconds: 7 * 24 * 60 * 60,
+          repeats: true,
+        };
+        break;
+      case "monthly":
+        schedulingOptions = {
+          seconds: 30 * 24 * 60 * 60,
+          repeats: true,
+        };
+        break;
+      case "custom":
+        schedulingOptions = {
+          seconds: customRepeatDays * 24 * 60 * 60,
+          repeats: true,
+        };
+        break;
+      default:
+        schedulingOptions = selectedDate.getTime()
+        break;
+    }
 
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `[${selectedPlant.scientific_name}] ${selectedCommonName}`,
           body: reminderDescription,
-          data: {
-            plantId: selectedPlant.id,
-          },
+          data: { plantId: selectedPlant.id },
         },
         trigger: schedulingOptions,
       });
       setIsReminderFormVisible(false);
-      console.log("Notificación programada para: ", selectedDate);
+      let formattedDate =
+        [
+          selectedDate.getFullYear(),
+          (selectedDate.getMonth() + 1).toString().padStart(2, "0"),
+          selectedDate.getDate().toString().padStart(2, "0"),
+        ].join("/") +
+        " " +
+        selectedDate.toLocaleTimeString();
+
+      const repeatTranslation =
+        reminderRepeat !== "custom"
+          ? t(reminderRepeat.toLowerCase())
+          : `${customRepeatDays} ${t("days")}`;
+
+      const successMessage = t("scheduled_notification_success", {
+        date: formattedDate,
+        repeat: repeatTranslation,
+      });
+      Alert.alert(capitalizeFirstLetter(t("success")), successMessage);
     } catch (error) {
-      console.error("Error al programar la notificación: ", error);
+      console.log(error);
+      Alert.alert(
+        capitalizeFirstLetter(t("error")),
+        t("scheduling_error_retry")
+      );
     }
   };
 
@@ -380,56 +433,109 @@ function ListMyPlantsScreen() {
                     scientific_name: selectedPlant.scientific_name,
                   })}
                 </Text>
-                <Text style={styles.label}>
+                <Text style={{ ...styles.label, marginTop: "3%" }}>
                   🌱 {t("reminder_description_label")}
                 </Text>
-                <CustomInput
-                  label={t("reminder_description")}
-                  value={reminderDescription}
-                  onChangeText={setReminderDescription}
-                  mode="outlined"
-                  style={{ marginBottom: 20 }}
-                />
-                <Text style={styles.label}>
+                <View style={{ marginTop: "3%" }}>
+                  <CustomInput
+                    label={t("reminder_description")}
+                    value={reminderDescription}
+                    onChangeText={setReminderDescription}
+                    mode="outlined"
+                  />
+                </View>
+                <Text style={{ ...styles.label, marginTop: "3%" }}>
                   🌟 {t("choose_common_name_label")}
                 </Text>
-                <Picker
-                  selectedValue={selectedCommonName}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setSelectedCommonName(itemValue)
-                  }
-                >
-                  {selectedPlant &&
-                    selectedPlant.common_names.map((name, index) => {
-                      return (
-                        <Picker.Item
-                          style={{ color: "black", fontSize: 16 }}
-                          label={name}
-                          value={name}
-                          key={index}
-                        />
-                      );
-                    })}
-                </Picker>
-                <Text style={styles.label}>
+                <View style={{ ...styles.viewBorders, marginTop: "3%" }}>
+                  <Picker
+                    selectedValue={selectedCommonName}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setSelectedCommonName(itemValue)
+                    }
+                  >
+                    {selectedPlant &&
+                      selectedPlant.common_names.map((name, index) => {
+                        return (
+                          <Picker.Item
+                            style={{ color: "black", fontSize: 16 }}
+                            label={name}
+                            value={name}
+                            key={index}
+                          />
+                        );
+                      })}
+                  </Picker>
+                </View>
+                <Text style={{ ...styles.label, marginTop: "3%" }}>
                   📅 {t("select_datetime_label")}
                 </Text>
-                <Button
-                  icon="calendar"
-                  mode="outlined"
-                  onPress={() => setDatePickerVisibility(true)}
-                >
-                  {selectedDate
-                    ? selectedDate.toLocaleString()
-                    : t("select_datetime")}
-                </Button>
+                <View style={{ marginTop: "3%" }}>
+                  <Button
+                    icon="calendar"
+                    mode="outlined"
+                    onPress={() => setDatePickerVisibility(true)}
+                  >
+                    {selectedDate
+                      ? selectedDate.toLocaleString()
+                      : t("select_datetime")}
+                  </Button>
+                </View>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="datetime"
                   onConfirm={handleConfirm}
                   onCancel={() => setDatePickerVisibility(false)}
                 />
+                <Text style={{ ...styles.label, marginTop: "3%" }}>
+                  🔁 {t("select_repeat_option")}
+                </Text>
+                <View style={{ ...styles.viewBorders, marginTop: "3%" }}>
+                  <Picker
+                    selectedValue={reminderRepeat}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setReminderRepeat(itemValue)
+                    }
+                  >
+                    <Picker.Item
+                      style={{ color: "black", fontSize: 16 }}
+                      label={t("no_repeat")}
+                      value="none"
+                    />
+                    <Picker.Item
+                      style={{ color: "black", fontSize: 16 }}
+                      label={t("daily")}
+                      value="daily"
+                    />
+                    <Picker.Item
+                      style={{ color: "black", fontSize: 16 }}
+                      label={t("weekly")}
+                      value="weekly"
+                    />
+                    <Picker.Item
+                      style={{ color: "black", fontSize: 16 }}
+                      label={t("monthly")}
+                      value="monthly"
+                    />
+                    <Picker.Item
+                      style={{ color: "black", fontSize: 16 }}
+                      label={t("custom")}
+                      value="custom"
+                    />
+                  </Picker>
+                </View>
 
+                {reminderRepeat === "custom" && (
+                  <View style={{ marginTop: "3%" }}>
+                    <CustomInput
+                      label={t("custom_repeat_days")}
+                      value={String(customRepeatDays)}
+                      onChangeText={(text) => setCustomRepeatDays(Number(text))}
+                      keyboardType="numeric"
+                      mode="outlined"
+                    />
+                  </View>
+                )}
                 <Button
                   icon="check"
                   mode="contained"
