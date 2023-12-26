@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -18,10 +13,12 @@
       "supportsTablet": true
     },
     "android": {
+      "jsEngine": "hermes",
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.franmuzzio.Seedy"
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png"
