@@ -1,9 +1,10 @@
 import * as ImagePicker from "expo-image-picker";
+import { Alert } from "react-native";
 
 export const selectImageFromGallery = async () => {
   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
   if (status !== "granted") {
-    alert(t("need_gallery_permission"));
+    Alert.alert(capitalizeFirstLetter(t("error")), t("need_gallery_permission"));
     return;
   }
 

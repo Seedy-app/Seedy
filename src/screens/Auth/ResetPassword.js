@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { Text, Button } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import CustomInput from "../CustomComponents/CustomInput";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
+import { capitalizeFirstLetter } from "../../utils/device";
 
 export default function ForgotPasswordScreen({ navigation }) {
   const [token, setToken] = useState("");
@@ -40,7 +40,7 @@ export default function ForgotPasswordScreen({ navigation }) {
       const data = await response.json();
 
       if (response.status === 200) {
-        alert(t("password_reset_successful"));
+        Alert.alert(capitalizeFirstLetter(t("success")), t("password_reset_successful"));
         navigation.navigate(t("login"));
       } else {
         setError(data.message || t("password_reset_error"));

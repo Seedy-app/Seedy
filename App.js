@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,21 +7,110 @@ import MyTabs from "./src/navigation/BottomTabsNavigator";
 import { AuthContext } from "./src/contexts/AuthContext";
 import { Provider as PaperProvider } from "react-native-paper";
 import SeedyTheme from "./src/config/SeedyTheme";
-import * as Font from 'expo-font';
+import * as Font from "expo-font";
 import i18n from "i18next";
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import Constants from "expo-constants";
+import { Platform, Alert } from "react-native";
 
 const RootStack = createStackNavigator();
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+async function sendPushNotification(expoPushToken) {
+  const message = {
+    to: expoPushToken,
+    sound: "default",
+    title: "Original Title",
+    body: "And here is the body!",
+    data: { someData: "goes here" },
+  };
+
+  await fetch("https://exp.host/--/api/v2/push/send", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Accept-encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      Alert.alert("Failed to get push token for push notification!");
+      return undefined;
+    }
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+    return token;
+  } else {
+    Alert.alert("Must use physical device for Push Notifications");
+    return undefined;
+  }
+}
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   async function loadFonts() {
     await Font.loadAsync({
-      'Roboto': require('./src/assets/fonts/Roboto-Regular.ttf'),
+      Roboto: require("./src/assets/fonts/Roboto-Regular.ttf"),
     });
-    setFontsLoaded(true); 
+    setFontsLoaded(true);
   }
 
   useEffect(() => {
@@ -61,7 +150,7 @@ function App() {
   };
 
   if (isLoading || !fontsLoaded) {
-    return null; 
+    return null;
   }
 
   return (

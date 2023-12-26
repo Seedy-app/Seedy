@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { Text, Button } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import CustomInput from "../CustomComponents/CustomInput";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
+import { capitalizeFirstLetter } from "../../utils/device";
 
 export default function ForgotPasswordScreen({ navigation }) {
   const { t } = useTranslation();
@@ -22,12 +23,12 @@ export default function ForgotPasswordScreen({ navigation }) {
       if (response.status === 200) {
         navigation.navigate(t("reset_password"));
       } else if (response.status === 404) {
-        alert(t("user_not_found_error"));
+        Alert.alert(capitalizeFirstLetter(t("error")), t("user_not_found_error"));
       } else {
-        alert(t("send_email_error"));
+        Alert.alert(capitalizeFirstLetter(t("error")), t("send_email_error"));
       }
     } catch (error) {
-      alert(t("network_error"));
+      Alert.alert(capitalizeFirstLetter(t("error")), t("network_error"));
     }
   };
 

@@ -130,6 +130,35 @@ const commonStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
   },
+  overlayContainer: {
+    padding: 10,
+  },
+  plantCardContent: {
+    fontSize: 14,
+    color: "white",
+  },
+  plantCardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
+  plantCardSubtitle: {
+    fontSize: 14,
+    color: "white",
+  },
+  plantCard: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 50,
+    overflow: "hidden",
+    marginBottom: "1%",
+  },
+  bellIcon: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10,
+    zIndex: 1,
+  },
   microProfilePic: {
     borderRadius: screenScale * 3,
     marginRight: "1%",
@@ -138,13 +167,18 @@ const commonStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
   },
-
+  cardBackground: {
+    width: "100%",
+    height: screenHeight / 2.5,
+    justifyContent: "flex-end",
+    borderRadius: 50,
+  },
   roleContainer: {
     borderRadius: 5,
     padding: 5,
     borderWidth: 1,
     borderColor: "black",
-    alignItems: "center"
+    alignItems: "center",
   },
   roleText: {
     color: Colors.white,
@@ -179,7 +213,7 @@ const commonStyles = StyleSheet.create({
     backgroundColor: "white",
     padding: screenScale * 10,
     alignSelf: "center",
-    maxHeight: screenHeight * 0.5,
+    maxHeight: screenHeight * 0.75,
     width: screenWidth * 0.9,
     borderRadius: screenScale * 15,
     borderWidth: 1,
@@ -242,6 +276,14 @@ const commonStyles = StyleSheet.create({
     position: "absolute",
     right: 0,
     zIndex: 1,
+  },
+  imageThumbnail: {
+    margin: 5,
+    borderWidth: 1,
+    borderColor: 'transparent', 
+  },
+  selectedImage: {
+    borderWidth: 2,
   },
 });
 
