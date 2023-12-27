@@ -147,6 +147,7 @@ const CommunityScreen = () => {
       }
       return data;
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching community categories:", error);
     }
   };
@@ -163,6 +164,7 @@ const CommunityScreen = () => {
       setTotalPostsPages(data.totalPages);
       setIsLoading(false);
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching community posts:", error);
     }
   };
@@ -197,6 +199,7 @@ const CommunityScreen = () => {
         setIsLoading(false);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching community members:", error);
     }
   };

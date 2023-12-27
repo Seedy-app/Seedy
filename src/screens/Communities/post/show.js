@@ -68,6 +68,7 @@ const ViewPostScreen = ({ route }) => {
         setPost(data);
         setPostReactions(data.postReactions);
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching post:", error);
       }
     };
@@ -149,7 +150,9 @@ const ViewPostScreen = ({ route }) => {
         }
         setPostReactions(newReactions);
       }
-    } catch (error) {}
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   };
 
   const handleCommentSubmit = async () => {

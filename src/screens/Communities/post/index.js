@@ -99,6 +99,7 @@ const ListPostsScreen = ({ route, navigation }) => {
       setTotalPages(data.totalPages);
       setIsLoading(false);
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching community posts:", error);
     }
   };
@@ -112,7 +113,11 @@ const ListPostsScreen = ({ route, navigation }) => {
       <FlatList
         data={posts}
         renderItem={({ item }) => (
-          <PostCard post={item} community_id={community.id} user_role={userRole} />
+          <PostCard
+            post={item}
+            community_id={community.id}
+            user_role={userRole}
+          />
         )}
         keyExtractor={(item) => String(item.id)}
         ListFooterComponent={

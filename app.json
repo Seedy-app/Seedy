@@ -23,10 +23,35 @@
     "web": {
       "favicon": "./src/assets/images/favicon.png"
     },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "extra": {
       "eas": {
         "projectId": "fabde9de-4289-4f07-b6b6-9eaa4b1265fc"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      "sentry-expo"
+    ]
+  },
+  "hooks": {
+    "postPublish": [
+      {
+        "file": "sentry-expo/upload-sourcemaps",
+        "config": {
+          "organization": "seedy-so",
+          "project": "seedy"
+        }
+      }
+    ]
   }
 }

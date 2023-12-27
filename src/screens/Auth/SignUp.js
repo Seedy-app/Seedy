@@ -81,6 +81,7 @@ export default function SignUpScreen({ navigation }) {
         setError(t("register_error"));
       }
     } catch (error) {
+      Sentry.captureException(error);
       setError(t("network_error"));
     }
   };

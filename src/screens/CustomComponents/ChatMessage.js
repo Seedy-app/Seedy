@@ -5,13 +5,12 @@ import { View, Text, Image } from "react-native";
 import { useTheme } from "react-native-paper";
 import styles from "../../config/CommonStyles";
 
-const ChatMessage = ({ item, t, user_id }) => {
+const ChatMessage = React.memo(({ item, t, user_id }) => {
   const theme = useTheme();
   const messageDate = new Date(item.createdAt);
   const currentDate = new Date();
 
   const isToday = messageDate.toDateString() === currentDate.toDateString();
-
   const dateTimeFormat = isToday
     ? {
         hour: "2-digit",
@@ -35,7 +34,7 @@ const ChatMessage = ({ item, t, user_id }) => {
         borderRadius: 10,
       }}
     >
-      <View style={{ flexDirection: "row", alignItems:"center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Image
           style={styles.microProfilePic}
           source={{ uri: `${Config.API_URL}${item.user.picture}` }}
@@ -83,6 +82,6 @@ const ChatMessage = ({ item, t, user_id }) => {
       </View>
     </View>
   );
-};
+});
 
 export default ChatMessage;

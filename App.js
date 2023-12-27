@@ -1,3 +1,4 @@
+import * as Sentry from 'sentry-expo';
 import React, { useState, useEffect, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -73,6 +74,12 @@ async function registerForPushNotificationsAsync() {
     return undefined;
   }
 }
+
+Sentry.init({
+  dsn: 'https://124a1c1f68068173fab813246da26ea3@o4506465935622144.ingest.sentry.io/4506465949843456',
+  enableInExpoDevelopment: true,
+  debug: true,
+});
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);

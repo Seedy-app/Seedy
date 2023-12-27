@@ -30,6 +30,7 @@ const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
         setCategories(data.categories);
         setFilteredCategories(data.categories);
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching community categories:", error);
       }
     };
@@ -40,12 +41,12 @@ const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
           richText.current?.setContentHTML(response.content);
         }
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching post content:", error);
       }
     };
     fetchPostContent();
     fetchCommunityCategories();
-    
   }, []);
 
   const selectCategory = (category) => {

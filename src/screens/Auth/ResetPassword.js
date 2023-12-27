@@ -40,12 +40,16 @@ export default function ForgotPasswordScreen({ navigation }) {
       const data = await response.json();
 
       if (response.status === 200) {
-        Alert.alert(capitalizeFirstLetter(t("success")), t("password_reset_successful"));
+        Alert.alert(
+          capitalizeFirstLetter(t("success")),
+          t("password_reset_successful")
+        );
         navigation.navigate(t("login"));
       } else {
         setError(data.message || t("password_reset_error"));
       }
     } catch (error) {
+      Sentry.captureException(error);
       setError(t("network_error"));
     }
   };
@@ -69,7 +73,11 @@ export default function ForgotPasswordScreen({ navigation }) {
         secureTextEntry={true}
       />
       {Error && <Text style={styles.error}>{Error}</Text>}
-      <Button mode="contained" style={styles.button} onPress={handleResetPassword}>
+      <Button
+        mode="contained"
+        style={styles.button}
+        onPress={handleResetPassword}
+      >
         <Text style={styles.buttonText}>{t("reset_password")}</Text>
       </Button>
     </View>

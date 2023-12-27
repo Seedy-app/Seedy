@@ -65,6 +65,7 @@ export default function TakePictureScreen({ navigation }) {
           );
         }
       } catch (error) {
+        Sentry.captureException(error);
         console.error("takePicture error:", error);
         Alert.alert(
           t("unexpected_error_title"),
@@ -95,7 +96,10 @@ export default function TakePictureScreen({ navigation }) {
         <View style={styles.centeredView}>
           <Image source={IdentifyingImage} style={styles.centeredImage} />
           <Text
-            style={{ ...styles.screenCenterText, color: theme.colors.secondary }}
+            style={{
+              ...styles.screenCenterText,
+              color: theme.colors.secondary,
+            }}
           >
             {t("identifying_plant_text")}
           </Text>

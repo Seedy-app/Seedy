@@ -15,7 +15,6 @@ import {
 } from "../../../utils/api";
 
 function CreateCommunitiesScreen() {
-
   const navigation = useNavigation();
 
   const { t } = useTranslation();
@@ -27,7 +26,11 @@ function CreateCommunitiesScreen() {
         formData.description,
         formData.displayedImageUrl.replace(Config.API_URL, "")
       );
-      await giveUserCommunityRole(formData.user_id, community_id, "community_founder");
+      await giveUserCommunityRole(
+        formData.user_id,
+        community_id,
+        "community_founder"
+      );
       await createCommunityCategory(
         community_id,
         t("general"),
@@ -43,6 +46,7 @@ function CreateCommunitiesScreen() {
       }
       navigation.navigate(t("communities_list"));
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error:", error.message);
     }
   };

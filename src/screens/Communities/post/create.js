@@ -15,10 +15,17 @@ const CreatePostScreen = ({ route, navigation }) => {
   const handleSubmit = async (formData) => {
     try {
       if (!formData.category) {
-        Alert.alert(capitalizeFirstLetter(t("error")), t("no_category_selected_error"));
+        Alert.alert(
+          capitalizeFirstLetter(t("error")),
+          t("no_category_selected_error")
+        );
         return;
       }
-      const post_response = await createPost(formData.title, formData.body, formData.category.id);
+      const post_response = await createPost(
+        formData.title,
+        formData.body,
+        formData.category.id
+      );
       if (post_response) {
         Alert.alert(
           capitalizeFirstLetter(t("success")),
@@ -27,6 +34,7 @@ const CreatePostScreen = ({ route, navigation }) => {
         navigation.goBack();
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error(error);
     }
   };

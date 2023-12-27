@@ -20,7 +20,9 @@ function CommunityForm({ onSubmit, community = {} }) {
   const [description, setDescription] = useState(null);
   const [nameError, setNameError] = useState(null);
   const [name, setName] = useState(null);
-  const [displayedImageUrl, setDisplayedImageUrl] = useState(community.picture || null);
+  const [displayedImageUrl, setDisplayedImageUrl] = useState(
+    community.picture || null
+  );
   const [user_id, setUser_id] = useState(null);
 
   const n_timeout = useRef(null);
@@ -37,7 +39,7 @@ function CommunityForm({ onSubmit, community = {} }) {
         setUser_id(parsedInfo.id);
       }
     };
-  
+
     const fetchPicture = async () => {
       if (!displayedImageUrl) {
         const picUrl = await getRandomPicture("community_picture");
@@ -46,10 +48,10 @@ function CommunityForm({ onSubmit, community = {} }) {
         }
       }
     };
-  
+
     fetchUserInfo();
     fetchPicture();
-  }, [displayedImageUrl]); 
+  }, [displayedImageUrl]);
 
   const handleCommunityNameChange = (text) => {
     setName(text);
@@ -70,6 +72,7 @@ function CommunityForm({ onSubmit, community = {} }) {
         setDisplayedImageUrl(imageUri);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error selecting the image:", error.message);
     }
   };

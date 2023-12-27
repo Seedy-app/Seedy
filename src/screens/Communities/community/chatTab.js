@@ -38,7 +38,11 @@ const ChatTab = ({ community, userInfo, userRole }) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setMessages(data.filter((msg) => msg.community_id === community.id));
+          if (Array.isArray(data)) {
+            setMessages(
+              data.filter((msg) => msg.community_id === community.id)
+            );
+          }
         })
         .catch((error) =>
           console.error("Error al obtener el historial de chat:", error)
@@ -56,7 +60,7 @@ const ChatTab = ({ community, userInfo, userRole }) => {
 
   useEffect(() => {
     if (flatListRef.current) {
-      flatListRef.current.scrollToEnd({ animated: true });
+      flatListRef.current.scrollToEnd({ animated: false });
     }
   }, [messages]);
 
@@ -86,9 +90,9 @@ const ChatTab = ({ community, userInfo, userRole }) => {
         renderItem={({ item }) => (
           <ChatMessage item={item} t={t} user_id={userInfo.id} />
         )}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id.toString()}
         style={{ flex: 1 }}
-        onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
+        onLayout={() => flatListRef.current.scrollToEnd({ animated: false })}
       />
       <CustomInput
         value={newMessage}

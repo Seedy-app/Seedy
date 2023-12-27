@@ -92,6 +92,7 @@ function EditProfileScreen() {
         setDisplayedImageUrl(imageUri);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error selecting the image:", error);
     }
   };
@@ -131,6 +132,7 @@ function EditProfileScreen() {
       await updateUserInfo(imageUrl);
       navigation.navigate(t("show_profile"));
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error:", error.message);
     }
   };

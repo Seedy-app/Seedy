@@ -25,6 +25,7 @@ export const checkUsernameAvailability = async (
       return { error: "" };
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -49,6 +50,7 @@ export const checkEmailAvailability = async (email, ignore_user_id = null) => {
       return { error: "" };
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -80,6 +82,7 @@ export const changeCommunityPicture = async (community_id, picture) => {
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -109,6 +112,7 @@ export const createCommunity = async (name, description, picture) => {
       return responseData.id;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -139,6 +143,7 @@ export const getUserCommunityRole = async (user_id, community_id) => {
       return responseData;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -173,6 +178,7 @@ export const giveUserCommunityRole = async (
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -204,6 +210,7 @@ export const checkCommunityNameAvailability = async (
       return { error: "" };
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error checking community name:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -222,10 +229,9 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
     name: `${filename}.jpg`,
     type: "image/jpeg",
   });
-
   try {
     const response = await fetch(
-      `${Config.API_URL}/image/upload/${encodeURIComponent(folderName)}`,
+      `${Config.API_URL}/image/upload/${folderName}`,
       {
         method: "POST",
         body: formData,
@@ -242,6 +248,7 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
     }
     return responseData.imageUrl;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error uploading image:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -267,6 +274,7 @@ export const getRandomPicture = async (type) => {
       return randomFilePath;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -303,6 +311,7 @@ export const checkCategoryNameAvailability = async (
       return { error: "" };
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error checking category name:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -337,6 +346,7 @@ export const createCommunityCategory = async (
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -371,6 +381,7 @@ export const getCommunityCategories = async (
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -401,6 +412,7 @@ export const createPost = async (title, body, category_id) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -433,6 +445,7 @@ export const editPost = async (title, content, category_id, post_id) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -459,6 +472,7 @@ export const deletePost = async (post_id) => {
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -490,6 +504,7 @@ export const deleteUserFromCommunity = async (community_id, user_id = null) => {
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -536,6 +551,7 @@ export const getCommunityPosts = async (
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -567,6 +583,7 @@ export const createCategory = async (name, description, community_id) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -601,6 +618,7 @@ export const migratePostsToCategory = async (
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -626,6 +644,7 @@ export const deleteCategory = async (category_id) => {
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -657,6 +676,7 @@ export const editCategory = async (name, description, category_id) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -684,6 +704,7 @@ export const identifyPlant = async (photo_url) => {
       return results;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -716,6 +737,7 @@ export const firstOrCreatePlant = async (plant) => {
       return data.id;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -742,6 +764,7 @@ export const associatePlantToUser = async (plant_id) => {
       return -1;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error") };
   }
@@ -774,6 +797,7 @@ export const isPlantAssociatedWithMe = async (plant_id) => {
       }
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error"), associated: false };
   }
@@ -797,6 +821,7 @@ export const getPlants = async () => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return { error: i18n.t("network_error"), associated: false };
   }
@@ -826,6 +851,7 @@ export const createComment = async (content, post_id) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -855,6 +881,7 @@ export const reactComment = async (comment_id, button_pressed) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -881,6 +908,7 @@ export const deleteComment = async (comment_id) => {
       return true;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return false;
   }
@@ -908,6 +936,7 @@ export const getPostContentById = async (post_id) => {
       return responseData;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }
@@ -937,6 +966,7 @@ export const reactPost = async (post_id, button_pressed) => {
       return data;
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error:", error.message);
     return null;
   }

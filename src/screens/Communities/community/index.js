@@ -37,6 +37,7 @@ function CommunitiesScreen() {
       const data = await response.json();
       setCommunitiesData(data);
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching communities:", error);
     } finally {
       setRefreshing(false);
