@@ -14,6 +14,7 @@
   "category_name_already_exists_error": "Category name already exists.",
   "change_language": "Change language",
   "change_password": "Change password",
+  "change_role": "Change role",
   "choose_common_name_label": "Choose a Common Name",
   "comments": "comments",
   "common_names": "common names",
@@ -21,6 +22,9 @@
   "communities_list": "Communities list",
   "community": "Community",
   "community_deleted": "community successfully deleted",
+  "community_founder": "Founder",
+  "community_member": "Member",
+  "community_moderator": "Mod",
   "community_name": "Community name",
   "community_name_already_exists_error": "Community name already exists.",
   "community_name_mismatch": "community name mismatch.",
@@ -99,9 +103,9 @@
   "not_logged_in_error": "Unauthenticated user. Please log in.",
   "optional": "optional",
   "password": "Password",
+  "password_modify_successful": "Password successfully modified.",
   "password_reset_error": "Password reset failed.",
   "password_reset_successful": "Password successfully reseted.",
-  "password_modify_successful": "Password successfully modified.",
   "picture": "Picture",
   "plant_identifier": "Plant identifier",
   "post_button_text": "post",
@@ -167,5 +171,6 @@
   "weekly": "Weekly",
   "where_to_migrate_posts": "This category has associated posts. Please choose another category to migrate these posts before proceeding with the deletion.",
   "write_a_message": "Write a message...",
-  "wrong_identification": "This is not the plant"
+  "wrong_identification": "This is not the plant",
+  "confirm_role_change": "confirm grant this role"
 }

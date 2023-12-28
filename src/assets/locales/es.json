@@ -14,6 +14,7 @@
   "category_name_already_exists_error": "El nombre de la categoría ya existe.",
   "change_language": "Cambiar lenguaje",
   "change_password": "Cambiar contraseña",
+  "change_role": "Cambiar rol",
   "choose_common_name_label": "Elige un Nombre Común",
   "comments": "comentarios",
   "common_names": "nombres comunes",
@@ -21,6 +22,9 @@
   "communities_list": "Listado de comunidades",
   "community": "Comunidad",
   "community_deleted": "comunidad eliminada exitosamente",
+  "community_founder": "Founder",
+  "community_member": "Member",
+  "community_moderator": "Mod",
   "community_name": "Nombre de la comunidad",
   "community_name_already_exists_error": "El nombre de la comunidad ya existe.",
   "community_name_mismatch": "el nombre de la comunidad no coincide.",
@@ -99,9 +103,9 @@
   "not_logged_in_error": "Usuario no autenticado. Por favor, inicia sesión.",
   "optional": "opcional",
   "password": "Contraseña",
+  "password_modify_successful": "Contraseña modificada con exito.",
   "password_reset_error": "Ocurrio un error al modificar la contraseña.",
   "password_reset_successful": "Contraseña reseteada con exito.",
-  "password_modify_successful": "Contraseña modificada con exito.",
   "picture": "Imagen",
   "plant_identifier": "Identificador de plantas",
   "post_button_text": "publicar",
@@ -166,5 +170,6 @@
   "weekly": "Semanalmente",
   "where_to_migrate_posts": "Esta categoría tiene publicaciones asociadas. Elige otra categoría para migrar estas publicaciones antes de proceder con la eliminación.",
   "write_a_message": "Escribe un mensaje...",
-  "wrong_identification": "Esta no es la planta"
+  "wrong_identification": "Esta no es la planta",
+  "confirm_role_change": "confirmar otorgar este rol"
 }

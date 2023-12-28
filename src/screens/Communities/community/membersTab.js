@@ -7,22 +7,57 @@ import {
   IconButton,
   Button,
   useTheme,
+  Menu,
 } from "react-native-paper";
 import styles from "../CommunitiesStyles";
 import MemberCard from "../../CustomComponents/MemberCard";
-import { capitalizeFirstLetter, isModerator } from "../../../utils/device";
+import {
+  capitalizeFirstLetter,
+  isFounder,
+  isModerator,
+  isAdmin,
+} from "../../../utils/device";
 import Config from "../../../config/Config";
 import Colors from "../../../config/Colors";
 import { useTranslation } from "react-i18next";
-import { deleteUserFromCommunity } from "../../../utils/api";
+import {
+  deleteUserFromCommunity,
+  giveUserCommunityRole,
+} from "../../../utils/api";
 
 const MembersTab = ({ communityMembers, community_id, userRole, userInfo }) => {
   const [members, setMembers] = useState(communityMembers);
   const [focusedMember, setFocusedMember] = useState(null);
   const [memberModalVisible, setMemberModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [roleMenuVisible, setRoleMenuVisible] = useState(false);
+  const [confirmChangeRoleVisible, setConfirmChangeRoleVisible] =
+    useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
   const theme = useTheme();
   const { t } = useTranslation();
+  const handleChangeRoleRequest = (newRole) => {
+    setSelectedRole(newRole);
+    setRoleMenuVisible(false);
+    setConfirmChangeRoleVisible(true);
+  };
+
+  const handleChangeRole = async () => {
+    setConfirmChangeRoleVisible(false);
+    await giveUserCommunityRole(focusedMember.id, community_id, selectedRole);
+    const updatedMembers = members.map((member) => {
+      if (member.id === focusedMember.id) {
+        return {
+          ...member,
+          role: selectedRole,
+          role_display_name: t(selectedRole),
+        };
+      }
+      return member;
+    });
+    setMembers(updatedMembers);
+    setMemberModalVisible(false);
+  };
 
   const handleOnLongPressMemberCard = (member) => {
     setFocusedMember(member);
@@ -39,7 +74,9 @@ const MembersTab = ({ communityMembers, community_id, userRole, userInfo }) => {
       focusedMember.id
     );
     if (response) {
-      const updatedMembers = members.filter(member => member.id !== focusedMember.id);
+      const updatedMembers = members.filter(
+        (member) => member.id !== focusedMember.id
+      );
       setMembers(updatedMembers);
       setConfirmModalVisible(false);
       setMemberModalVisible(false);
@@ -117,6 +154,19 @@ const MembersTab = ({ communityMembers, community_id, userRole, userInfo }) => {
               </View>
             </View>
             <View>
+              {focusedMember &&
+                isFounder(userRole) &&
+                (focusedMember.role != "community_founder" || isAdmin(userRole)) &&
+                focusedMember.id != userInfo.id && (
+                  <Button
+                    mode="contained"
+                    icon="account-star"
+                    style={styles.button}
+                    onPress={() => setRoleMenuVisible(true)}
+                  >
+                    {capitalizeFirstLetter(t("change_role"))}
+                  </Button>
+                )}
               {focusedMember && focusedMember.id != userInfo.id && (
                 <Button
                   mode="contained"
@@ -166,6 +216,62 @@ const MembersTab = ({ communityMembers, community_id, userRole, userInfo }) => {
               <Button
                 mode="contained"
                 onPress={() => setConfirmModalVisible(false)}
+                style={styles.button}
+              >
+                {capitalizeFirstLetter(t("no"))}
+              </Button>
+            </View>
+          </View>
+        </Modal>
+        {/* Menú de cambio de rol */}
+        <Menu
+          visible={roleMenuVisible}
+          style={styles.menu}
+          onDismiss={() => setRoleMenuVisible(false)}
+          anchor={
+            <Button onPress={() => setRoleMenuVisible(true)}>
+              {capitalizeFirstLetter(t("change_role"))}
+            </Button>
+          }
+        >
+          <Menu.Item
+            onPress={() => handleChangeRoleRequest("community_member")}
+            title={t("community_member")}
+          />
+          <Menu.Item
+            onPress={() => handleChangeRoleRequest("community_moderator")}
+            title={t("community_moderator")}
+          />
+          <Menu.Item
+            onPress={() => handleChangeRoleRequest("community_founder")}
+            title={t("community_founder")}
+          />
+        </Menu>
+
+        {/* Modal de confirmación de cambio de rol */}
+        <Modal
+          visible={confirmChangeRoleVisible}
+          onDismiss={() => setConfirmChangeRoleVisible(false)}
+          contentContainerStyle={styles.modalContainer}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>
+              {`${capitalizeFirstLetter(t("confirm_role_change"))}: ${t(
+                selectedRole
+              )}?`}
+            </Text>
+            <View style={styles.modalButtons}>
+              <Button
+                mode="contained"
+                onPress={handleChangeRole}
+                style={styles.button}
+                buttonColor={theme.colors.danger}
+              >
+                {capitalizeFirstLetter(t("yes"))}
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => setConfirmChangeRoleVisible(false)}
                 style={styles.button}
               >
                 {capitalizeFirstLetter(t("no"))}

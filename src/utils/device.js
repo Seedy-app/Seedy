@@ -39,3 +39,7 @@ export const isModerator = (userRole) => {
 export const isFounder = (userRole) => {
   return userRole && ["system_admin", "community_founder"].includes(userRole.name);
 };
+
+export const isAdmin = (userRole) => {
+  return userRole && ["system_admin"].includes(userRole.name);
+};
