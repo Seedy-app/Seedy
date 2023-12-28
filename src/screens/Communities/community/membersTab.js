@@ -154,19 +154,42 @@ const MembersTab = ({ communityMembers, community_id, userRole, userInfo }) => {
               </View>
             </View>
             <View>
-              {focusedMember &&
-                isFounder(userRole) &&
-                (focusedMember.role != "community_founder" || isAdmin(userRole)) &&
-                focusedMember.id != userInfo.id && (
-                  <Button
-                    mode="contained"
-                    icon="account-star"
-                    style={styles.button}
-                    onPress={() => setRoleMenuVisible(true)}
-                  >
-                    {capitalizeFirstLetter(t("change_role"))}
-                  </Button>
-                )}
+              {/* Menú de cambio de rol */}
+              <Menu
+                visible={roleMenuVisible}
+                style={styles.menu}
+                onDismiss={() => setRoleMenuVisible(false)}
+                anchor={
+                  focusedMember &&
+                  isFounder(userRole) &&
+                  (focusedMember.role != "community_founder" ||
+                    isAdmin(userRole)) &&
+                  focusedMember.id != userInfo.id && (
+                    <Button
+                      mode="contained"
+                      icon="account-star"
+                      style={styles.button}
+                      onPress={() => setRoleMenuVisible(true)}
+                    >
+                      {capitalizeFirstLetter(t("change_role"))}
+                    </Button>
+                  )
+                }
+              >
+                <Menu.Item
+                  onPress={() => handleChangeRoleRequest("community_member")}
+                  title={t("community_member")}
+                />
+                <Menu.Item
+                  onPress={() => handleChangeRoleRequest("community_moderator")}
+                  title={t("community_moderator")}
+                />
+                <Menu.Item
+                  onPress={() => handleChangeRoleRequest("community_founder")}
+                  title={t("community_founder")}
+                />
+              </Menu>
+
               {focusedMember && focusedMember.id != userInfo.id && (
                 <Button
                   mode="contained"
@@ -223,30 +246,6 @@ const MembersTab = ({ communityMembers, community_id, userRole, userInfo }) => {
             </View>
           </View>
         </Modal>
-        {/* Menú de cambio de rol */}
-        <Menu
-          visible={roleMenuVisible}
-          style={styles.menu}
-          onDismiss={() => setRoleMenuVisible(false)}
-          anchor={
-            <Button onPress={() => setRoleMenuVisible(true)}>
-              {capitalizeFirstLetter(t("change_role"))}
-            </Button>
-          }
-        >
-          <Menu.Item
-            onPress={() => handleChangeRoleRequest("community_member")}
-            title={t("community_member")}
-          />
-          <Menu.Item
-            onPress={() => handleChangeRoleRequest("community_moderator")}
-            title={t("community_moderator")}
-          />
-          <Menu.Item
-            onPress={() => handleChangeRoleRequest("community_founder")}
-            title={t("community_founder")}
-          />
-        </Menu>
 
         {/* Modal de confirmación de cambio de rol */}
         <Modal
