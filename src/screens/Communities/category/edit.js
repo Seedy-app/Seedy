@@ -4,9 +4,9 @@ import styles from "../CommunitiesStyles";
 import CategoryForm from "./form";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
-import {
-  editCategory,
-} from "../../../utils/api";
+import { editCategory } from "../../../utils/api";
+import * as Sentry from '@sentry/react-native';
+
 
 const EditCategoryScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
@@ -14,11 +14,7 @@ const EditCategoryScreen = ({ route, navigation }) => {
 
   const handleSubmit = async (name, description) => {
     try {
-      const put_response = await editCategory(
-        name,
-        description,
-        category.id
-      );
+      const put_response = await editCategory(name, description, category.id);
       if (put_response) {
         Alert.alert(
           capitalizeFirstLetter(t("success")),
@@ -27,6 +23,7 @@ const EditCategoryScreen = ({ route, navigation }) => {
         navigation.goBack();
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error(error);
     }
   };

@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import * as Sentry from '@sentry/react-native';
 import { Button, Portal, Modal, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -68,6 +69,7 @@ const ViewPostScreen = ({ route }) => {
         setPost(data);
         setPostReactions(data.postReactions);
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching post:", error);
       }
     };
@@ -149,7 +151,9 @@ const ViewPostScreen = ({ route }) => {
         }
         setPostReactions(newReactions);
       }
-    } catch (error) {}
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   };
 
   const handleCommentSubmit = async () => {

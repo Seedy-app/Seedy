@@ -88,6 +88,16 @@ function ProfileScreen() {
         >
           <Text style={styles.buttonText}>{t("edit_profile")}</Text>
         </Button>
+        <Button
+          mode="contained"
+          icon="lock"
+          onPress={() =>
+            navigation.navigate(t("reset_password"), { isLoggedIn: true })
+          }
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>{t("change_password")}</Text>
+        </Button>
         <Menu
           visible={isMenuVisible}
           onDismiss={() => setIsMenuVisible(false)}

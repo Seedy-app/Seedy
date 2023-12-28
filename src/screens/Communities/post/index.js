@@ -9,6 +9,8 @@ import PostCard from "../../CustomComponents/PostCard";
 import Pagination from "../../CustomComponents/Pagination";
 import { getUserCommunityRole, getCommunityPosts } from "../../../utils/api";
 import { HeaderBackButton } from "@react-navigation/elements";
+import * as Sentry from '@sentry/react-native';
+
 
 const ListPostsScreen = ({ route, navigation }) => {
   const { community, category, currentCategoriesPage, currentPostsPage } =
@@ -99,6 +101,7 @@ const ListPostsScreen = ({ route, navigation }) => {
       setTotalPages(data.totalPages);
       setIsLoading(false);
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching community posts:", error);
     }
   };
@@ -112,7 +115,11 @@ const ListPostsScreen = ({ route, navigation }) => {
       <FlatList
         data={posts}
         renderItem={({ item }) => (
-          <PostCard post={item} community_id={community.id} user_role={userRole} />
+          <PostCard
+            post={item}
+            community_id={community.id}
+            user_role={userRole}
+          />
         )}
         keyExtractor={(item) => String(item.id)}
         ListFooterComponent={

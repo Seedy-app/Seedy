@@ -5,22 +5,27 @@ import CustomInput from "../../CustomComponents/CustomInput";
 import { useTranslation } from "react-i18next";
 import styles from "../CommunitiesStyles";
 import Config from "../../../config/Config";
-import { selectImageFromGallery } from "../../../utils/device";
+import {
+  capitalizeFirstLetter,
+  selectImageFromGallery,
+} from "../../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import loadingImage from "../../../assets/images/loading.gif";
 import { useTheme } from "react-native-paper";
+import * as Sentry from "@sentry/react-native";
+import { uploadPictureToServer } from "../../../utils/api";
 
 import {
   checkCommunityNameAvailability,
   getRandomPicture,
 } from "../../../utils/api";
 
-function CommunityForm({ onSubmit, community = {} }) {
+function CommunityForm({ onSubmit, community = null }) {
   const [selectedImageUri, setSelectedImageUri] = useState(null);
   const [description, setDescription] = useState(null);
   const [nameError, setNameError] = useState(null);
   const [name, setName] = useState(null);
-  const [displayedImageUrl, setDisplayedImageUrl] = useState(community.picture || null);
+  const [displayedImageUrl, setDisplayedImageUrl] = useState(null);
   const [user_id, setUser_id] = useState(null);
 
   const n_timeout = useRef(null);
@@ -30,6 +35,14 @@ function CommunityForm({ onSubmit, community = {} }) {
   const { t } = useTranslation();
 
   useEffect(() => {
+    if (community) {
+      setName(community.name);
+      setDescription(community.description);
+      setDisplayedImageUrl(Config.API_URL + community.picture);
+    }
+  }, [community]);
+
+  useEffect(() => {
     const fetchUserInfo = async () => {
       const storedUserInfo = await AsyncStorage.getItem("userInfo");
       if (storedUserInfo) {
@@ -37,7 +50,7 @@ function CommunityForm({ onSubmit, community = {} }) {
         setUser_id(parsedInfo.id);
       }
     };
-  
+
     const fetchPicture = async () => {
       if (!displayedImageUrl) {
         const picUrl = await getRandomPicture("community_picture");
@@ -46,16 +59,22 @@ function CommunityForm({ onSubmit, community = {} }) {
         }
       }
     };
-  
+
     fetchUserInfo();
-    fetchPicture();
-  }, [displayedImageUrl]); 
+    if (!community) {
+      fetchPicture();
+    }
+  }, [displayedImageUrl]);
 
   const handleCommunityNameChange = (text) => {
     setName(text);
     clearTimeout(n_timeout.current);
     n_timeout.current = setTimeout(async () => {
-      const result = await checkCommunityNameAvailability(text);
+      if (community) {
+        result = await checkCommunityNameAvailability(text, community.id);
+      } else {
+        result = await checkCommunityNameAvailability(text);
+      }
       if (result.error || result.error == "") {
         setNameError(result.error);
       }
@@ -67,16 +86,22 @@ function CommunityForm({ onSubmit, community = {} }) {
       const imageUri = await selectImageFromGallery();
       if (imageUri) {
         setSelectedImageUri(imageUri);
-        setDisplayedImageUrl(imageUri);
+        imageUrl = await uploadPictureToServer(
+          `cp_${Date.now()}`,
+          `communities/first_cps`,
+          imageUri
+        );
+        setDisplayedImageUrl(Config.API_URL + imageUrl);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error selecting the image:", error.message);
     }
   };
 
   const handleSubmit = () => {
     const formData = {
-      user_id: user_id,
+      user_id,
       name,
       description,
       displayedImageUrl,
@@ -95,9 +120,14 @@ function CommunityForm({ onSubmit, community = {} }) {
   return (
     <View style={{ ...styles.container }}>
       {nameError && <Text style={styles.error}>{nameError}</Text>}
-      <CustomInput label={t("name")} onChangeText={handleCommunityNameChange} />
+      <CustomInput
+        label={t("name")}
+        value={name}
+        onChangeText={handleCommunityNameChange}
+      />
       <CustomInput
         label={t("description")}
+        value={description}
         onChangeText={(text) => setDescription(text)}
       />
 
@@ -130,7 +160,11 @@ function CommunityForm({ onSubmit, community = {} }) {
         {t("no_community_image_message")}
       </Text>
       <Button mode="contained" style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>{t("create")}</Text>
+        <Text style={styles.buttonText}>
+          {community
+            ? capitalizeFirstLetter(t("edit"))
+            : capitalizeFirstLetter(t("create"))}
+        </Text>
       </Button>
     </View>
   );

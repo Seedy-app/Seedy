@@ -5,6 +5,8 @@ import { Text, Button, TouchableRipple } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
+import * as Sentry from '@sentry/react-native';
+
 import {
   checkUsernameAvailability,
   checkEmailAvailability,
@@ -81,6 +83,7 @@ export default function SignUpScreen({ navigation }) {
         setError(t("register_error"));
       }
     } catch (error) {
+      Sentry.captureException(error);
       setError(t("network_error"));
     }
   };

@@ -13,8 +13,16 @@ import Config from "../../config/Config";
 import styles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
 import { reactComment } from "../../utils/api";
+import * as Sentry from '@sentry/react-native';
 
-const Comment = ({ comment, index, user_id, onClickOptions, hide_pictures = false }) => {
+
+const Comment = ({
+  comment,
+  index,
+  user_id,
+  onClickOptions,
+  hide_pictures = false,
+}) => {
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const theme = useTheme();
@@ -50,11 +58,19 @@ const Comment = ({ comment, index, user_id, onClickOptions, hide_pictures = fals
         }
         setCommentReactions(newReactions);
       }
-    } catch (error) {}
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   };
 
   return (
-    <View key={index} style={{...styles.commentView, maxWidth: Dimensions.get('window').width}}>
+    <View
+      key={index}
+      style={{
+        ...styles.commentView,
+        maxWidth: Dimensions.get("window").width,
+      }}
+    >
       <View style={styles.commentInfoBox}>
         <Image
           source={{ uri: Config.API_URL + comment.user.picture }}
@@ -126,15 +142,18 @@ const Comment = ({ comment, index, user_id, onClickOptions, hide_pictures = fals
       </View>
       <View style={{ flex: 1, padding: "1%" }}>
         {onClickOptions && (
-        <View style={{ flex: 0.05 }}>
-          <IconButton
-            icon="dots-vertical"
-            size={20}
-            onPress={() => onClickOptions(comment)}
-            style={styles.commentOptionsButton}
-          />
-        </View>)}
-        <View style={{ flex: 0.9, maxWidth: Dimensions.get("window").width * 0.65 }}>
+          <View style={{ flex: 0.05 }}>
+            <IconButton
+              icon="dots-vertical"
+              size={20}
+              onPress={() => onClickOptions(comment)}
+              style={styles.commentOptionsButton}
+            />
+          </View>
+        )}
+        <View
+          style={{ flex: 0.9, maxWidth: Dimensions.get("window").width * 0.65 }}
+        >
           <RenderHtml
             contentWidth={width * 0.65}
             source={{ html: content }}

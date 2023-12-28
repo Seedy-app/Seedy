@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "../screens/Profile/show";
 import EditProfileScreen from "../screens/Profile/edit";
+import ResetPasswordScreen from "../screens/Auth/ResetPassword";
 import { useTranslation } from "react-i18next";
 
 const ProfileStack = createStackNavigator();
@@ -24,6 +25,16 @@ function ProfileStackNavigator() {
       <ProfileStack.Screen
         name={t("edit_profile")}
         component={EditProfileScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <ProfileStack.Screen
+        name={t("reset_password")}
+        component={ResetPasswordScreen}
         options={{
           headerStyle: {
             borderBottomWidth: 1,

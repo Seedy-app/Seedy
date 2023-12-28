@@ -6,8 +6,9 @@ import CustomInput from "../CustomComponents/CustomInput";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
 import { capitalizeFirstLetter } from "../../utils/device";
+import * as Sentry from '@sentry/react-native';
 
-export default function ForgotPasswordScreen({ navigation }) {
+export default function ChangePasswordScreen({ navigation }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
 
@@ -23,11 +24,15 @@ export default function ForgotPasswordScreen({ navigation }) {
       if (response.status === 200) {
         navigation.navigate(t("reset_password"));
       } else if (response.status === 404) {
-        Alert.alert(capitalizeFirstLetter(t("error")), t("user_not_found_error"));
+        Alert.alert(
+          capitalizeFirstLetter(t("error")),
+          t("user_not_found_error")
+        );
       } else {
         Alert.alert(capitalizeFirstLetter(t("error")), t("send_email_error"));
       }
     } catch (error) {
+      Sentry.captureException(error);
       Alert.alert(capitalizeFirstLetter(t("error")), t("network_error"));
     }
   };

@@ -7,6 +7,8 @@ import {
   Image,
   Alert,
 } from "react-native";
+import * as Sentry from '@sentry/react-native';
+
 import {
   Dialog,
   Paragraph,
@@ -39,6 +41,7 @@ const AddPlantScreen = () => {
         const plantsData = await getPlants();
         setOptions(plantsData);
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error al obtener las plantas:", error);
       }
     };
@@ -120,12 +123,12 @@ const AddPlantScreen = () => {
   return (
     <Provider>
       <View style={styles.container}>
-          <Searchbar
-            style={styles.searchBar}
-            placeholder={t("search_plant")}
-            onChangeText={setSearchQuery}
-            value={searchQuery}
-          />
+        <Searchbar
+          style={styles.searchBar}
+          placeholder={t("search_plant")}
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+        />
         {
           <FlatList
             data={filteredOptions}

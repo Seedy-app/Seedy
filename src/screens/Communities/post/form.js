@@ -13,12 +13,14 @@ import { useTranslation } from "react-i18next";
 import { actions } from "react-native-pell-rich-editor";
 import { getCommunityCategories, getPostContentById } from "../../../utils/api";
 import styles from "../CommunitiesStyles";
+import * as Sentry from '@sentry/react-native';
+
 
 const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
   const { t } = useTranslation();
   const richText = useRef();
-  const [title, setTitle] = useState(post.title || "");
-  const [category, setCategory] = useState(post.category || null);
+  const [title, setTitle] = useState(post ? post.title : "");
+  const [category, setCategory] = useState(post ? post.category : null);
   const [modalVisible, setModalVisible] = useState(false);
   const [categories, setCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState(categories);
@@ -30,6 +32,7 @@ const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
         setCategories(data.categories);
         setFilteredCategories(data.categories);
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching community categories:", error);
       }
     };
@@ -40,12 +43,12 @@ const PostForm = ({ user_id, community_id, onSubmit, post = null }) => {
           richText.current?.setContentHTML(response.content);
         }
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching post content:", error);
       }
     };
     fetchPostContent();
     fetchCommunityCategories();
-    
   }, []);
 
   const selectCategory = (category) => {

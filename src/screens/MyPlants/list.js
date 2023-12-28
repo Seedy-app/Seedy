@@ -20,6 +20,7 @@ import {
   Searchbar,
   Button,
 } from "react-native-paper";
+import * as Sentry from '@sentry/react-native';
 import styles from "./MyPlantsStyles";
 import { useTranslation } from "react-i18next";
 import { capitalizeFirstLetter } from "../../utils/device";
@@ -134,6 +135,7 @@ function ListMyPlantsScreen() {
       setPlants(plants.filter((plant) => plant.id !== plant_id));
       closeModal();
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error removing plant:", error);
       Alert.alert(capitalizeFirstLetter(t("error")), t("remove_plant_error"));
     }
@@ -159,6 +161,7 @@ function ListMyPlantsScreen() {
       setAllPlants(responseData.plants);
       setPlants(responseData.plants.slice(0, 5));
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error fetching plants:", error);
     }
   }
@@ -170,6 +173,7 @@ function ListMyPlantsScreen() {
       try {
         await fetchUserPlants(id);
       } catch (error) {
+        Sentry.captureException(error);
         console.error("Error fetching plants:", error);
       }
     }
@@ -214,7 +218,7 @@ function ListMyPlantsScreen() {
         };
         break;
       default:
-        schedulingOptions = selectedDate.getTime()
+        schedulingOptions = selectedDate.getTime();
         break;
     }
 
@@ -248,7 +252,7 @@ function ListMyPlantsScreen() {
       });
       Alert.alert(capitalizeFirstLetter(t("success")), successMessage);
     } catch (error) {
-      console.log(error);
+      Sentry.captureException(error);
       Alert.alert(
         capitalizeFirstLetter(t("error")),
         t("scheduling_error_retry")

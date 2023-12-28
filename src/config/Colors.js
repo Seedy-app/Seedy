@@ -10,6 +10,7 @@ const Colors = {
     community_founder: "darkviolet",
     community_moderator: "midnightblue",
     community_member: "#4CAF50",
+    system_admin: "#FF4136",
 };
 
 export default Colors;

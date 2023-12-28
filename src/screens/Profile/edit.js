@@ -14,6 +14,7 @@ import Config from "../../config/Config";
 import { selectImageFromGallery } from "../../utils/device";
 import { uploadPictureToServer } from "../../utils/api";
 import loadingImage from "../../assets/images/loading.gif";
+import * as Sentry from "@sentry/react-native";
 
 function EditProfileScreen() {
   const { t } = useTranslation();
@@ -92,6 +93,7 @@ function EditProfileScreen() {
         setDisplayedImageUrl(imageUri);
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error selecting the image:", error);
     }
   };
@@ -111,6 +113,7 @@ function EditProfileScreen() {
             selectedImageUri
           )
         : picture;
+
       const response = await fetch(`${Config.API_URL}/user/${user_id}/edit`, {
         method: "PUT",
         headers: {
@@ -131,6 +134,7 @@ function EditProfileScreen() {
       await updateUserInfo(imageUrl);
       navigation.navigate(t("show_profile"));
     } catch (error) {
+      Sentry.captureException(error);
       console.error("Error:", error.message);
     }
   };
