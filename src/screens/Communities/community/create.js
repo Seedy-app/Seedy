@@ -5,13 +5,10 @@ import { useTranslation } from "react-i18next";
 import styles from "../CommunitiesStyles";
 import Config from "../../../config/Config";
 import CommunityForm from "./form";
-import * as Sentry from '@sentry/react-native';
-
+import * as Sentry from "@sentry/react-native";
 
 import {
-  changeCommunityPicture,
   createCommunity,
-  uploadPictureToServer,
   giveUserCommunityRole,
   createCommunityCategory,
 } from "../../../utils/api";
@@ -38,14 +35,6 @@ function CreateCommunitiesScreen() {
         t("general"),
         t("general_category_description")
       );
-      if (formData.selectedImageUri) {
-        const imageUrl = await uploadPictureToServer(
-          `cp_${Date.now()}`,
-          `communities/${community_id}`,
-          formData.selectedImageUri
-        );
-        await changeCommunityPicture(community_id, imageUrl);
-      }
       navigation.navigate(t("communities_list"));
     } catch (error) {
       Sentry.captureException(error);

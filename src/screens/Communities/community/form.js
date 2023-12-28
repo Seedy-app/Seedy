@@ -20,7 +20,7 @@ import {
   getRandomPicture,
 } from "../../../utils/api";
 
-function CommunityForm({ onSubmit, community = {} }) {
+function CommunityForm({ onSubmit, community = null }) {
   const [selectedImageUri, setSelectedImageUri] = useState(null);
   const [description, setDescription] = useState(null);
   const [nameError, setNameError] = useState(null);
@@ -88,7 +88,7 @@ function CommunityForm({ onSubmit, community = {} }) {
         setSelectedImageUri(imageUri);
         imageUrl = await uploadPictureToServer(
           `cp_${Date.now()}`,
-          `communities/${community.id}`,
+          `communities/first_cps`,
           imageUri
         );
         setDisplayedImageUrl(Config.API_URL + imageUrl);
@@ -101,6 +101,7 @@ function CommunityForm({ onSubmit, community = {} }) {
 
   const handleSubmit = () => {
     const formData = {
+      user_id,
       name,
       description,
       displayedImageUrl,

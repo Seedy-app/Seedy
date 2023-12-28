@@ -14,7 +14,7 @@ import {
   IconButton,
   useTheme,
 } from "react-native-paper";
-import * as Sentry from '@sentry/react-native';
+import * as Sentry from "@sentry/react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -118,7 +118,7 @@ const CommunityScreen = () => {
           <></>
         ),
     });
-  }, [navigation, userRole]);
+  }, [navigation, userRole, community.name]);
 
   const changePostsPage = (newPage) => {
     setCurrentPostsPage(newPage);
@@ -230,9 +230,18 @@ const CommunityScreen = () => {
         fetchCommunityCategories={fetchCommunityCategories}
       />
     ),
-    chat: () => <ChatTab community={community} userInfo={userInfo} userRole={userRole}/>,
-    members: () => <MembersTab communityMembers={communityMembersData.data} community_id={community.id} userRole={userRole} userInfo={userInfo} />,
-    info: () => <InfoTab community={community}/>,
+    chat: () => (
+      <ChatTab community={community} userInfo={userInfo} userRole={userRole} />
+    ),
+    members: () => (
+      <MembersTab
+        communityMembers={communityMembersData.data}
+        community_id={community.id}
+        userRole={userRole}
+        userInfo={userInfo}
+      />
+    ),
+    info: () => <InfoTab community={community} />,
   });
 
   const join_community = async () => {
@@ -244,7 +253,10 @@ const CommunityScreen = () => {
     <>
       {isLoading || isMember === null ? (
         <View style={styles.fullLoading}>
-          <Image source={loadingImage} />
+          <Image
+            source={loadingImage}
+            style={[styles.FormProfilePic, styles.formPicPreview]}
+          />
         </View>
       ) : isMember ? (
         <TabView
