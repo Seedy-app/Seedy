@@ -66,15 +66,27 @@ const CommunitySettingsScreen = () => {
   return (
     <View style={styles.container}>
       {isFounder(userRole) && (
-        <Button
-          mode="contained"
-          icon="trash-can"
-          onPress={showDeleteModal}
-          buttonColor={theme.colors.danger}
-          style={styles.button}
-        >
-          {t("delete_community")}
-        </Button>
+        <>
+          <Button
+            mode="contained"
+            icon="pencil"
+            onPress={() => {navigation.navigate(capitalizeFirstLetter(t("edit_community")), {
+              community: community,
+            })}}
+            style={styles.button}
+          >
+            {t("edit_community")}
+          </Button>
+          <Button
+            mode="contained"
+            icon="trash-can"
+            onPress={showDeleteModal}
+            buttonColor={theme.colors.danger}
+            style={styles.button}
+          >
+            {t("delete_community")}
+          </Button>
+        </>
       )}
 
       <Portal>

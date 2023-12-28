@@ -253,7 +253,6 @@ function ListMyPlantsScreen() {
       Alert.alert(capitalizeFirstLetter(t("success")), successMessage);
     } catch (error) {
       Sentry.captureException(error);
-      console.log(error);
       Alert.alert(
         capitalizeFirstLetter(t("error")),
         t("scheduling_error_retry")

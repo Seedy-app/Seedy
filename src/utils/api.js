@@ -1,8 +1,7 @@
 import Config from "../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "i18next";
-import * as Sentry from '@sentry/react-native';
-
+import * as Sentry from "@sentry/react-native";
 
 export const checkUsernameAvailability = async (
   username,
@@ -120,6 +119,43 @@ export const createCommunity = async (name, description, picture) => {
   }
 };
 
+export const editCommunity = async (
+  name,
+  description,
+  community_id,
+  imageUrl = null
+) => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+
+    const response = await fetch(
+      `${Config.API_URL}/communities/${community_id}/edit`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name,
+          description,
+          imageUrl,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
 export const getUserCommunityRole = async (user_id, community_id) => {
   try {
     const token = await AsyncStorage.getItem("userToken");
@@ -222,9 +258,8 @@ export const checkCommunityNameAvailability = async (
 
 export const uploadPictureToServer = async (filename, filepath, imageUri) => {
   const token = await AsyncStorage.getItem("userToken");
-
   const folderName = filepath;
-
+  
   const formData = new FormData();
   formData.append("image", {
     uri: imageUri,
@@ -232,6 +267,7 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
     type: "image/jpeg",
   });
   try {
+
     const response = await fetch(
       `${Config.API_URL}/image/upload/${folderName}`,
       {
@@ -243,12 +279,13 @@ export const uploadPictureToServer = async (filename, filepath, imageUri) => {
         },
       }
     );
-
-    const responseData = await response.json();
     if (!response.ok) {
-      throw new Error(responseData.message || "Failed to upload image.");
+      return { error: "Failed to upload image." };
+    } else {
+      const responseData = await response.json();
+
+      return responseData.imageUrl;
     }
-    return responseData.imageUrl;
   } catch (error) {
     Sentry.captureException(error);
     console.error("Error uploading image:", error.message);

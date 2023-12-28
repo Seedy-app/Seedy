@@ -64,7 +64,7 @@ const CommunityScreen = () => {
     };
 
     fetchUserInfo();
-  }, [community.id]);
+  }, [community.id, refresh]);
 
   useEffect(() => {
     if (route.params?.currentCategoriesPage) {
