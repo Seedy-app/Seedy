@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { View, Alert } from "react-native";
 import { Text, Button } from "react-native-paper";
 import { useTranslation } from "react-i18next";
@@ -6,16 +6,23 @@ import CustomInput from "../CustomComponents/CustomInput";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
 import { capitalizeFirstLetter } from "../../utils/device";
-import * as Sentry from '@sentry/react-native';
+import * as Sentry from "@sentry/react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-export default function ForgotPasswordScreen({ navigation }) {
+export default function ChangePasswordScreen({ navigation, route }) {
+  const { isLoggedIn = false } = route.params || {};
   const [token, setToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [Error, setError] = useState("");
   const { t } = useTranslation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: isLoggedIn ?t("change_password") : t("reset_password"),
+    });
+  }, []);
 
   const handleResetPassword = async () => {
     if (newPassword !== confirmNewPassword) {
@@ -28,25 +35,44 @@ export default function ForgotPasswordScreen({ navigation }) {
       return;
     }
     try {
-      const response = await fetch(Config.API_URL + "/reset-password", {
+      const endpoint = isLoggedIn ? "/change-password" : "/reset-password";
+      let headers = {
+        "Content-Type": "application/json",
+      };
+      const payload = isLoggedIn
+        ? { newPassword: newPassword }
+        : { token: token, newPassword: newPassword };
+      if (isLoggedIn) {
+        const bearer_token = await AsyncStorage.getItem("userToken");
+
+        if (!bearer_token) {
+          console.error(t("not_logged_in_error"));
+        } else {
+          headers["Authorization"] = `Bearer ${bearer_token}`;
+        }
+      }
+      const response = await fetch(Config.API_URL + endpoint, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-          newPassword: newPassword,
-        }),
+        headers: headers,
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
       if (response.status === 200) {
-        Alert.alert(
-          capitalizeFirstLetter(t("success")),
-          t("password_reset_successful")
-        );
-        navigation.navigate(t("login"));
+        if (isLoggedIn) {
+          Alert.alert(
+            capitalizeFirstLetter(t("success")),
+            t("password_modify_successful")
+          );
+          navigation.navigate(t("show_profile"));
+        } else {
+          Alert.alert(
+            capitalizeFirstLetter(t("success")),
+            t("password_reset_successful")
+          );
+          navigation.navigate(t("login"));
+        }
       } else {
         setError(data.message || t("password_reset_error"));
       }
@@ -58,7 +84,9 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { justifyContent: "center" }]}>
-      <CustomInput label={t("token")} value={token} onChangeText={setToken} />
+      {!isLoggedIn && (
+        <CustomInput label={t("token")} value={token} onChangeText={setToken} />
+      )}
       {passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CustomInput
         label={t("new_password")}
@@ -80,7 +108,7 @@ export default function ForgotPasswordScreen({ navigation }) {
         style={styles.button}
         onPress={handleResetPassword}
       >
-        <Text style={styles.buttonText}>{t("reset_password")}</Text>
+        <Text style={styles.buttonText}>{isLoggedIn ?t("change_password") : t("reset_password")}</Text>
       </Button>
     </View>
   );

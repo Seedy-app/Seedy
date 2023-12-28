@@ -8,7 +8,7 @@ import Config from "../../config/Config";
 import { capitalizeFirstLetter } from "../../utils/device";
 import * as Sentry from '@sentry/react-native';
 
-export default function ForgotPasswordScreen({ navigation }) {
+export default function ChangePasswordScreen({ navigation }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
 
