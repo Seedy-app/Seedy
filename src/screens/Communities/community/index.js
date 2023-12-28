@@ -7,6 +7,8 @@ import styles from "../CommunitiesStyles";
 import Config from "../../../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { capitalizeFirstLetter } from "../../../utils/device";
+import * as Sentry from '@sentry/react-native';
+
 
 function CommunitiesScreen() {
   const navigation = useNavigation();

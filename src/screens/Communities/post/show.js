@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import * as Sentry from '@sentry/react-native';
 import { Button, Portal, Modal, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";

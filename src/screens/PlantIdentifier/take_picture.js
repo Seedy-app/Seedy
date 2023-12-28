@@ -7,6 +7,8 @@ import { identifyPlant, uploadPictureToServer } from "../../utils/api";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 import IdentifyingImage from "../../assets/images/identifying.gif";
+import * as Sentry from '@sentry/react-native';
+
 
 export default function TakePictureScreen({ navigation }) {
   const { t } = useTranslation();

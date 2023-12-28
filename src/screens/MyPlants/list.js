@@ -20,6 +20,7 @@ import {
   Searchbar,
   Button,
 } from "react-native-paper";
+import * as Sentry from '@sentry/react-native';
 import styles from "./MyPlantsStyles";
 import { useTranslation } from "react-i18next";
 import { capitalizeFirstLetter } from "../../utils/device";

@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import styles from "../CommunitiesStyles";
 import Config from "../../../config/Config";
 import CommunityForm from "./form";
+import * as Sentry from '@sentry/react-native';
+
 
 import {
   changeCommunityPicture,

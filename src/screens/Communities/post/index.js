@@ -9,6 +9,8 @@ import PostCard from "../../CustomComponents/PostCard";
 import Pagination from "../../CustomComponents/Pagination";
 import { getUserCommunityRole, getCommunityPosts } from "../../../utils/api";
 import { HeaderBackButton } from "@react-navigation/elements";
+import * as Sentry from '@sentry/react-native';
+
 
 const ListPostsScreen = ({ route, navigation }) => {
   const { community, category, currentCategoriesPage, currentPostsPage } =

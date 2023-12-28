@@ -9,6 +9,8 @@ import { selectImageFromGallery } from "../../../utils/device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import loadingImage from "../../../assets/images/loading.gif";
 import { useTheme } from "react-native-paper";
+import * as Sentry from '@sentry/react-native';
+
 
 import {
   checkCommunityNameAvailability,

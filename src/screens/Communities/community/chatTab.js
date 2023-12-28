@@ -19,10 +19,7 @@ const ChatTab = ({ community, userInfo, userRole }) => {
   useEffect(() => {
     const fetchChatHistory = async () => {
       const token = await AsyncStorage.getItem("userToken");
-      socketRef.current = io(Config.API_URL, {
-        query: { token },
-      });
-
+      socketRef.current = io(Config.BASE_URL, {path: "/api/socket.io"});
       socketRef.current.on("receive_message", (message) => {
         if (message.community_id === community.id) {
           setMessages((prevMessages) => [...prevMessages, message]);

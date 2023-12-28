@@ -7,6 +7,8 @@ import {
   Image,
   Alert,
 } from "react-native";
+import * as Sentry from '@sentry/react-native';
+
 import {
   Dialog,
   Paragraph,

@@ -10,7 +10,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "jsEngine": "hermes",
@@ -18,13 +21,15 @@
         "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.franmuzzio.Seedy"
+      "package": "com.franmuzzio.Seedy",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/fabde9de-4289-4f07-b6b6-9eaa4b1265fc"
     },
     "extra": {
       "eas": {

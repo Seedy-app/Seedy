@@ -13,6 +13,8 @@ import Config from "../../config/Config";
 import styles from "../../config/CommonStyles";
 import Colors from "../../config/Colors";
 import { reactComment } from "../../utils/api";
+import * as Sentry from '@sentry/react-native';
+
 
 const Comment = ({
   comment,

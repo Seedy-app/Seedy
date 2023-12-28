@@ -1,4 +1,3 @@
-import * as Sentry from 'sentry-expo';
 import React, { useState, useEffect, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -14,6 +13,12 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
 import { Platform, Alert } from "react-native";
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: 'https://124a1c1f68068173fab813246da26ea3@o4506465935622144.ingest.sentry.io/4506465949843456',
+});
+
 
 const RootStack = createStackNavigator();
 
@@ -24,26 +29,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-
-async function sendPushNotification(expoPushToken) {
-  const message = {
-    to: expoPushToken,
-    sound: "default",
-    title: "Original Title",
-    body: "And here is the body!",
-    data: { someData: "goes here" },
-  };
-
-  await fetch("https://exp.host/--/api/v2/push/send", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Accept-encoding": "gzip, deflate",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(message),
-  });
-}
 
 async function registerForPushNotificationsAsync() {
   if (Platform.OS === "android") {
@@ -74,13 +59,6 @@ async function registerForPushNotificationsAsync() {
     return undefined;
   }
 }
-
-Sentry.init({
-  dsn: 'https://124a1c1f68068173fab813246da26ea3@o4506465935622144.ingest.sentry.io/4506465949843456',
-  enableInExpoDevelopment: true,
-  debug: true,
-});
-
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);

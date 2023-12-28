@@ -5,6 +5,8 @@ import { Text, Button, TouchableRipple } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
+import * as Sentry from '@sentry/react-native';
+
 import {
   checkUsernameAvailability,
   checkEmailAvailability,

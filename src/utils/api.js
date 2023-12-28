@@ -1,6 +1,8 @@
 import Config from "../config/Config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "i18next";
+import * as Sentry from '@sentry/react-native';
+
 
 export const checkUsernameAvailability = async (
   username,

@@ -5,6 +5,8 @@ import PostForm from "./form";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { editPost } from "../../../utils/api";
+import * as Sentry from '@sentry/react-native';
+
 
 const EditPostScreen = ({ route, navigation }) => {
   const { t } = useTranslation();

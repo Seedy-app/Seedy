@@ -4,8 +4,9 @@ import CommunitiesScreen from "../screens/Communities/community/index";
 import CommunityScreen from "../screens/Communities/community/show";
 import CreateCommunityScreen from "../screens/Communities/community/create";
 import CreatePostScreen from "../screens/Communities/post/create";
-import EditPostScreen from "../screens/Communities/post/edit";
 import CreateCategoryScreen from "../screens/Communities/category/create";
+import EditCommunityScreen from "../screens/Communities/community/edit";
+import EditPostScreen from "../screens/Communities/post/edit";
 import EditCategoryScreen from "../screens/Communities/category/edit";
 import CommunitySettingsScreen from "../screens/Communities/settings/index";
 import ViewPostScreen from "../screens/Communities/post/show";
@@ -58,6 +59,16 @@ function CommunitiesStackNavigator() {
       <CommunitiesStack.Screen
         name={t("create_community")}
         component={CreateCommunityScreen}
+        options={{
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "black",
+          },
+        }}
+      />
+      <CommunitiesStack.Screen
+        name={t("edit_community")}
+        component={EditCommunityScreen}
         options={{
           headerStyle: {
             borderBottomWidth: 1,

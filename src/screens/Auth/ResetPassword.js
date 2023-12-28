@@ -6,6 +6,8 @@ import CustomInput from "../CustomComponents/CustomInput";
 import styles from "./AuthStyles";
 import Config from "../../config/Config";
 import { capitalizeFirstLetter } from "../../utils/device";
+import * as Sentry from '@sentry/react-native';
+
 
 export default function ForgotPasswordScreen({ navigation }) {
   const [token, setToken] = useState("");

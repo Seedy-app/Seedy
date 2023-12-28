@@ -5,6 +5,7 @@ import CategoryForm from "./form";
 import { capitalizeFirstLetter } from "../../../utils/device";
 import { useTranslation } from "react-i18next";
 import { createCategory } from "../../../utils/api";
+import * as Sentry from '@sentry/react-native';
 
 const CreateCategoryScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
